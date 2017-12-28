@@ -1,34 +1,13 @@
 package com.udacity.bakingapp.stepdetails;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.media.session.MediaSessionCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.exoplayer2.DefaultLoadControl;
-import com.google.android.exoplayer2.DefaultRenderersFactory;
-import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.PlaybackParameters;
-import com.google.android.exoplayer2.Player;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.Timeline;
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.TrackGroupArray;
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.recipes.presenter.RecipesPresenterImpl;
@@ -40,24 +19,19 @@ import com.udacity.bakingapp.recipedetails.StepsAdapter;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class StepDetailsFragment extends Fragment
-        implements StepsDetailsView, Player.EventListener {
+public class StepDetailsFragment extends Fragment implements StepsDetailsView {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String ARG_VIDEO_URL = "video-url";
     private static final String LOG_TAG = "Log Tag";
+    private static final String VIDEO_FRAGMENT_TAG = "video-fragment-tag";
 
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private StepsAdapter mStepsAdapter;
     private RecipesPresenterImpl mRecipesPresenter;
     private TextView mDescriptionView;
-    private static MediaSessionCompat mMediaSession;
-    private SimpleExoPlayer mPlayer;
-    private SimpleExoPlayerView mPlayerView;
-    private boolean mPlayWhenReady = true;
     private int mCurrentWindow;
-    private long mPlaybackPosition;
     private String mVideoUrl;
 
     /**
@@ -67,7 +41,6 @@ public class StepDetailsFragment extends Fragment
     public StepDetailsFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static StepDetailsFragment newInstance(int columnCount, String videoUrl) {
         StepDetailsFragment fragment = new StepDetailsFragment();
@@ -99,7 +72,15 @@ public class StepDetailsFragment extends Fragment
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_step_details, container, false);
         mDescriptionView = (TextView) view.findViewById(R.id.step_description);
-        mPlayerView = (SimpleExoPlayerView) view.findViewById(R.id.step_video_player);
+
+        if (getChildFragmentManager().findFragmentByTag(VIDEO_FRAGMENT_TAG) == null) {
+            VideoFragment videoFragment = VideoFragment.newInstance(mVideoUrl);
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.videoContainerLayout, videoFragment, VIDEO_FRAGMENT_TAG)
+                    .commit();
+        }
+
 //        mPlayerView.requestFocus();
 
 //        initializePlayer();
@@ -119,87 +100,7 @@ public class StepDetailsFragment extends Fragment
                     + " must implement OnIngredientsFragmentInteractionListener");
         }
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (Util.SDK_INT > 23) {
-            initializePlayer();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-//        hideSystemUi();
-        if ((Util.SDK_INT <= 23 || mPlayer == null)) {
-            initializePlayer();
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (Util.SDK_INT <= 23) {
-            releasePlayer();
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (Util.SDK_INT > 23) {
-            releasePlayer();
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
     //endregion
-
-    private void initializePlayer() {
-        mPlayer = ExoPlayerFactory.newSimpleInstance(
-                new DefaultRenderersFactory(getContext()),
-                new DefaultTrackSelector(), new DefaultLoadControl());
-
-        mPlayerView.setPlayer(mPlayer);
-
-        mPlayer.setPlayWhenReady(mPlayWhenReady);
-        mPlayer.seekTo(mCurrentWindow, mPlaybackPosition);
-
-        Uri uri = Uri.parse(mVideoUrl);
-        MediaSource mediaSource = buildMediaSource(uri);
-        mPlayer.prepare(mediaSource, true, false);
-    }
-
-    private void releasePlayer() {
-        if (mPlayer != null) {
-            mPlaybackPosition = mPlayer.getCurrentPosition();
-            mCurrentWindow = mPlayer.getCurrentWindowIndex();
-            mPlayWhenReady = mPlayer.getPlayWhenReady();
-            mPlayer.release();
-            mPlayer = null;
-        }
-    }
-
-    private MediaSource buildMediaSource(Uri uri) {
-        return new ExtractorMediaSource(uri,
-                new DefaultHttpDataSourceFactory("ua"),
-                new DefaultExtractorsFactory(), null, null);
-    }
-
-    @SuppressLint("InlinedApi")
-    private void hideSystemUi() {
-        mPlayerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-    }
 
     @Override
     public void showStepDetails(Step step) {
@@ -221,46 +122,4 @@ public class StepDetailsFragment extends Fragment
         void previousStep(Step step);
         void nextStep(Step step);
     }
-
-    //region ExoPlayer Event Listeners
-    @Override
-    public void onTimelineChanged(Timeline timeline, Object manifest) {
-
-    }
-
-    @Override
-    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-
-    }
-
-    @Override
-    public void onLoadingChanged(boolean isLoading) {
-        Log.d(LOG_TAG, "Loading changed to " + String.valueOf(isLoading));
-    }
-
-    @Override
-    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-        Log.d(LOG_TAG, "Player state changed to " + String.valueOf(playbackState));
-    }
-
-    @Override
-    public void onRepeatModeChanged(int repeatMode) {
-
-    }
-
-    @Override
-    public void onPlayerError(ExoPlaybackException error) {
-        error.printStackTrace();
-    }
-
-    @Override
-    public void onPositionDiscontinuity() {
-
-    }
-
-    @Override
-    public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
-
-    }
-    //endregion
 }
