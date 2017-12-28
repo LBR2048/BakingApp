@@ -1,8 +1,6 @@
-package com.udacity.bakingapp.stepdetail;
+package com.udacity.bakingapp.stepdetails;
 
 import com.udacity.bakingapp.model.Step;
-
-import java.util.List;
 
 /**
  * Created by leonardo.ardjomand on 09/06/2017.

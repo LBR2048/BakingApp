@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.stepdetail;
+package com.udacity.bakingapp.stepdetails;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -32,7 +32,7 @@ import com.google.android.exoplayer2.util.Util;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.recipes.presenter.RecipesPresenterImpl;
-import com.udacity.bakingapp.details.StepsAdapter;
+import com.udacity.bakingapp.recipedetails.StepsAdapter;
 
 /**
  * A fragment representing a list of Items.

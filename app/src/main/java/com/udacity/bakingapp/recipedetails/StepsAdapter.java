@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.details;
+package com.udacity.bakingapp.recipedetails;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.udacity.bakingapp.R;
-import com.udacity.bakingapp.details.DetailsFragment.OnDetailsFragmentInteraction;
-import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Recipe;
+import com.udacity.bakingapp.model.Step;
+import com.udacity.bakingapp.recipedetails.RecipeRecipeDetailsFragment.OnDetailsFragmentInteraction;
 
 import java.util.List;
 
@@ -18,33 +18,32 @@ import java.util.List;
  * specified {@link OnDetailsFragmentInteraction}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.ViewHolder> {
+public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> {
 
-    private List<Ingredient> mValues;
+    private List<Step> mValues;
     private final OnDetailsFragmentInteraction mListener;
 
-    public IngredientsAdapter(List<Ingredient> items, OnDetailsFragmentInteraction listener) {
+    public StepsAdapter(List<Step> items, OnDetailsFragmentInteraction listener) {
         mValues = items;
         mListener = listener;
     }
 
-    public void replaceData(List<Ingredient> recipes) {
-        mValues = recipes;
+    public void replaceData(List<Step> steps) {
+        mValues = steps;
         notifyDataSetChanged();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_ingredient, parent, false);
+                .inflate(R.layout.item_detail, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mIngredient = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).toString());
-        holder.mContentView.setText(mValues.get(position).toString());
+        holder.mStep = mValues.get(position);
+        holder.mShortDescription.setText(holder.mStep.getShortDescription());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +51,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onIngredientClicked(holder.mIngredient);
+                    mListener.onStepClicked(holder.mStep);
                 }
 //                Toast.makeText(v.getContext(), holder.mStep.toString() + " clicked", Toast.LENGTH_SHORT).show();
             }
@@ -66,14 +65,14 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
+        public final TextView mShortDescription;
         public final TextView mContentView;
-        public Ingredient mIngredient;
+        public Step mStep;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.short_description);
+            mShortDescription = (TextView) view.findViewById(R.id.short_description);
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 

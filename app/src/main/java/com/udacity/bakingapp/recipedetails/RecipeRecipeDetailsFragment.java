@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.details;
+package com.udacity.bakingapp.recipedetails;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -27,7 +27,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnDetailsFragmentInteraction}
  * interface.
  */
-public class DetailsFragment extends Fragment implements DetailsView {
+public class RecipeRecipeDetailsFragment extends Fragment implements RecipeDetailsView {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -45,12 +45,12 @@ public class DetailsFragment extends Fragment implements DetailsView {
     private List<Step> mSteps;
     private List<Ingredient> mIngredients;
 
-    public DetailsFragment() {
+    public RecipeRecipeDetailsFragment() {
     }
 
     @SuppressWarnings("unused")
-    public static DetailsFragment newInstance(int columnCount) {
-        DetailsFragment fragment = new DetailsFragment();
+    public static RecipeRecipeDetailsFragment newInstance(int columnCount) {
+        RecipeRecipeDetailsFragment fragment = new RecipeRecipeDetailsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
