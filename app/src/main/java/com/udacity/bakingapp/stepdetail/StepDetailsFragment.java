@@ -43,10 +43,10 @@ import com.udacity.bakingapp.details.StepsAdapter;
 public class StepDetailsFragment extends Fragment
         implements StepsDetailsView, Player.EventListener {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String ARG_VIDEO_URL = "video-url";
     private static final String LOG_TAG = "Log Tag";
-    // TODO: Customize parameters
+
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private StepsAdapter mStepsAdapter;
@@ -58,6 +58,7 @@ public class StepDetailsFragment extends Fragment
     private boolean mPlayWhenReady = true;
     private int mCurrentWindow;
     private long mPlaybackPosition;
+    private String mVideoUrl;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -68,10 +69,11 @@ public class StepDetailsFragment extends Fragment
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static StepDetailsFragment newInstance(int columnCount) {
+    public static StepDetailsFragment newInstance(int columnCount, String videoUrl) {
         StepDetailsFragment fragment = new StepDetailsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putString(ARG_VIDEO_URL, videoUrl);
         fragment.setArguments(args);
         return fragment;
     }
@@ -85,6 +87,7 @@ public class StepDetailsFragment extends Fragment
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            mVideoUrl = getArguments().getString(ARG_VIDEO_URL);
         }
 
         // Instantiate presenter
@@ -167,7 +170,7 @@ public class StepDetailsFragment extends Fragment
         mPlayer.setPlayWhenReady(mPlayWhenReady);
         mPlayer.seekTo(mCurrentWindow, mPlaybackPosition);
 
-        Uri uri = Uri.parse(getString(R.string.media_url_mp4));
+        Uri uri = Uri.parse(mVideoUrl);
         MediaSource mediaSource = buildMediaSource(uri);
         mPlayer.prepare(mediaSource, true, false);
     }
