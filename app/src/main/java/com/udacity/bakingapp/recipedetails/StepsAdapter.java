@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.model.Step;
-import com.udacity.bakingapp.recipedetails.RecipeRecipeDetailsFragment.OnDetailsFragmentInteraction;
+import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment.OnDetailsFragmentInteraction;
 
 import java.util.List;
 

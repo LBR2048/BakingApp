@@ -27,7 +27,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnDetailsFragmentInteraction}
  * interface.
  */
-public class RecipeRecipeDetailsFragment extends Fragment implements RecipeDetailsView {
+public class RecipeDetailsFragment extends Fragment implements RecipeDetailsView {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -45,12 +45,12 @@ public class RecipeRecipeDetailsFragment extends Fragment implements RecipeDetai
     private List<Step> mSteps;
     private List<Ingredient> mIngredients;
 
-    public RecipeRecipeDetailsFragment() {
+    public RecipeDetailsFragment() {
     }
 
     @SuppressWarnings("unused")
-    public static RecipeRecipeDetailsFragment newInstance(int columnCount) {
-        RecipeRecipeDetailsFragment fragment = new RecipeRecipeDetailsFragment();
+    public static RecipeDetailsFragment newInstance(int columnCount) {
+        RecipeDetailsFragment fragment = new RecipeDetailsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);

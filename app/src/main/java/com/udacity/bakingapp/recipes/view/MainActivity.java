@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.udacity.bakingapp.R;
-import com.udacity.bakingapp.recipedetails.RecipeRecipeDetailsFragment;
+import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment;
 import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.model.Step;
@@ -13,14 +13,14 @@ import com.udacity.bakingapp.stepdetails.StepDetailsFragment;
 
 public class MainActivity extends AppCompatActivity
         implements RecipesFragment.OnRecipesFragmentInteractionListener,
-        RecipeRecipeDetailsFragment.OnDetailsFragmentInteraction,
+        RecipeDetailsFragment.OnDetailsFragmentInteraction,
         StepDetailsFragment.OnListFragmentInteractionListener {
 
     private static final String RECIPES_FRAGMENT_TAG = "recipes_fragment_tag";
     private static final String STEPS_FRAGMENT_TAG = "steps_fragment_tag";
     private static final String STEP_DETAILS_FRAGMENT_TAG = "step_details_tag";
     private RecipesFragment mRecipesFragment;
-    private RecipeRecipeDetailsFragment mRecipeDetailsFragment;
+    private RecipeDetailsFragment mRecipeDetailsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity
 
         if (savedInstanceState != null) {
             mRecipesFragment = (RecipesFragment) getSupportFragmentManager().getFragment(savedInstanceState, RECIPES_FRAGMENT_TAG);
-//            mRecipeDetailsFragment = (RecipeRecipeDetailsFragment) getSupportFragmentManager().getFragment(savedInstanceState, STEPS_FRAGMENT_TAG);
+//            mRecipeDetailsFragment = (RecipeDetailsFragment) getSupportFragmentManager().getFragment(savedInstanceState, STEPS_FRAGMENT_TAG);
         } else {
             mRecipesFragment = RecipesFragment.newInstance(1);
             getSupportFragmentManager()
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRecipeClicked(Recipe recipe) {
-        mRecipeDetailsFragment = RecipeRecipeDetailsFragment.newInstance(1);
+        mRecipeDetailsFragment = RecipeDetailsFragment.newInstance(1);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_acivity_content, mRecipeDetailsFragment, STEPS_FRAGMENT_TAG)
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().executePendingTransactions();
 
 //        stepsFragment =
-//                (RecipeRecipeDetailsFragment) getSupportFragmentManager().findFragmentByTag(
+//                (RecipeDetailsFragment) getSupportFragmentManager().findFragmentByTag(
 //                        STEPS_FRAGMENT_TAG);
         mRecipeDetailsFragment.showIngredients(recipe.getIngredients());
         mRecipeDetailsFragment.showSteps(recipe.getSteps());

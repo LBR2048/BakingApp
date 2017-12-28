@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.udacity.bakingapp.R;
-import com.udacity.bakingapp.recipedetails.RecipeRecipeDetailsFragment.OnDetailsFragmentInteraction;
+import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment.OnDetailsFragmentInteraction;
 import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Recipe;
 
