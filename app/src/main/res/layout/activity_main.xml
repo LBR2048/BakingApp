@@ -5,6 +5,6 @@
     android:id="@+id/main_acivity_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".recipes.view.MainActivity">
+    tools:context=".recipes.MainActivity">
 
 </FrameLayout>

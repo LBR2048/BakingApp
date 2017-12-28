@@ -1,20 +1,17 @@
-package com.udacity.bakingapp.recipes.view;
+package com.udacity.bakingapp.recipes;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Recipe;
-import com.udacity.bakingapp.recipes.presenter.RecipesPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,15 +22,15 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnRecipesFragmentInteractionListener}
  * interface.
  */
-public class RecipesFragment extends Fragment implements RecipesView {
+public class RecipesFragment extends android.support.v4.app.Fragment implements RecipesContract.View {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String RECYCLER_VIEW_STATE = "recyclerViewState";
 
     private int mColumnCount = 1;
     private OnRecipesFragmentInteractionListener mListener;
-    private RecipeAdapter mRecipeAdapter;
-    private RecipesPresenterImpl mRecipesPresenter;
+    private RecipesAdapter mRecipesAdapter;
+    private RecipesPresenter mRecipesPresenter;
     private RecyclerView mRecyclerView;
 
     public RecipesFragment() {
@@ -41,11 +38,11 @@ public class RecipesFragment extends Fragment implements RecipesView {
 
     @SuppressWarnings("unused")
     public static RecipesFragment newInstance(int columnCount) {
-        RecipesFragment fragment = new RecipesFragment();
+        RecipesFragment recipesFragment = new RecipesFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
+        recipesFragment.setArguments(args);
+        return recipesFragment;
     }
 
     @Override
@@ -58,13 +55,13 @@ public class RecipesFragment extends Fragment implements RecipesView {
         }
 
         // Instantiate presenter
-        mRecipesPresenter = new RecipesPresenterImpl(this);
+        mRecipesPresenter = new RecipesPresenter(this);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recipes, container, false);
+        android.view.View view = inflater.inflate(R.layout.fragment_recipes, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_list);
 
         // Set the adapter
@@ -74,8 +71,8 @@ public class RecipesFragment extends Fragment implements RecipesView {
         } else {
             mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
-        mRecipeAdapter = new RecipeAdapter(new ArrayList<Recipe>(), mListener);
-        mRecyclerView.setAdapter(mRecipeAdapter);
+        mRecipesAdapter = new RecipesAdapter(new ArrayList<Recipe>(), mListener);
+        mRecyclerView.setAdapter(mRecipesAdapter);
 
         // Load data
         mRecipesPresenter.loadRecipes();
@@ -119,7 +116,7 @@ public class RecipesFragment extends Fragment implements RecipesView {
 
     @Override
     public void showRecipes(List<Recipe> recipes) {
-        mRecipeAdapter.replaceData(recipes);
+        mRecipesAdapter.replaceData(recipes);
     }
 
     /**

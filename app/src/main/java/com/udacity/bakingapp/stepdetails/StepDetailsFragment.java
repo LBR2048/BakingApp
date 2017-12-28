@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.recipedetails.StepsAdapter;
-import com.udacity.bakingapp.recipes.presenter.RecipesPresenterImpl;
+import com.udacity.bakingapp.recipes.RecipesPresenter;
 
 /**
  * A fragment representing a list of Items.
@@ -31,7 +31,7 @@ public class StepDetailsFragment extends Fragment implements StepsDetailsView {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private StepsAdapter mStepsAdapter;
-    private RecipesPresenterImpl mRecipesPresenter;
+    private RecipesPresenter mRecipesPresenter;
     private TextView mDescriptionView;
     private int mCurrentWindow;
     private String mVideoUrl;
@@ -66,7 +66,7 @@ public class StepDetailsFragment extends Fragment implements StepsDetailsView {
         }
 
         // Instantiate presenter
-//        mRecipesPresenter = new RecipesPresenterImpl(this);
+//        mRecipesPresenter = new RecipesPresenter(this);
     }
 
     @Override

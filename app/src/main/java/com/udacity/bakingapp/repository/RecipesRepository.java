@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.recipes.repository;
+package com.udacity.bakingapp.repository;
 
 import com.udacity.bakingapp.model.Recipe;
 
@@ -12,7 +12,7 @@ public interface RecipesRepository {
 
     interface LoadRecipesCallback {
 
-        void onRecipesLoaded(List<Recipe> recipes);
+        void showRecipes(List<Recipe> recipes);
 
         void onDataNotAvailable();
     }

@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.recipes.view;
+package com.udacity.bakingapp.recipes;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

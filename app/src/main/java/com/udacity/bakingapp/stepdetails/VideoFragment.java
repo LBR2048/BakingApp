@@ -70,7 +70,7 @@ public class VideoFragment extends Fragment implements Player.EventListener {
         }
 
         // Instantiate presenter
-//        mRecipesPresenter = new RecipesPresenterImpl(this);
+//        mRecipesPresenter = new RecipesPresenter(this);
     }
 
     @Override

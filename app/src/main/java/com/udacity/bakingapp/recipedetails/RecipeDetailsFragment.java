@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Step;
-import com.udacity.bakingapp.recipes.presenter.RecipesPresenterImpl;
+import com.udacity.bakingapp.recipes.RecipesPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailsView
     private OnDetailsFragmentInteraction mListener;
     private StepsAdapter mStepsAdapter;
     private IngredientsAdapter mIngredientsAdapter;
-    private RecipesPresenterImpl mRecipesPresenter;
+    private RecipesPresenter mRecipesPresenter;
     private RecyclerView mStepList;
     private RecyclerView mIngredientList;
     private TextView mIngredientText;
@@ -67,7 +67,7 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailsView
         }
 
         // Instantiate presenter
-//        mRecipesPresenter = new RecipesPresenterImpl(this);
+//        mRecipesPresenter = new RecipesPresenter(this);
     }
 
     @Override

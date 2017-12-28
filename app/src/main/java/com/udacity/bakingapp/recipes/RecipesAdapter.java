@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.recipes.view;
+package com.udacity.bakingapp.recipes;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,21 +8,20 @@ import android.widget.TextView;
 
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Recipe;
-import com.udacity.bakingapp.recipes.view.RecipesFragment.OnRecipesFragmentInteractionListener;
 
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Recipe} and makes a call to the
- * specified {@link OnRecipesFragmentInteractionListener}.
+ * specified {@link RecipesFragment.OnRecipesFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
+public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
 
     private List<Recipe> mValues;
-    private final OnRecipesFragmentInteractionListener mListener;
+    private final RecipesFragment.OnRecipesFragmentInteractionListener mListener;
 
-    public RecipeAdapter(List<Recipe> items, OnRecipesFragmentInteractionListener listener) {
+    public RecipesAdapter(List<Recipe> items, RecipesFragment.OnRecipesFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }

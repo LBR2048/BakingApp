@@ -1,9 +1,8 @@
-package com.udacity.bakingapp.recipes.presenter;
+package com.udacity.bakingapp.recipes;
 
 import com.udacity.bakingapp.model.Recipe;
-import com.udacity.bakingapp.recipes.repository.RecipesRepository;
-import com.udacity.bakingapp.recipes.repository.RecipesRepositoryImpl;
-import com.udacity.bakingapp.recipes.view.RecipesView;
+import com.udacity.bakingapp.repository.RecipesRepository;
+import com.udacity.bakingapp.repository.RecipesRepositoryImpl;
 
 import java.util.List;
 
@@ -11,16 +10,16 @@ import java.util.List;
  * Created by leonardo.ardjomand on 09/06/2017.
  */
 
-public class RecipesPresenterImpl implements RecipesPresenter {
+public class RecipesPresenter implements RecipesContract.Presenter {
 
-    private RecipesView mRecipesView;
+    private RecipesContract.View mView;
 
     private RecipesRepository mRecipesRepository;
 
     private String urlString = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
-    public RecipesPresenterImpl(RecipesView recipesView) {
-        mRecipesView = recipesView;
+    public RecipesPresenter(RecipesContract.View view) {
+        mView = view;
         mRecipesRepository = new RecipesRepositoryImpl();
     }
 
@@ -28,8 +27,8 @@ public class RecipesPresenterImpl implements RecipesPresenter {
     public void loadRecipes() {
         mRecipesRepository.loadRecipes(new RecipesRepository.LoadRecipesCallback() {
             @Override
-            public void onRecipesLoaded(List<Recipe> recipes) {
-                mRecipesView.showRecipes(recipes);
+            public void showRecipes(List<Recipe> recipes) {
+                mView.showRecipes(recipes);
             }
 
             @Override

@@ -1,10 +1,8 @@
-package com.udacity.bakingapp.recipes.repository;
+package com.udacity.bakingapp.repository;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Recipe;
-import com.udacity.bakingapp.model.Step;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -710,6 +708,6 @@ public class RecipesRepositoryImpl implements RecipesRepository {
 //        recipes.add(new Recipe(2, "Recipe 4", ingredients, steps, 2, ""));
 //        recipes.add(new Recipe(2, "Recipe 5", ingredients, steps, 2, ""));
 
-        loadRecipesCallback.onRecipesLoaded(recipes);
+        loadRecipesCallback.showRecipes(recipes);
     }
 }
