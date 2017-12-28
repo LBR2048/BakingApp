@@ -27,7 +27,7 @@ public class RecipesPresenter implements RecipesContract.Presenter {
     public void loadRecipes() {
         mRecipesRepository.loadRecipes(new RecipesRepository.LoadRecipesCallback() {
             @Override
-            public void showRecipes(List<Recipe> recipes) {
+            public void onRecipesLoaded(List<Recipe> recipes) {
                 mView.showRecipes(recipes);
             }
 

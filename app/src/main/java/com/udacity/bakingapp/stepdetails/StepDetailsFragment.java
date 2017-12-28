@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,9 +20,10 @@ import com.udacity.bakingapp.recipes.RecipesPresenter;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class StepDetailsFragment extends Fragment implements StepsDetailsView {
+public class StepDetailsFragment extends Fragment implements StepDetailsContract.View {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String ARG_RECIPE_ID = "recipe-id";
     private static final String ARG_VIDEO_URL = "video-url";
     private static final String LOG_TAG = "Log Tag";
     private static final String VIDEO_FRAGMENT_TAG = "video-fragment-tag";
@@ -35,6 +35,10 @@ public class StepDetailsFragment extends Fragment implements StepsDetailsView {
     private TextView mDescriptionView;
     private int mCurrentWindow;
     private String mVideoUrl;
+    private Button mPreviousButton;
+    private Button mNextButton;
+    private StepDetailsPresenter mStepDetailsPresenter;
+    private int mRecipeId;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -44,11 +48,12 @@ public class StepDetailsFragment extends Fragment implements StepsDetailsView {
     }
 
     @SuppressWarnings("unused")
-    public static StepDetailsFragment newInstance(int columnCount, String videoUrl) {
+    public static StepDetailsFragment newInstance(int columnCount, String videoUrl, int recipeId) {
         StepDetailsFragment fragment = new StepDetailsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         args.putString(ARG_VIDEO_URL, videoUrl);
+        args.putInt(ARG_RECIPE_ID, recipeId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,44 +68,24 @@ public class StepDetailsFragment extends Fragment implements StepsDetailsView {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
             mVideoUrl = getArguments().getString(ARG_VIDEO_URL);
+            mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
         }
 
         // Instantiate presenter
-//        mRecipesPresenter = new RecipesPresenter(this);
+        mStepDetailsPresenter = new StepDetailsPresenter(this);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_step_details, container, false);
+        android.view.View view = inflater.inflate(R.layout.fragment_step_details, container, false);
         mDescriptionView = (TextView) view.findViewById(R.id.step_description);
-        final Button previousButton = (Button) view.findViewById(R.id.previous_button);
-        Button nextButton  = (Button) view.findViewById(R.id.next_button);
+        mPreviousButton = (Button) view.findViewById(R.id.previous_button);
+        mNextButton = (Button) view.findViewById(R.id.next_button);
 
-        if (getChildFragmentManager().findFragmentByTag(VIDEO_FRAGMENT_TAG) == null) {
-            VideoFragment videoFragment = VideoFragment.newInstance(mVideoUrl);
-            getChildFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.videoContainerLayout, videoFragment, VIDEO_FRAGMENT_TAG)
-                    .commit();
-        }
+        setupNavigationButtons();
 
-        previousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "P", Toast.LENGTH_SHORT).show();
-                mListener.previousStep();
-            }
-        });
-
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "N", Toast.LENGTH_SHORT).show();
-                mListener.nextStep();
-            }
-        });
-
+        mStepDetailsPresenter.getFirstStep(mRecipeId);
 //        mPlayerView.requestFocus();
 
 //        initializePlayer();
@@ -123,8 +108,38 @@ public class StepDetailsFragment extends Fragment implements StepsDetailsView {
     //endregion
 
     @Override
-    public void showStepDetails(Step step) {
+    public void showStep(Step step) {
         mDescriptionView.setText(step.getDescription());
+
+        showVideoFragment();
+    }
+
+    private void showVideoFragment() {
+        if (getChildFragmentManager().findFragmentByTag(VIDEO_FRAGMENT_TAG) == null) {
+            VideoFragment videoFragment = VideoFragment.newInstance(mVideoUrl);
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.videoContainerLayout, videoFragment, VIDEO_FRAGMENT_TAG)
+                    .commit();
+        }
+    }
+
+    private void setupNavigationButtons() {
+        mPreviousButton.setOnClickListener(new android.view.View.OnClickListener() {
+            @Override
+            public void onClick(android.view.View v) {
+                Toast.makeText(getContext(), "P", Toast.LENGTH_SHORT).show();
+                mListener.previousStep();
+            }
+        });
+
+        mNextButton.setOnClickListener(new android.view.View.OnClickListener() {
+            @Override
+            public void onClick(android.view.View v) {
+                Toast.makeText(getContext(), "N", Toast.LENGTH_SHORT).show();
+                mListener.nextStep();
+            }
+        });
     }
 
     /**

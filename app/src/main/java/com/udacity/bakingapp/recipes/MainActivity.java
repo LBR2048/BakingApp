@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity
     public void onStepClicked(Step step) {
         Toast.makeText(this, step.getShortDescription() + " clicked", Toast.LENGTH_SHORT).show();
 
-        StepDetailsFragment stepDetailsFragment = StepDetailsFragment.newInstance(1, step.getVideoURL());
+        StepDetailsFragment stepDetailsFragment = StepDetailsFragment.newInstance(1, step.getVideoURL(), step.getId());
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_acivity_content, stepDetailsFragment,
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
 //        stepDetailsFragment =
 //                (StepDetailsFragment) getSupportFragmentManager().findFragmentByTag(
 //                        STEP_DETAILS_FRAGMENT_TAG);
-        stepDetailsFragment.showStepDetails(step);
+//        stepDetailsFragment.showStep(step);
     }
 
     @Override
