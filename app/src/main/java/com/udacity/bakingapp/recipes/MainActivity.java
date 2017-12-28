@@ -19,22 +19,18 @@ public class MainActivity extends AppCompatActivity
     private static final String RECIPES_FRAGMENT_TAG = "recipes_fragment_tag";
     private static final String STEPS_FRAGMENT_TAG = "steps_fragment_tag";
     private static final String STEP_DETAILS_FRAGMENT_TAG = "step_details_tag";
-    private RecipesFragment mRecipesFragment;
-    private RecipeDetailsFragment mRecipeDetailsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (savedInstanceState != null) {
-            mRecipesFragment = (RecipesFragment) getSupportFragmentManager().getFragment(savedInstanceState, RECIPES_FRAGMENT_TAG);
-//            mRecipeDetailsFragment = (RecipeDetailsFragment) getSupportFragmentManager().getFragment(savedInstanceState, STEPS_FRAGMENT_TAG);
-        } else {
-            mRecipesFragment = RecipesFragment.newInstance(1);
+        RecipesFragment recipesFragment;
+        if (getSupportFragmentManager().findFragmentByTag(RECIPES_FRAGMENT_TAG) == null) {
+            recipesFragment = RecipesFragment.newInstance(1);
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.main_acivity_content, mRecipesFragment, RECIPES_FRAGMENT_TAG)
+                    .replace(R.id.main_acivity_content, recipesFragment, RECIPES_FRAGMENT_TAG)
                     .commit();
         }
 //        } else {
@@ -54,15 +50,15 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRecipeClicked(Recipe recipe) {
-        mRecipeDetailsFragment = RecipeDetailsFragment.newInstance(1, recipe.getId());
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_acivity_content, mRecipeDetailsFragment, STEPS_FRAGMENT_TAG)
-                .addToBackStack(null)
-                .commit();
-
-        getSupportFragmentManager().executePendingTransactions();
-
+        if (getSupportFragmentManager().findFragmentByTag(STEPS_FRAGMENT_TAG) == null) {
+            RecipeDetailsFragment recipeDetailsFragment = RecipeDetailsFragment.newInstance(1,
+                    recipe.getId());
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_acivity_content, recipeDetailsFragment, STEPS_FRAGMENT_TAG)
+                    .addToBackStack(null)
+                    .commit();
+        }
 //        stepsFragment =
 //                (RecipeDetailsFragment) getSupportFragmentManager().findFragmentByTag(
 //                        STEPS_FRAGMENT_TAG);
@@ -73,20 +69,20 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    // TODO ao clicar no step, não mandamos as infos sobre o step, mas sim sobre a receita toda?
     @Override
     public void onStepClicked(Step step) {
         Toast.makeText(this, step.getShortDescription() + " clicked", Toast.LENGTH_SHORT).show();
 
-        StepDetailsFragment stepDetailsFragment = StepDetailsFragment.newInstance(1, step.getVideoURL(), step.getId());
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_acivity_content, stepDetailsFragment,
-                        STEP_DETAILS_FRAGMENT_TAG)
-                .addToBackStack(null)
-                .commit();
-
-        getSupportFragmentManager().executePendingTransactions();
-
+        if (getSupportFragmentManager().findFragmentByTag(STEP_DETAILS_FRAGMENT_TAG) == null) {
+            StepDetailsFragment stepDetailsFragment = StepDetailsFragment.newInstance(1,
+                    step.getVideoURL(), step.getId());
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_acivity_content, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG)
+                    .addToBackStack(null)
+                    .commit();
+        }
 //        stepDetailsFragment =
 //                (StepDetailsFragment) getSupportFragmentManager().findFragmentByTag(
 //                        STEP_DETAILS_FRAGMENT_TAG);
