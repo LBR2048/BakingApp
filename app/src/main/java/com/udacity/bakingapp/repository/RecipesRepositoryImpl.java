@@ -713,6 +713,19 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     }
 
     @Override
+    public void loadRecipe(LoadRecipeCallback loadRecipeCallback, int recipeId) {
+        Gson gson = new Gson();
+        Type recipeType = new TypeToken<ArrayList<Recipe>>() {}.getType();
+        List<Recipe> recipes = gson.fromJson(mData, recipeType);
+
+        Recipe recipe = findRecipeById(recipeId, recipes);
+
+        if (recipe != null) {
+            loadRecipeCallback.onRecipeLoaded(recipe);
+        }
+    }
+
+    @Override
     public void loadSteps(LoadStepsCallback loadStepsCallback, int recipeId) {
         Gson gson = new Gson();
         Type recipeType = new TypeToken<ArrayList<Recipe>>() {}.getType();

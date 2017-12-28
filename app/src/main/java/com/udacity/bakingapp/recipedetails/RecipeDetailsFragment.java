@@ -9,7 +9,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -27,11 +26,12 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnDetailsFragmentInteraction}
  * interface.
  */
-public class RecipeDetailsFragment extends Fragment implements RecipeDetailsView {
+public class RecipeDetailsFragment extends Fragment implements RecipeDetailsContract.View {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String RECYCLER_VIEW_STATE = "recycler_view_state";
+    private static final String ARG_RECIPE_ID = "arg_recipe_id";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnDetailsFragmentInteraction mListener;
@@ -44,15 +44,18 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailsView
     private Bundle mBundleRecyclerViewState;
     private List<Step> mSteps;
     private List<Ingredient> mIngredients;
+    private RecipeDetailsPresenter mRecipeDetailsPresenter;
+    private int mRecipeId;
 
     public RecipeDetailsFragment() {
     }
 
     @SuppressWarnings("unused")
-    public static RecipeDetailsFragment newInstance(int columnCount) {
+    public static RecipeDetailsFragment newInstance(int columnCount, int recipeId) {
         RecipeDetailsFragment fragment = new RecipeDetailsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putInt(ARG_RECIPE_ID, recipeId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,10 +67,11 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailsView
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
         }
 
         // Instantiate presenter
-//        mRecipesPresenter = new RecipesPresenter(this);
+        mRecipeDetailsPresenter = new RecipeDetailsPresenter(this);
     }
 
     @Override
@@ -91,8 +95,8 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailsView
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_details, container, false);
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        android.view.View view = inflater.inflate(R.layout.fragment_details, container, false);
         mStepList = (RecyclerView) view.findViewById(R.id.step_list);
 //        mIngredientList = (RecyclerView) view.findViewById(R.id.ingredient_list);
         mIngredientText = (TextView) view.findViewById(R.id.ingredient_text);
@@ -107,6 +111,8 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailsView
 
         mStepsAdapter = new StepsAdapter(new ArrayList<Step>(), mListener);
         mStepList.setAdapter(mStepsAdapter);
+
+        mRecipeDetailsPresenter.getRecipeDetails(mRecipeId);
 
 //        mIngredientsAdapter = new IngredientsAdapter(new ArrayList<Ingredient>(), mListener);
 //        mIngredientList.setAdapter(mIngredientsAdapter);

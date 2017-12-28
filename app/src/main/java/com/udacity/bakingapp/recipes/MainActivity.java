@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRecipeClicked(Recipe recipe) {
-        mRecipeDetailsFragment = RecipeDetailsFragment.newInstance(1);
+        mRecipeDetailsFragment = RecipeDetailsFragment.newInstance(1, recipe.getId());
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_acivity_content, mRecipeDetailsFragment, STEPS_FRAGMENT_TAG)
@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity
 //        stepsFragment =
 //                (RecipeDetailsFragment) getSupportFragmentManager().findFragmentByTag(
 //                        STEPS_FRAGMENT_TAG);
-        mRecipeDetailsFragment.showIngredients(recipe.getIngredients());
-        mRecipeDetailsFragment.showSteps(recipe.getSteps());
     }
 
     @Override

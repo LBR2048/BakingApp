@@ -18,12 +18,21 @@ public interface RecipesRepository {
         void onDataNotAvailable();
     }
 
+    interface LoadRecipeCallback {
+
+        void onRecipeLoaded(Recipe recipe);
+
+        void onDataNotAvailable();
+    }
+
     interface LoadStepsCallback {
 
         void onStepsLoaded(List<Step> steps);
     }
 
     void loadRecipes(LoadRecipesCallback loadRecipesCallback);
+
+    void loadRecipe(LoadRecipeCallback loadRecipeCallback, int recipeId);
 
     void loadSteps(LoadStepsCallback loadStepsCallback, int recipeId);
 }
