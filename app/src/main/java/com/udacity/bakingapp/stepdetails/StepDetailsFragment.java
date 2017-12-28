@@ -6,12 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Step;
-import com.udacity.bakingapp.recipes.presenter.RecipesPresenterImpl;
 import com.udacity.bakingapp.recipedetails.StepsAdapter;
+import com.udacity.bakingapp.recipes.presenter.RecipesPresenterImpl;
 
 /**
  * A fragment representing a list of Items.
@@ -72,6 +74,8 @@ public class StepDetailsFragment extends Fragment implements StepsDetailsView {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_step_details, container, false);
         mDescriptionView = (TextView) view.findViewById(R.id.step_description);
+        final Button previousButton = (Button) view.findViewById(R.id.previous_button);
+        Button nextButton  = (Button) view.findViewById(R.id.next_button);
 
         if (getChildFragmentManager().findFragmentByTag(VIDEO_FRAGMENT_TAG) == null) {
             VideoFragment videoFragment = VideoFragment.newInstance(mVideoUrl);
@@ -80,6 +84,22 @@ public class StepDetailsFragment extends Fragment implements StepsDetailsView {
                     .replace(R.id.videoContainerLayout, videoFragment, VIDEO_FRAGMENT_TAG)
                     .commit();
         }
+
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "P", Toast.LENGTH_SHORT).show();
+                mListener.previousStep();
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "N", Toast.LENGTH_SHORT).show();
+                mListener.nextStep();
+            }
+        });
 
 //        mPlayerView.requestFocus();
 
@@ -118,8 +138,7 @@ public class StepDetailsFragment extends Fragment implements StepsDetailsView {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void previousStep(Step step);
-        void nextStep(Step step);
+        void previousStep();
+        void nextStep();
     }
 }

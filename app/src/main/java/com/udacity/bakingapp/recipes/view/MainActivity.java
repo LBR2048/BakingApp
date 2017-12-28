@@ -96,12 +96,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void previousStep(Step step) {
+    public void previousStep() {
         Toast.makeText(this, "Previous step", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void nextStep(Step step) {
+    public void nextStep() {
         Toast.makeText(this, "Next step", Toast.LENGTH_SHORT).show();
     }
 }
