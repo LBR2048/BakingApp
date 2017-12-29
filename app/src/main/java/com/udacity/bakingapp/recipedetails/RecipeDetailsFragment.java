@@ -26,7 +26,8 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnDetailsFragmentInteraction}
  * interface.
  */
-public class RecipeDetailsFragment extends Fragment implements RecipeDetailsContract.View {
+public class RecipeDetailsFragment extends Fragment
+        implements StepsAdapter.OnStepsAdapterInteraction, RecipeDetailsContract.View {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -109,7 +110,7 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailsCont
             mStepList.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
 
-        mStepsAdapter = new StepsAdapter(new ArrayList<Step>(), mListener);
+        mStepsAdapter = new StepsAdapter(new ArrayList<Step>(), this);
         mStepList.setAdapter(mStepsAdapter);
 
         mRecipeDetailsPresenter.getRecipeDetails(mRecipeId);
@@ -151,6 +152,11 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailsCont
         mStepsAdapter.replaceData(steps);
     }
 
+    @Override
+    public void onStepClicked(Step step) {
+        mListener.onStepClicked(mRecipeId, step);
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -163,6 +169,6 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailsCont
      */
     public interface OnDetailsFragmentInteraction {
         void onIngredientClicked(Ingredient ingredient);
-        void onStepClicked(Step step);
+        void onStepClicked(int recipeId, Step step);
     }
 }

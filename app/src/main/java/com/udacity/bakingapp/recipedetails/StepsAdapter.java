@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.udacity.bakingapp.R;
+import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment.OnDetailsFragmentInteraction;
@@ -21,9 +22,9 @@ import java.util.List;
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> {
 
     private List<Step> mValues;
-    private final OnDetailsFragmentInteraction mListener;
+    private final OnStepsAdapterInteraction mListener;
 
-    public StepsAdapter(List<Step> items, OnDetailsFragmentInteraction listener) {
+    public StepsAdapter(List<Step> items, OnStepsAdapterInteraction listener) {
         mValues = items;
         mListener = listener;
     }
@@ -80,5 +81,9 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
         }
+    }
+
+    public interface OnStepsAdapterInteraction {
+        void onStepClicked(Step step);
     }
 }

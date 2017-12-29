@@ -71,12 +71,12 @@ public class MainActivity extends AppCompatActivity
 
     // TODO ao clicar no step, não mandamos as infos sobre o step, mas sim sobre a receita toda?
     @Override
-    public void onStepClicked(Step step) {
+    public void onStepClicked(int recipeId, Step step) {
         Toast.makeText(this, step.getShortDescription() + " clicked", Toast.LENGTH_SHORT).show();
 
         if (getSupportFragmentManager().findFragmentByTag(STEP_DETAILS_FRAGMENT_TAG) == null) {
             StepDetailsFragment stepDetailsFragment = StepDetailsFragment.newInstance(1,
-                    step.getVideoURL(), step.getId());
+                    step.getVideoURL(), recipeId);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.main_acivity_content, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG)
