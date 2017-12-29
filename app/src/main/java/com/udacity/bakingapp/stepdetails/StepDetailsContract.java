@@ -15,7 +15,7 @@ public interface StepDetailsContract {
 
     interface Presenter {
 
-        void getFirstStep(int recipeId);
+        void getStep(int recipeId, int stepId);
 
         void getPreviousStep();
 

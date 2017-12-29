@@ -82,11 +82,13 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.main_acivity_content, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG)
                     .addToBackStack(null)
                     .commit();
+            getSupportFragmentManager().executePendingTransactions();
         }
-//        stepDetailsFragment =
-//                (StepDetailsFragment) getSupportFragmentManager().findFragmentByTag(
-//                        STEP_DETAILS_FRAGMENT_TAG);
-//        stepDetailsFragment.showStep(step);
+
+        StepDetailsFragment stepDetailsFragment =
+                (StepDetailsFragment) getSupportFragmentManager().findFragmentByTag(
+                        STEP_DETAILS_FRAGMENT_TAG);
+        stepDetailsFragment.showStep(recipeId, step.getId());
     }
 
     @Override

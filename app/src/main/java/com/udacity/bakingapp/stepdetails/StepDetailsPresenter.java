@@ -24,18 +24,20 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
     }
 
     @Override
-    public void getFirstStep(int recipeId) {
+    public void getStep(int recipeId, final int stepId) {
         mRepository.loadSteps(new RecipesRepository.LoadStepsCallback() {
             @Override
             public void onStepsLoaded(List<Step> steps) {
-                Step step = steps.get(0);
-                mView.showDescription(step.getDescription());
+                Step step = findStepById(stepId, steps);
 
-                String videoURL = step.getVideoURL();
-                if (!videoURL.equals("")) {
-                    mView.showVideo(videoURL);
+                if (step != null) {
+                    mView.showDescription(step.getDescription());
+
+                    String videoURL = step.getVideoURL();
+                    if (!videoURL.equals("")) {
+                        mView.showVideo(videoURL);
+                    }
                 }
-//                mView.showStep(step);
             }
         }, recipeId);
 
@@ -49,5 +51,14 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
     @Override
     public void getNextStep() {
 //        mView.showStep(mSteps.get(++mCurrentStepPosition));
+    }
+
+    private Step findStepById(int stepId, List<Step> steps) {
+        for (Step step : steps) {
+            if (step.getId() == stepId) {
+                return step;
+            }
+        }
+        return null;
     }
 }

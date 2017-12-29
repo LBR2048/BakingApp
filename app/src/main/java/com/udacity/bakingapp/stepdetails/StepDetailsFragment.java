@@ -81,7 +81,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
 
         setupNavigationButtons();
 
-        mStepDetailsPresenter.getFirstStep(mRecipeId);
 //        mPlayerView.requestFocus();
 
 //        initializePlayer();
@@ -102,6 +101,10 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
         }
     }
     //endregion
+
+    public void showStep(int recipeId, int stepId) {
+        mStepDetailsPresenter.getStep(recipeId, stepId);
+    }
 
     @Override
     public void showDescription(String description) {
