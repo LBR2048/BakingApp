@@ -14,19 +14,18 @@ import java.util.List;
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Recipe} and makes a call to the
  * specified {@link RecipesFragment.OnRecipesFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
  */
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
 
     private List<Recipe> mValues;
     private final RecipesFragment.OnRecipesFragmentInteractionListener mListener;
 
-    public RecipesAdapter(List<Recipe> items, RecipesFragment.OnRecipesFragmentInteractionListener listener) {
+    RecipesAdapter(List<Recipe> items, RecipesFragment.OnRecipesFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
 
-    public void replaceData(List<Recipe> recipes) {
+    void replaceData(List<Recipe> recipes) {
         mValues = recipes;
         notifyDataSetChanged();
     }
@@ -51,7 +50,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
                     // fragment is attached to one) that an item has been selected.
                     mListener.onRecipeClicked(holder.mRecipe);
                 }
-//                Toast.makeText(v.getContext(), holder.mStep.toString() + " clicked", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -62,14 +60,14 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mName;
-        public Recipe mRecipe;
+        final View mView;
+        final TextView mName;
+        Recipe mRecipe;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             mView = view;
-            mName = (TextView) view.findViewById(R.id.name);
+            mName = view.findViewById(R.id.name);
         }
 
         @Override

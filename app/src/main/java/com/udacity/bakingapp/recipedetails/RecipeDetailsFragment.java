@@ -3,6 +3,7 @@ package com.udacity.bakingapp.recipedetails;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -29,20 +30,17 @@ import java.util.List;
 public class RecipeDetailsFragment extends Fragment
         implements StepsAdapter.OnStepsAdapterInteraction, RecipeDetailsContract.View {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String RECYCLER_VIEW_STATE = "recycler_view_state";
     private static final String ARG_RECIPE_ID = "arg_recipe_id";
-    // TODO: Customize parameters
+
     private int mColumnCount = 1;
     private OnDetailsFragmentInteraction mListener;
     private StepsAdapter mStepsAdapter;
     private IngredientsAdapter mIngredientsAdapter;
-    private RecipesPresenter mRecipesPresenter;
     private RecyclerView mStepList;
     private RecyclerView mIngredientList;
     private TextView mIngredientText;
-    private Bundle mBundleRecyclerViewState;
     private List<Step> mSteps;
     private List<Ingredient> mIngredients;
     private RecipeDetailsPresenter mRecipeDetailsPresenter;
@@ -76,7 +74,7 @@ public class RecipeDetailsFragment extends Fragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         Parcelable recyclerViewState = mStepList.getLayoutManager().onSaveInstanceState();
@@ -96,11 +94,11 @@ public class RecipeDetailsFragment extends Fragment
     }
 
     @Override
-    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public android.view.View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         android.view.View view = inflater.inflate(R.layout.fragment_details, container, false);
-        mStepList = (RecyclerView) view.findViewById(R.id.step_list);
+        mStepList = view.findViewById(R.id.step_list);
 //        mIngredientList = (RecyclerView) view.findViewById(R.id.ingredient_list);
-        mIngredientText = (TextView) view.findViewById(R.id.ingredient_text);
+        mIngredientText = view.findViewById(R.id.ingredient_text);
 
         // Set the adapter
         Context context = view.getContext();
@@ -157,16 +155,6 @@ public class RecipeDetailsFragment extends Fragment
         mListener.onStepClicked(mRecipeId, step);
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnDetailsFragmentInteraction {
         void onIngredientClicked(Ingredient ingredient);
         void onStepClicked(int recipeId, Step step);

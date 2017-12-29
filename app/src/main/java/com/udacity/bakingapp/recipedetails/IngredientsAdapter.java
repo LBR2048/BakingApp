@@ -28,11 +28,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         mListener = listener;
     }
 
-    public void replaceData(List<Ingredient> recipes) {
-        mValues = recipes;
-        notifyDataSetChanged();
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -54,7 +49,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
                     // fragment is attached to one) that an item has been selected.
                     mListener.onIngredientClicked(holder.mIngredient);
                 }
-//                Toast.makeText(v.getContext(), holder.mStep.toString() + " clicked", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -65,21 +59,26 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public Ingredient mIngredient;
+        final View mView;
+        final TextView mIdView;
+        final TextView mContentView;
+        Ingredient mIngredient;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.short_description);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView = view.findViewById(R.id.short_description);
+            mContentView = view.findViewById(R.id.content);
         }
 
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
         }
+    }
+
+    public void replaceData(List<Ingredient> ingredients) {
+        mValues = ingredients;
+        notifyDataSetChanged();
     }
 }

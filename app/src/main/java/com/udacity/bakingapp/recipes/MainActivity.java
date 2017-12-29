@@ -2,7 +2,6 @@ package com.udacity.bakingapp.recipes;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment;
@@ -39,15 +38,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-//        getSupportFragmentManager().putFragment(outState, RECIPES_FRAGMENT_TAG, mRecipesFragment);
-
-//        if (mRecipeDetailsFragment != null) getSupportFragmentManager().putFragment(outState, STEPS_FRAGMENT_TAG, mRecipeDetailsFragment);
-    }
-
-    @Override
     public void onRecipeClicked(Recipe recipe) {
         if (getSupportFragmentManager().findFragmentByTag(STEPS_FRAGMENT_TAG) == null) {
             RecipeDetailsFragment recipeDetailsFragment = RecipeDetailsFragment.newInstance(1,
@@ -58,9 +48,6 @@ public class MainActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
         }
-//        stepsFragment =
-//                (RecipeDetailsFragment) getSupportFragmentManager().findFragmentByTag(
-//                        STEPS_FRAGMENT_TAG);
     }
 
     @Override
@@ -68,11 +55,8 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    // TODO ao clicar no step, não mandamos as infos sobre o step, mas sim sobre a receita toda?
     @Override
     public void onStepClicked(int recipeId, Step step) {
-        Toast.makeText(this, step.getShortDescription() + " clicked", Toast.LENGTH_SHORT).show();
-
         if (getSupportFragmentManager().findFragmentByTag(STEP_DETAILS_FRAGMENT_TAG) == null) {
             StepDetailsFragment stepDetailsFragment = StepDetailsFragment.newInstance(1,
                     recipeId);

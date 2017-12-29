@@ -3,6 +3,7 @@ package com.udacity.bakingapp.recipes;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -59,10 +60,10 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
     }
 
     @Override
-    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public android.view.View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         android.view.View view = inflater.inflate(R.layout.fragment_recipes, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_list);
+        mRecyclerView = view.findViewById(R.id.recipe_list);
 
         // Set the adapter
         Context context = view.getContext();
@@ -80,7 +81,7 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         Parcelable recyclerViewState = mRecyclerView.getLayoutManager().onSaveInstanceState();
@@ -119,16 +120,6 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
         mRecipesAdapter.replaceData(recipes);
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnRecipesFragmentInteractionListener {
         void onRecipeClicked(Recipe recipe);
     }

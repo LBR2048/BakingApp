@@ -29,11 +29,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         mListener = listener;
     }
 
-    public void replaceData(List<Step> steps) {
-        mValues = steps;
-        notifyDataSetChanged();
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -81,6 +76,11 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
         }
+    }
+
+    public void replaceData(List<Step> steps) {
+        mValues = steps;
+        notifyDataSetChanged();
     }
 
     public interface OnStepsAdapterInteraction {

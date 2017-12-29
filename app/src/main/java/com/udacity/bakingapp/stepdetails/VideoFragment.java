@@ -3,6 +3,7 @@ package com.udacity.bakingapp.stepdetails;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -74,16 +75,10 @@ public class VideoFragment extends Fragment implements Player.EventListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_video, container, false);
-        mPlayerView = (SimpleExoPlayerView) view.findViewById(R.id.step_video_player);
-//        mPlayerView.requestFocus();
-
-//        initializePlayer();
-
-        // Load data
-//        mRecipesPresenter.loadRecipes();
+        mPlayerView = view.findViewById(R.id.step_video_player);
         return view;
     }
 

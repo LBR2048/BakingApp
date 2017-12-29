@@ -10,8 +10,8 @@ import com.udacity.bakingapp.repository.RecipesRepositoryImpl;
 
 public class RecipeDetailsPresenter implements RecipeDetailsContract.Presenter {
 
-    private RecipeDetailsContract.View mView;
-    private RecipesRepository mRepository;
+    private final RecipeDetailsContract.View mView;
+    private final RecipesRepository mRepository;
 
     public RecipeDetailsPresenter(RecipeDetailsContract.View view) {
         mView = view;
