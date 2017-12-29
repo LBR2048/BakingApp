@@ -79,9 +79,9 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         android.view.View view = inflater.inflate(R.layout.fragment_step_details, container, false);
-        mDescriptionView = (TextView) view.findViewById(R.id.step_description);
-        mPreviousButton = (Button) view.findViewById(R.id.previous_button);
-        mNextButton = (Button) view.findViewById(R.id.next_button);
+        mDescriptionView = view.findViewById(R.id.step_description);
+        mPreviousButton = view.findViewById(R.id.previous_button);
+        mNextButton = view.findViewById(R.id.next_button);
 
         setupNavigationButtons();
 
