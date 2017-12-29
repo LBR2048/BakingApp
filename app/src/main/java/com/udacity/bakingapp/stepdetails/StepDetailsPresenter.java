@@ -29,7 +29,13 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
             @Override
             public void onStepsLoaded(List<Step> steps) {
                 Step step = steps.get(0);
-                mView.showStep(step);
+                mView.showDescription(step.getDescription());
+
+                String videoURL = step.getVideoURL();
+                if (!videoURL.equals("")) {
+                    mView.showVideo(videoURL);
+                }
+//                mView.showStep(step);
             }
         }, recipeId);
 
@@ -37,11 +43,11 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
 
     @Override
     public void getPreviousStep() {
-        mView.showStep(mSteps.get(--mCurrentStepPosition));
+//        mView.showStep(mSteps.get(--mCurrentStepPosition));
     }
 
     @Override
     public void getNextStep() {
-        mView.showStep(mSteps.get(++mCurrentStepPosition));
+//        mView.showStep(mSteps.get(++mCurrentStepPosition));
     }
 }

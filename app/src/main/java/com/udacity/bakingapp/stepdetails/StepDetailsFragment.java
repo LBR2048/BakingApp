@@ -108,15 +108,18 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     //endregion
 
     @Override
-    public void showStep(Step step) {
-        mDescriptionView.setText(step.getDescription());
-
-        showVideoFragment();
+    public void showDescription(String description) {
+        mDescriptionView.setText(description);
     }
 
-    private void showVideoFragment() {
+    @Override
+    public void showVideo(String videoUrl) {
+        showVideoFragment(videoUrl);
+    }
+
+    private void showVideoFragment(String videoUrl) {
         if (getChildFragmentManager().findFragmentByTag(VIDEO_FRAGMENT_TAG) == null) {
-            VideoFragment videoFragment = VideoFragment.newInstance(mVideoUrl);
+            VideoFragment videoFragment = VideoFragment.newInstance(videoUrl);
             getChildFragmentManager()
                     .beginTransaction()
                     .replace(R.id.videoContainerLayout, videoFragment, VIDEO_FRAGMENT_TAG)
