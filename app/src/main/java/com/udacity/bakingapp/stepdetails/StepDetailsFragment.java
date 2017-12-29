@@ -123,23 +123,26 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
                     .beginTransaction()
                     .replace(R.id.videoContainerLayout, videoFragment, VIDEO_FRAGMENT_TAG)
                     .commit();
+            getChildFragmentManager().executePendingTransactions();
         }
+
+        VideoFragment videoFragment = (VideoFragment) getChildFragmentManager().findFragmentByTag(
+                VIDEO_FRAGMENT_TAG);
+        videoFragment.playVideo(videoUrl);
     }
 
     private void setupNavigationButtons() {
         mPreviousButton.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
             public void onClick(android.view.View v) {
-                Toast.makeText(getContext(), "P", Toast.LENGTH_SHORT).show();
-                mListener.previousStep();
+                mStepDetailsPresenter.getPreviousStep();
             }
         });
 
         mNextButton.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
             public void onClick(android.view.View v) {
-                Toast.makeText(getContext(), "N", Toast.LENGTH_SHORT).show();
-                mListener.nextStep();
+                mStepDetailsPresenter.getNextStep();
             }
         });
     }

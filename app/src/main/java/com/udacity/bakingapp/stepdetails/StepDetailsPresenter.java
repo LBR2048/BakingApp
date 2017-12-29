@@ -13,7 +13,7 @@ import java.util.List;
 public class StepDetailsPresenter implements StepDetailsContract.Presenter {
 
     private List<Step> mSteps;
-    private int mCurrentStepPosition;
+    private int mCurrentStepId;
 
     private StepDetailsContract.View mView;
     private RecipesRepository mRepository;
@@ -28,9 +28,13 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
         mRepository.loadSteps(new RecipesRepository.LoadStepsCallback() {
             @Override
             public void onStepsLoaded(List<Step> steps) {
+                mSteps = steps;
+
                 Step step = findStepById(stepId, steps);
 
                 if (step != null) {
+                    mCurrentStepId = stepId;
+
                     mView.showDescription(step.getDescription());
 
                     String videoURL = step.getVideoURL();
@@ -40,17 +44,20 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
                 }
             }
         }, recipeId);
-
     }
 
     @Override
     public void getPreviousStep() {
-//        mView.showStep(mSteps.get(--mCurrentStepPosition));
+        Step step = mSteps.get(--mCurrentStepId);
+        mView.showDescription(step.getDescription());
+        mView.showVideo(step.getVideoURL());
     }
 
     @Override
     public void getNextStep() {
-//        mView.showStep(mSteps.get(++mCurrentStepPosition));
+        Step step = mSteps.get(++mCurrentStepId);
+        mView.showDescription(step.getDescription());
+        mView.showVideo(step.getVideoURL());
     }
 
     private Step findStepById(int stepId, List<Step> steps) {
@@ -60,5 +67,14 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
             }
         }
         return null;
+    }
+
+    private int findStepPositionById(int stepId, List<Step> steps) {
+        for (int i = 0; i < steps.size(); i++) {
+            if (steps.get(i).getId() == stepId) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

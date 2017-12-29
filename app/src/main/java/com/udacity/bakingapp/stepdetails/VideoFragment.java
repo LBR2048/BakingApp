@@ -130,8 +130,10 @@ public class VideoFragment extends Fragment implements Player.EventListener {
 
         mPlayer.setPlayWhenReady(mPlayWhenReady);
         mPlayer.seekTo(mCurrentWindow, mPlaybackPosition);
+    }
 
-        Uri uri = Uri.parse(mVideoUrl);
+    public void playVideo(String videoUrl) {
+        Uri uri = Uri.parse(videoUrl);
         MediaSource mediaSource = buildMediaSource(uri);
         mPlayer.prepare(mediaSource, true, false);
     }

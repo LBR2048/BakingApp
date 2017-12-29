@@ -13,8 +13,7 @@ import com.udacity.bakingapp.stepdetails.StepDetailsFragment;
 
 public class MainActivity extends AppCompatActivity
         implements RecipesFragment.OnRecipesFragmentInteractionListener,
-        RecipeDetailsFragment.OnDetailsFragmentInteraction,
-        StepDetailsFragment.OnListFragmentInteractionListener {
+        RecipeDetailsFragment.OnDetailsFragmentInteraction {
 
     private static final String RECIPES_FRAGMENT_TAG = "recipes_fragment_tag";
     private static final String STEPS_FRAGMENT_TAG = "steps_fragment_tag";
@@ -89,15 +88,5 @@ public class MainActivity extends AppCompatActivity
                 (StepDetailsFragment) getSupportFragmentManager().findFragmentByTag(
                         STEP_DETAILS_FRAGMENT_TAG);
         stepDetailsFragment.showStep(recipeId, step.getId());
-    }
-
-    @Override
-    public void previousStep() {
-        Toast.makeText(this, "Previous step", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void nextStep() {
-        Toast.makeText(this, "Next step", Toast.LENGTH_SHORT).show();
     }
 }
