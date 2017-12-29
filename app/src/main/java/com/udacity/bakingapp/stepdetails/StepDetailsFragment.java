@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
@@ -88,8 +89,8 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnIngredientsFragmentInteractionListener");
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnIngredientsFragmentInteractionListener");
         }
     }
     //endregion
@@ -117,6 +118,16 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
         VideoFragment videoFragment = (VideoFragment) getChildFragmentManager().findFragmentByTag(
                 VIDEO_FRAGMENT_TAG);
         videoFragment.playVideo(videoUrl);
+    }
+
+    @Override
+    public void setPreviousButtonVisibility(boolean visibility) {
+        mPreviousButton.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    @Override
+    public void setNextButtonVisibility(boolean visibility) {
+        mNextButton.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
     }
 
     private void setupNavigationButtons() {

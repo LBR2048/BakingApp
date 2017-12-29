@@ -41,6 +41,8 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
                     if (!videoURL.equals("")) {
                         mView.showVideo(videoURL);
                     }
+
+                    setNavigationButtonsVisibility();
                 }
             }
         }, recipeId);
@@ -51,6 +53,7 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
         Step step = mSteps.get(--mCurrentStepId);
         mView.showDescription(step.getDescription());
         mView.showVideo(step.getVideoURL());
+        setNavigationButtonsVisibility();
     }
 
     @Override
@@ -58,6 +61,20 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
         Step step = mSteps.get(++mCurrentStepId);
         mView.showDescription(step.getDescription());
         mView.showVideo(step.getVideoURL());
+        setNavigationButtonsVisibility();
+    }
+
+    private void setNavigationButtonsVisibility() {
+        if (mCurrentStepId == 0) {
+            mView.setPreviousButtonVisibility(false);
+            mView.setNextButtonVisibility(true);
+        } else if (mCurrentStepId + 1 == mSteps.size()) {
+            mView.setPreviousButtonVisibility(true);
+            mView.setNextButtonVisibility(false);
+        } else {
+            mView.setPreviousButtonVisibility(true);
+            mView.setNextButtonVisibility(true);
+        }
     }
 
     private Step findStepById(int stepId, List<Step> steps) {

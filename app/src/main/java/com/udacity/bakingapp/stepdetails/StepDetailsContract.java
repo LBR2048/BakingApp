@@ -11,6 +11,10 @@ public interface StepDetailsContract {
         void showDescription(String description);
 
         void showVideo(String videoUrl);
+
+        void setPreviousButtonVisibility(boolean visibility);
+
+        void setNextButtonVisibility(boolean visibility);
     }
 
     interface Presenter {
