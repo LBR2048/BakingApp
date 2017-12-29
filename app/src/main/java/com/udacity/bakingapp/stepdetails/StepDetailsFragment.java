@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.udacity.bakingapp.R;
-import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.recipedetails.StepsAdapter;
 import com.udacity.bakingapp.recipes.RecipesPresenter;
 
@@ -34,7 +33,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     private RecipesPresenter mRecipesPresenter;
     private TextView mDescriptionView;
     private int mCurrentWindow;
-    private String mVideoUrl;
     private Button mPreviousButton;
     private Button mNextButton;
     private StepDetailsPresenter mStepDetailsPresenter;
@@ -48,11 +46,10 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     }
 
     @SuppressWarnings("unused")
-    public static StepDetailsFragment newInstance(int columnCount, String videoUrl, int recipeId) {
+    public static StepDetailsFragment newInstance(int columnCount, int recipeId) {
         StepDetailsFragment fragment = new StepDetailsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
-        args.putString(ARG_VIDEO_URL, videoUrl);
         args.putInt(ARG_RECIPE_ID, recipeId);
         fragment.setArguments(args);
         return fragment;
@@ -67,7 +64,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-            mVideoUrl = getArguments().getString(ARG_VIDEO_URL);
             mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
         }
 

@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity
 
         if (getSupportFragmentManager().findFragmentByTag(STEP_DETAILS_FRAGMENT_TAG) == null) {
             StepDetailsFragment stepDetailsFragment = StepDetailsFragment.newInstance(1,
-                    step.getVideoURL(), recipeId);
+                    recipeId);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.main_acivity_content, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG)
