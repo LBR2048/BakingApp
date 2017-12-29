@@ -121,6 +121,18 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     }
 
     @Override
+    public void hideVideo() {
+        Fragment videoFragment = getChildFragmentManager().findFragmentByTag(VIDEO_FRAGMENT_TAG);
+        if (videoFragment != null) {
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .remove(videoFragment)
+                    .commit();
+            getChildFragmentManager().executePendingTransactions();
+        }
+    }
+
+    @Override
     public void setPreviousButtonVisibility(boolean visibility) {
         mPreviousButton.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
     }
