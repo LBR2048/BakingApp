@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".BakingAppWidget">
+        <receiver android:name=".widget.BakingAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -28,6 +28,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/baking_app_widget_info" />
         </receiver>
+
+        <service android:name=".widget.BakingService" />
     </application>
 
 </manifest>
