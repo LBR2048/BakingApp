@@ -23,6 +23,7 @@ public class RecipeDetailsPresenter implements RecipeDetailsContract.Presenter {
         mRepository.loadRecipe(new RecipesRepository.LoadRecipeCallback() {
             @Override
             public void onRecipeLoaded(Recipe recipe) {
+                mView.showRecipeName(recipe.getName());
                 mView.showIngredients(recipe.getIngredients());
                 mView.showSteps(recipe.getSteps());
             }

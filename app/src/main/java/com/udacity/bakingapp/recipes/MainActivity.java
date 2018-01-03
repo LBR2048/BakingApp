@@ -1,13 +1,16 @@
 package com.udacity.bakingapp.recipes;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 
 import com.udacity.bakingapp.R;
-import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment;
 import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.model.Step;
+import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment;
 import com.udacity.bakingapp.stepdetails.StepDetailsFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -23,14 +26,30 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setTitle();
+
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+
         RecipesFragment recipesFragment;
-        if (getSupportFragmentManager().findFragmentByTag(RECIPES_FRAGMENT_TAG) == null) {
+        if (fragmentManager.findFragmentByTag(RECIPES_FRAGMENT_TAG) == null) {
             recipesFragment = RecipesFragment.newInstance(1);
-            getSupportFragmentManager()
+            fragmentManager
                     .beginTransaction()
                     .replace(R.id.main_acivity_content, recipesFragment, RECIPES_FRAGMENT_TAG)
                     .commit();
         }
+
+        fragmentManager.addOnBackStackChangedListener(
+                new FragmentManager.OnBackStackChangedListener() {
+                    @Override
+                    public void onBackStackChanged() {
+                        Fragment fragment = fragmentManager.findFragmentById(
+                                R.id.main_acivity_content);
+                        if (RECIPES_FRAGMENT_TAG.equals(fragment.getTag())) {
+                            setTitle();
+                        }
+                    }
+                });
 //        } else {
 //            recipesFragment = (RecipesFragment) getSupportFragmentManager().findFragmentByTag(
 //                    RECIPES_FRAGMENT_TAG);
@@ -72,5 +91,12 @@ public class MainActivity extends AppCompatActivity
                 (StepDetailsFragment) getSupportFragmentManager().findFragmentByTag(
                         STEP_DETAILS_FRAGMENT_TAG);
         stepDetailsFragment.showStep(recipeId, step.getId());
+    }
+
+    private void setTitle() {
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setTitle("Recipes");
+        }
     }
 }

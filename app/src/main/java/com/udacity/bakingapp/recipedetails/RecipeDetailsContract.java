@@ -13,6 +13,8 @@ public interface RecipeDetailsContract {
 
     interface View {
 
+        void showRecipeName(String title);
+
         void showIngredients(List<Ingredient> ingredients);
 
         void showSteps(List<Step> steps);
