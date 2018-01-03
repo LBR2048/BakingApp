@@ -114,10 +114,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
                     .commit();
             getChildFragmentManager().executePendingTransactions();
         }
-
-        VideoFragment videoFragment = (VideoFragment) getChildFragmentManager().findFragmentByTag(
-                VIDEO_FRAGMENT_TAG);
-        videoFragment.playVideo(videoUrl);
     }
 
     @Override

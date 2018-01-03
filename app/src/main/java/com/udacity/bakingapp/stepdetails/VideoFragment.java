@@ -69,9 +69,6 @@ public class VideoFragment extends Fragment implements Player.EventListener {
         if (getArguments() != null) {
             mVideoUrl = getArguments().getString(ARG_VIDEO_URL);
         }
-
-        // Instantiate presenter
-//        mRecipesPresenter = new RecipesPresenter(this);
     }
 
     @Override
@@ -97,6 +94,7 @@ public class VideoFragment extends Fragment implements Player.EventListener {
         if ((Util.SDK_INT <= 23 || mPlayer == null)) {
             initializePlayer();
         }
+        mPlayer.seekTo(mCurrentWindow, mPlaybackPosition);
     }
 
     @Override
@@ -124,13 +122,10 @@ public class VideoFragment extends Fragment implements Player.EventListener {
         mPlayerView.setPlayer(mPlayer);
 
         mPlayer.setPlayWhenReady(mPlayWhenReady);
-        mPlayer.seekTo(mCurrentWindow, mPlaybackPosition);
-    }
 
-    public void playVideo(String videoUrl) {
-        Uri uri = Uri.parse(videoUrl);
+        Uri uri = Uri.parse(mVideoUrl);
         MediaSource mediaSource = buildMediaSource(uri);
-        mPlayer.prepare(mediaSource, true, false);
+        mPlayer.prepare(mediaSource);
     }
 
     private void releasePlayer() {
