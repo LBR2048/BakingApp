@@ -78,19 +78,13 @@ public class MainActivity extends AppCompatActivity
     public void onStepClicked(int recipeId, Step step) {
         if (getSupportFragmentManager().findFragmentByTag(STEP_DETAILS_FRAGMENT_TAG) == null) {
             StepDetailsFragment stepDetailsFragment = StepDetailsFragment.newInstance(1,
-                    recipeId);
+                    recipeId, step.getId());
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.main_acivity_content, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG)
                     .addToBackStack(null)
                     .commit();
-            getSupportFragmentManager().executePendingTransactions();
         }
-
-        StepDetailsFragment stepDetailsFragment =
-                (StepDetailsFragment) getSupportFragmentManager().findFragmentByTag(
-                        STEP_DETAILS_FRAGMENT_TAG);
-        stepDetailsFragment.showStep(recipeId, step.getId());
     }
 
     private void setTitle() {

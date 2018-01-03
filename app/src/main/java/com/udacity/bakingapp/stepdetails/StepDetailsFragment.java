@@ -21,6 +21,7 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String ARG_RECIPE_ID = "recipe-id";
+    private static final String ARG_STEP_ID = "step-id";
     private static final String VIDEO_FRAGMENT_TAG = "video-fragment-tag";
 
     private int mColumnCount = 1;
@@ -30,6 +31,7 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     private Button mNextButton;
     private StepDetailsPresenter mStepDetailsPresenter;
     private int mRecipeId;
+    private int mStepId;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -39,11 +41,12 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     }
 
     @SuppressWarnings("unused")
-    public static StepDetailsFragment newInstance(int columnCount, int recipeId) {
+    public static StepDetailsFragment newInstance(int columnCount, int recipeId, int stepId) {
         StepDetailsFragment fragment = new StepDetailsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         args.putInt(ARG_RECIPE_ID, recipeId);
+        args.putInt(ARG_STEP_ID, stepId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,6 +61,7 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
             mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
+            mStepId = getArguments().getInt(ARG_STEP_ID);
         }
 
         // Instantiate presenter
@@ -73,6 +77,9 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
         mNextButton = view.findViewById(R.id.next_button);
 
         setupNavigationButtons();
+
+        mStepDetailsPresenter.getStep(mRecipeId, mStepId);
+
 
 //        mPlayerView.requestFocus();
 
@@ -95,10 +102,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     }
     //endregion
 
-    public void showStep(int recipeId, int stepId) {
-        mStepDetailsPresenter.getStep(recipeId, stepId);
-    }
-
     @Override
     public void showDescription(String description) {
         mDescriptionView.setText(description);
@@ -112,7 +115,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
                     .beginTransaction()
                     .replace(R.id.videoContainerLayout, videoFragment, VIDEO_FRAGMENT_TAG)
                     .commit();
-            getChildFragmentManager().executePendingTransactions();
         }
     }
 
@@ -124,7 +126,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
                     .beginTransaction()
                     .remove(videoFragment)
                     .commit();
-            getChildFragmentManager().executePendingTransactions();
         }
     }
 
