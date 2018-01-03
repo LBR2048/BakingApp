@@ -2,11 +2,12 @@ package com.udacity.bakingapp.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.widget.Toast;
 
+import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.recipes.MainActivity;
 
@@ -44,6 +45,11 @@ public class WidgetConfigActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setTitle(R.string.widget_config_acivity_title);
+        }
 
         // When your configuration Activity first opens, set the Activity result to RESULT_CANCELED,
         // along with EXTRA_APPWIDGET_ID, as shown in step 5 above.

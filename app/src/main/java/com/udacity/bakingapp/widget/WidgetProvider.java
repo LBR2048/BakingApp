@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.udacity.bakingapp.R;
+import com.udacity.bakingapp.Utils;
 import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.recipes.MainActivity;
 
@@ -32,14 +33,8 @@ public class WidgetProvider extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.appwidget_ingredients, pendingIntent);
 
         // Show ingredients on the widget
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < ingredients.size(); i++) {
-            builder.append(ingredients.get(i).toString());
-            if (i != ingredients.size() - 1) {
-                builder.append(", \n");
-            }
-        }
-        views.setTextViewText(R.id.appwidget_ingredients, builder.toString());
+        String ingredientsString = Utils.formatIngredientsString(ingredients);
+        views.setTextViewText(R.id.appwidget_ingredients, ingredientsString);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
