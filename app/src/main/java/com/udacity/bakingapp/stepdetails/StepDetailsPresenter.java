@@ -34,9 +34,8 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
 
                 if (step != null) {
                     mCurrentStepId = stepId;
-
+                    mView.showStepTitle(step.getShortDescription());
                     mView.showDescription(step.getDescription());
-
                     String videoURL = step.getVideoURL();
                     showOrHideVideo(videoURL);
                     setNavigationButtonsVisibility();
@@ -48,6 +47,7 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
     @Override
     public void getPreviousStep() {
         Step step = mSteps.get(--mCurrentStepId);
+        mView.showStepTitle(step.getShortDescription());
         mView.showDescription(step.getDescription());
         showOrHideVideo(step.getVideoURL());
         setNavigationButtonsVisibility();
@@ -56,6 +56,7 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
     @Override
     public void getNextStep() {
         Step step = mSteps.get(++mCurrentStepId);
+        mView.showStepTitle(step.getShortDescription());
         mView.showDescription(step.getDescription());
         showOrHideVideo(step.getVideoURL());
         setNavigationButtonsVisibility();

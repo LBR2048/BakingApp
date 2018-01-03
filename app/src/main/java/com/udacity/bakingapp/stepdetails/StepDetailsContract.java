@@ -8,6 +8,8 @@ public interface StepDetailsContract {
 
     interface View {
 
+        void showStepTitle(String stepName);
+
         void showDescription(String description);
 
         void showVideo(String videoUrl);

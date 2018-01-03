@@ -3,6 +3,8 @@ package com.udacity.bakingapp.stepdetails;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,6 +103,14 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
         }
     }
     //endregion
+
+    @Override
+    public void showStepTitle(String stepName) {
+        ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setTitle(stepName);
+        }
+    }
 
     @Override
     public void showDescription(String description) {
