@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".widget.BakingAppWidget">
+        <receiver android:name=".widget.WidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -30,6 +30,12 @@
         </receiver>
 
         <service android:name=".widget.BakingService" />
+
+        <activity android:name=".widget.WidgetConfigActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
