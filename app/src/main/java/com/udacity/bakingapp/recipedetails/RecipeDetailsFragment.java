@@ -13,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.exoplayer2.util.Util;
 import com.udacity.bakingapp.R;
+import com.udacity.bakingapp.Utils;
 import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.recipes.RecipesPresenter;
@@ -141,7 +143,7 @@ public class RecipeDetailsFragment extends Fragment
     public void showIngredients(List<Ingredient> ingredients) {
         mIngredients = ingredients;
 //        mIngredientsAdapter.replaceData(ingredients);
-        mIngredientText.setText(ingredients.toString());
+        mIngredientText.setText(Utils.formatIngredientsString(ingredients));
     }
 
     @Override
