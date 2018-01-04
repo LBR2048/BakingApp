@@ -8,6 +8,8 @@ public interface StepDetailsContract {
 
     interface View {
 
+        void setStepId(int stepId);
+
         void showStepTitle(String stepName);
 
         void showDescription(String description);

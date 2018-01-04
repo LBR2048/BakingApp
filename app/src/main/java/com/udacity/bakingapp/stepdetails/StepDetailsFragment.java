@@ -74,6 +74,7 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         android.view.View view = inflater.inflate(R.layout.fragment_step_details, container, false);
+
         mDescriptionView = view.findViewById(R.id.step_description);
         mPreviousButton = view.findViewById(R.id.previous_button);
         mNextButton = view.findViewById(R.id.next_button);
@@ -82,13 +83,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
 
         mStepDetailsPresenter.getStep(mRecipeId, mStepId);
 
-
-//        mPlayerView.requestFocus();
-
-//        initializePlayer();
-
-        // Load data
-//        mRecipesPresenter.loadRecipes();
         return view;
     }
 
@@ -103,6 +97,18 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
         }
     }
     //endregion
+
+    public void showStep(int recipeId, int stepId) {
+        mRecipeId = recipeId;
+        mStepId = stepId;
+
+        mStepDetailsPresenter.getStep(mRecipeId, mStepId);
+    }
+
+    @Override
+    public void setStepId(int stepId) {
+        mStepId = stepId;
+    }
 
     @Override
     public void showStepTitle(String stepName) {
@@ -125,6 +131,10 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
                     .beginTransaction()
                     .replace(R.id.videoContainerLayout, videoFragment, VIDEO_FRAGMENT_TAG)
                     .commit();
+        } else {
+            VideoFragment videoFragment =
+                    (VideoFragment) getChildFragmentManager().findFragmentByTag(VIDEO_FRAGMENT_TAG);
+            videoFragment.playVideo(videoUrl);
         }
     }
 

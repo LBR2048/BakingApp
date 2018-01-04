@@ -128,6 +128,12 @@ public class VideoFragment extends Fragment implements Player.EventListener {
         mPlayer.prepare(mediaSource);
     }
 
+    public void playVideo(String videoUrl) {
+        mVideoUrl = videoUrl;
+
+        initializePlayer();
+    }
+
     private void releasePlayer() {
         if (mPlayer != null) {
             mPlaybackPosition = mPlayer.getCurrentPosition();
