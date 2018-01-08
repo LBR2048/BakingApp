@@ -20,11 +20,14 @@ public class MainActivity extends AppCompatActivity
     private static final String RECIPES_FRAGMENT_TAG = "recipes_fragment_tag";
     private static final String RECIPE_DETAILS_FRAGMENT_TAG = "recipe_details_fragment_tag";
     private static final String STEP_DETAILS_FRAGMENT_TAG = "step_details_tag";
+    private boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        determineTwoPane();
 
         setTitle();
 
@@ -79,16 +82,22 @@ public class MainActivity extends AppCompatActivity
                 (StepDetailsFragment) getSupportFragmentManager().findFragmentByTag(
                         STEP_DETAILS_FRAGMENT_TAG);
 
-        if (stepDetailsFragment == null) {
-            stepDetailsFragment =
-                    StepDetailsFragment.newInstance(1, recipeId, step.getId());
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_activity_master_pane, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG)
-                    .addToBackStack(null)
-                    .commit();
+
+        if (mTwoPane) {
+
         } else {
-            stepDetailsFragment.showStep(recipeId, step.getId());
+            if (stepDetailsFragment == null) {
+                stepDetailsFragment =
+                        StepDetailsFragment.newInstance(1, recipeId, step.getId());
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_activity_master_pane, stepDetailsFragment,
+                                STEP_DETAILS_FRAGMENT_TAG)
+                        .addToBackStack(null)
+                        .commit();
+            } else {
+                stepDetailsFragment.showStep(recipeId, step.getId());
+            }
         }
     }
 
@@ -97,5 +106,9 @@ public class MainActivity extends AppCompatActivity
         if (supportActionBar != null) {
             supportActionBar.setTitle("Recipes");
         }
+    }
+
+    private void determineTwoPane() {
+        mTwoPane = (findViewById(R.id.main_activity_detail_pane) != null);
     }
 }
