@@ -34,35 +34,12 @@ public class MainActivity extends AppCompatActivity
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (!mTwoPane) {
-            Fragment detailPaneFragment = getSupportFragmentManager().findFragmentById(
-                    R.id.main_activity_detail_pane);
-
-            if (detailPaneFragment != null) {
-                getSupportFragmentManager().beginTransaction().remove(detailPaneFragment).commit();
-                fragmentManager.executePendingTransactions();
-            }
+            removeDetailPaneFragment();
         }
 
-        RecipesFragment recipesFragment;
-        if (fragmentManager.findFragmentByTag(RECIPES_FRAGMENT_TAG) == null) {
-            recipesFragment = RecipesFragment.newInstance(1);
-            fragmentManager
-                    .beginTransaction()
-                    .replace(R.id.main_activity_master_pane, recipesFragment, RECIPES_FRAGMENT_TAG)
-                    .commit();
-        }
+        showRecipesFragment();
 
-        fragmentManager.addOnBackStackChangedListener(
-                new FragmentManager.OnBackStackChangedListener() {
-                    @Override
-                    public void onBackStackChanged() {
-                        Fragment fragment = fragmentManager.findFragmentById(
-                                R.id.main_activity_master_pane);
-                        if (RECIPES_FRAGMENT_TAG.equals(fragment.getTag())) {
-                            setTitle();
-                        }
-                    }
-                });
+        addOnBackStackChangedListener();
     }
 
     @Override
@@ -133,5 +110,45 @@ public class MainActivity extends AppCompatActivity
 
     private void determineTwoPane() {
         mTwoPane = (findViewById(R.id.main_activity_detail_pane) != null);
+    }
+
+    private void addOnBackStackChangedListener() {
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+
+        fragmentManager.addOnBackStackChangedListener(
+                new FragmentManager.OnBackStackChangedListener() {
+                    @Override
+                    public void onBackStackChanged() {
+                        Fragment fragment = fragmentManager.findFragmentById(
+                                R.id.main_activity_master_pane);
+                        if (RECIPES_FRAGMENT_TAG.equals(fragment.getTag())) {
+                            setTitle();
+                        }
+                    }
+                });
+    }
+
+    private void showRecipesFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        if (fragmentManager.findFragmentByTag(RECIPES_FRAGMENT_TAG) == null) {
+            RecipesFragment recipesFragment = RecipesFragment.newInstance(1);
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_activity_master_pane, recipesFragment, RECIPES_FRAGMENT_TAG)
+                    .commit();
+        }
+    }
+
+    private void removeDetailPaneFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        Fragment detailPaneFragment = fragmentManager.findFragmentById(
+                R.id.main_activity_detail_pane);
+
+        if (detailPaneFragment != null) {
+            fragmentManager.beginTransaction().remove(detailPaneFragment).commit();
+            fragmentManager.executePendingTransactions();
+        }
     }
 }
