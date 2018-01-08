@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity
         RecipeDetailsFragment.OnDetailsFragmentInteraction {
 
     private static final String RECIPES_FRAGMENT_TAG = "recipes_fragment_tag";
-    private static final String STEPS_FRAGMENT_TAG = "steps_fragment_tag";
+    private static final String RECIPE_DETAILS_FRAGMENT_TAG = "recipe_details_fragment_tag";
     private static final String STEP_DETAILS_FRAGMENT_TAG = "step_details_tag";
 
     @Override
@@ -50,20 +50,19 @@ public class MainActivity extends AppCompatActivity
                         }
                     }
                 });
-//        } else {
-//            recipesFragment = (RecipesFragment) getSupportFragmentManager().findFragmentByTag(
-//                    RECIPES_FRAGMENT_TAG);
-//        }
     }
 
     @Override
     public void onRecipeClicked(Recipe recipe) {
-        if (getSupportFragmentManager().findFragmentByTag(STEPS_FRAGMENT_TAG) == null) {
-            RecipeDetailsFragment recipeDetailsFragment = RecipeDetailsFragment.newInstance(1,
-                    recipe.getId());
+        RecipeDetailsFragment recipeDetailsFragment =
+                (RecipeDetailsFragment) getSupportFragmentManager().findFragmentByTag(
+                        RECIPE_DETAILS_FRAGMENT_TAG);
+
+        if (recipeDetailsFragment == null) {
+            recipeDetailsFragment = RecipeDetailsFragment.newInstance(1, recipe.getId());
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.main_activity_master_pane, recipeDetailsFragment, STEPS_FRAGMENT_TAG)
+                    .replace(R.id.main_activity_master_pane, recipeDetailsFragment, RECIPE_DETAILS_FRAGMENT_TAG)
                     .addToBackStack(null)
                     .commit();
         }
@@ -76,8 +75,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onStepClicked(int recipeId, Step step) {
-        if (getSupportFragmentManager().findFragmentByTag(STEP_DETAILS_FRAGMENT_TAG) == null) {
-            StepDetailsFragment stepDetailsFragment =
+        StepDetailsFragment stepDetailsFragment =
+                (StepDetailsFragment) getSupportFragmentManager().findFragmentByTag(
+                        STEP_DETAILS_FRAGMENT_TAG);
+
+        if (stepDetailsFragment == null) {
+            stepDetailsFragment =
                     StepDetailsFragment.newInstance(1, recipeId, step.getId());
             getSupportFragmentManager()
                     .beginTransaction()
@@ -85,9 +88,6 @@ public class MainActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
         } else {
-            StepDetailsFragment stepDetailsFragment =
-                    (StepDetailsFragment) getSupportFragmentManager().findFragmentByTag(
-                            STEP_DETAILS_FRAGMENT_TAG);
             stepDetailsFragment.showStep(recipeId, step.getId());
         }
     }
