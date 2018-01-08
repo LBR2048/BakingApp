@@ -33,6 +33,16 @@ public class MainActivity extends AppCompatActivity
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
+        if (!mTwoPane) {
+            Fragment detailPaneFragment = getSupportFragmentManager().findFragmentById(
+                    R.id.main_activity_detail_pane);
+
+            if (detailPaneFragment != null) {
+                getSupportFragmentManager().beginTransaction().remove(detailPaneFragment).commit();
+                fragmentManager.executePendingTransactions();
+            }
+        }
+
         RecipesFragment recipesFragment;
         if (fragmentManager.findFragmentByTag(RECIPES_FRAGMENT_TAG) == null) {
             recipesFragment = RecipesFragment.newInstance(1);
@@ -82,9 +92,22 @@ public class MainActivity extends AppCompatActivity
                 (StepDetailsFragment) getSupportFragmentManager().findFragmentByTag(
                         STEP_DETAILS_FRAGMENT_TAG);
 
+        Fragment detailPaneFragment = getSupportFragmentManager().findFragmentById(
+                R.id.main_activity_detail_pane);
 
         if (mTwoPane) {
-
+            if (detailPaneFragment != null && detailPaneFragment instanceof StepDetailsFragment) {
+                stepDetailsFragment = (StepDetailsFragment) detailPaneFragment;
+                stepDetailsFragment.showStep(recipeId, step.getId());
+            } else {
+                stepDetailsFragment =
+                        StepDetailsFragment.newInstance(1, recipeId, step.getId());
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_activity_detail_pane, stepDetailsFragment,
+                                STEP_DETAILS_FRAGMENT_TAG)
+                        .commit();
+            }
         } else {
             if (stepDetailsFragment == null) {
                 stepDetailsFragment =
