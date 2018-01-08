@@ -3,23 +3,21 @@ package com.udacity.bakingapp.recipes;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Ingredient;
-import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment;
 import com.udacity.bakingapp.stepdetails.StepDetailsFragment;
 
-public class MainActivity extends AppCompatActivity
-        implements RecipesFragment.OnRecipesFragmentInteractionListener,
-        RecipeDetailsFragment.OnDetailsFragmentInteraction {
+public class DualPaneActivity extends AppCompatActivity
+        implements RecipeDetailsFragment.OnDetailsFragmentInteraction {
 
-    private static final String RECIPES_FRAGMENT_TAG = "recipes_fragment_tag";
+    public static final String EXTRA_RECIPE_ID = "recipeId";
     private static final String RECIPE_DETAILS_FRAGMENT_TAG = "recipe_details_fragment_tag";
     private static final String STEP_DETAILS_FRAGMENT_TAG = "step_details_tag";
+
     private boolean mTwoPane;
 
     @Override
@@ -27,34 +25,14 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        int recipeId = getIntent().getIntExtra(EXTRA_RECIPE_ID, -1);
+
         determineTwoPane();
 
-        setTitle();
-
-        final FragmentManager fragmentManager = getSupportFragmentManager();
+        showRecipeDetailsFragment(recipeId);
 
         if (!mTwoPane) {
             removeDetailPaneFragment();
-        }
-
-        showRecipesFragment();
-
-        addOnBackStackChangedListener();
-    }
-
-    @Override
-    public void onRecipeClicked(Recipe recipe) {
-        RecipeDetailsFragment recipeDetailsFragment =
-                (RecipeDetailsFragment) getSupportFragmentManager().findFragmentByTag(
-                        RECIPE_DETAILS_FRAGMENT_TAG);
-
-        if (recipeDetailsFragment == null) {
-            recipeDetailsFragment = RecipeDetailsFragment.newInstance(1, recipe.getId());
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_activity_master_pane, recipeDetailsFragment, RECIPE_DETAILS_FRAGMENT_TAG)
-                    .addToBackStack(null)
-                    .commit();
         }
     }
 
@@ -101,41 +79,20 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void setTitle() {
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.setTitle("Recipes");
-        }
-    }
-
     private void determineTwoPane() {
         mTwoPane = (findViewById(R.id.main_activity_detail_pane) != null);
     }
 
-    private void addOnBackStackChangedListener() {
-        final FragmentManager fragmentManager = getSupportFragmentManager();
+    private void showRecipeDetailsFragment(int mRecipeId) {
+        RecipeDetailsFragment recipeDetailsFragment =
+                (RecipeDetailsFragment) getSupportFragmentManager().findFragmentByTag(
+                        RECIPE_DETAILS_FRAGMENT_TAG);
 
-        fragmentManager.addOnBackStackChangedListener(
-                new FragmentManager.OnBackStackChangedListener() {
-                    @Override
-                    public void onBackStackChanged() {
-                        Fragment fragment = fragmentManager.findFragmentById(
-                                R.id.main_activity_master_pane);
-                        if (RECIPES_FRAGMENT_TAG.equals(fragment.getTag())) {
-                            setTitle();
-                        }
-                    }
-                });
-    }
-
-    private void showRecipesFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        if (fragmentManager.findFragmentByTag(RECIPES_FRAGMENT_TAG) == null) {
-            RecipesFragment recipesFragment = RecipesFragment.newInstance(1);
-            fragmentManager
+        if (recipeDetailsFragment == null) {
+            recipeDetailsFragment = RecipeDetailsFragment.newInstance(1, mRecipeId);
+            getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.main_activity_master_pane, recipesFragment, RECIPES_FRAGMENT_TAG)
+                    .replace(R.id.main_activity_master_pane, recipeDetailsFragment, RECIPE_DETAILS_FRAGMENT_TAG)
                     .commit();
         }
     }

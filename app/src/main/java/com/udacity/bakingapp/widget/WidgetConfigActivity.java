@@ -9,9 +9,10 @@ import android.widget.Toast;
 
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Recipe;
-import com.udacity.bakingapp.recipes.MainActivity;
+import com.udacity.bakingapp.recipes.DualPaneActivity;
+import com.udacity.bakingapp.recipes.SinglePaneActivity;
 
-public class WidgetConfigActivity extends MainActivity {
+public class WidgetConfigActivity extends SinglePaneActivity {
 
     private int mAppWidgetId;
 

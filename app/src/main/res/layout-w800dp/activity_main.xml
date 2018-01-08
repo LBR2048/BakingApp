@@ -10,13 +10,13 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        tools:context=".recipes.MainActivity" />
+        tools:context=".recipes.DualPaneActivity" />
 
     <FrameLayout
         android:id="@+id/main_activity_detail_pane"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        tools:context=".recipes.MainActivity" />
+        tools:context=".recipes.DualPaneActivity" />
 
 </LinearLayout>
