@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity
             recipesFragment = RecipesFragment.newInstance(1);
             fragmentManager
                     .beginTransaction()
-                    .replace(R.id.main_acivity_content, recipesFragment, RECIPES_FRAGMENT_TAG)
+                    .replace(R.id.main_activity_master_pane, recipesFragment, RECIPES_FRAGMENT_TAG)
                     .commit();
         }
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onBackStackChanged() {
                         Fragment fragment = fragmentManager.findFragmentById(
-                                R.id.main_acivity_content);
+                                R.id.main_activity_master_pane);
                         if (RECIPES_FRAGMENT_TAG.equals(fragment.getTag())) {
                             setTitle();
                         }
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity
                     recipe.getId());
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.main_acivity_content, recipeDetailsFragment, STEPS_FRAGMENT_TAG)
+                    .replace(R.id.main_activity_master_pane, recipeDetailsFragment, STEPS_FRAGMENT_TAG)
                     .addToBackStack(null)
                     .commit();
         }
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
                     StepDetailsFragment.newInstance(1, recipeId, step.getId());
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.main_acivity_content, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG)
+                    .replace(R.id.main_activity_master_pane, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG)
                     .addToBackStack(null)
                     .commit();
         } else {
