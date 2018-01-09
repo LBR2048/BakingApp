@@ -5,6 +5,8 @@
     android:initialLayout="@layout/widget_ingredients"
     android:minHeight="80dp"
     android:minWidth="80dp"
+    android:minResizeHeight="40dp"
+    android:minResizeWidth="40dp"
     android:previewImage="@drawable/exo_controls_play"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="86400000"
