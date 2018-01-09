@@ -9,10 +9,8 @@ import android.widget.RemoteViews;
 
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.Utils;
-import com.udacity.bakingapp.model.Ingredient;
+import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.recipes.DualPaneActivity;
-
-import java.util.List;
 
 /**
  * Implementation of App Widget functionality.
@@ -20,7 +18,7 @@ import java.util.List;
 public class WidgetProvider extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-            int appWidgetId, List<Ingredient> ingredients) {
+                                int appWidgetId, Recipe recipe) {
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ingredients);
@@ -32,8 +30,11 @@ public class WidgetProvider extends AppWidgetProvider {
         // Widget allow click handlers to only launch pending intents
         views.setOnClickPendingIntent(R.id.appwidget_ingredients, pendingIntent);
 
+        // Show recipe title on the widget
+        views.setTextViewText(R.id.appwidget_recipe_name, recipe.getName());
+
         // Show ingredients on the widget
-        String ingredientsString = Utils.formatIngredientsString(ingredients);
+        String ingredientsString = Utils.formatIngredientsString(recipe.getIngredients());
         views.setTextViewText(R.id.appwidget_ingredients, ingredientsString);
 
         // Instruct the widget manager to update the widget

@@ -96,8 +96,7 @@ public class WidgetService extends IntentService {
             @Override
             public void onRecipeLoaded(Recipe recipe) {
                 Log.d("Widget", "Recipe loaded: id " + recipeId);
-                List<Ingredient> ingredients = recipe.getIngredients();
-                WidgetProvider.updateAppWidget(context, appWidgetManager, widgetId, ingredients);
+                WidgetProvider.updateAppWidget(context, appWidgetManager, widgetId, recipe);
             }
 
             @Override
