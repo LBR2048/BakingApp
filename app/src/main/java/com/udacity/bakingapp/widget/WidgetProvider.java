@@ -11,6 +11,7 @@ import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.Utils;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.recipes.DualPaneActivity;
+import com.udacity.bakingapp.recipes.SinglePaneActivity;
 
 /**
  * Implementation of App Widget functionality.
@@ -24,7 +25,7 @@ public class WidgetProvider extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ingredients);
 
         // Create an intent to launch DualPaneActivity when clicked
-        Intent intent = new Intent(context, DualPaneActivity.class);
+        Intent intent = new Intent(context, SinglePaneActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         // Widget allow click handlers to only launch pending intents
