@@ -21,7 +21,7 @@ import java.util.List;
  * Created by leonardo.ardjomand on 02/01/2018.
  */
 
-public class BakingService extends IntentService {
+public class WidgetService extends IntentService {
 
     private static final String ACTION_UPDATE_ALL_WIDGETS = "com.udacity.bakingapp.action.update_widgets";
     private static final String ACTION_UPDATE_WIDGET = "com.udacity.bakingapp.action.update_single_widget";
@@ -30,7 +30,7 @@ public class BakingService extends IntentService {
 
     private RecipesRepositoryImpl mRecipesRepository;
 
-    public BakingService() {
+    public WidgetService() {
         super("Baking Service");
     }
 
@@ -41,13 +41,13 @@ public class BakingService extends IntentService {
     }
 
     public static void startActionUpdateAllWidgets(Context context) {
-        Intent intent = new Intent(context, BakingService.class);
+        Intent intent = new Intent(context, WidgetService.class);
         intent.setAction(ACTION_UPDATE_ALL_WIDGETS);
         context.startService(intent);
     }
 
     public static void startActionUpdateWidget(Context context, int widgetId, int recipeId) {
-        Intent intent = new Intent(context, BakingService.class);
+        Intent intent = new Intent(context, WidgetService.class);
         intent.setAction(ACTION_UPDATE_WIDGET);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         intent.putExtra(EXTRA_RECIPE_ID, recipeId);

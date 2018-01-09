@@ -29,10 +29,10 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/baking_app_widget_info" />
+                android:resource="@xml/widget_ingredients_info" />
         </receiver>
 
-        <service android:name=".widget.BakingService" />
+        <service android:name=".widget.WidgetService" />
 
         <activity android:name=".widget.WidgetConfigActivity">
             <intent-filter>

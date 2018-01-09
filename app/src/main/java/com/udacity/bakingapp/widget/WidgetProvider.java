@@ -23,7 +23,7 @@ public class WidgetProvider extends AppWidgetProvider {
             int appWidgetId, List<Ingredient> ingredients) {
 
         // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ingredients);
 
         // Create an intent to launch DualPaneActivity when clicked
         Intent intent = new Intent(context, DualPaneActivity.class);
@@ -43,7 +43,7 @@ public class WidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // Update the widget through an IntentService
-        BakingService.startActionUpdateAllWidgets(context);
+        WidgetService.startActionUpdateAllWidgets(context);
     }
 
     @Override
