@@ -23,7 +23,7 @@ public class DualPaneActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_dual_pane);
 
         int recipeId = getIntent().getIntExtra(EXTRA_RECIPE_ID, -1);
 
