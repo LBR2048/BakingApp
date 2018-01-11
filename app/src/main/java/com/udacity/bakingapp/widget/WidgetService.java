@@ -10,12 +10,9 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.repository.RecipesRepository;
 import com.udacity.bakingapp.repository.RecipesRepositoryImpl;
-
-import java.util.List;
 
 /**
  * Created by leonardo.ardjomand on 02/01/2018.
