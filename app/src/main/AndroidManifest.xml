@@ -22,6 +22,8 @@
 
         <activity android:name=".recipes.DualPaneActivity" />
 
+        <!-- TextView Widget -->
+
         <receiver android:name=".widget.WidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -39,6 +41,28 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+
+
+        <!-- ListView Collection Widget -->
+
+        <!-- 1. The broadcast receiver that refers to our widget. This needs the
+                intent-filter android.appwidget.action.APPWIDGET_UPDATE and the
+                meta-data for our XML widget configuration -->
+        <receiver android:name=".widgetlistview.ListWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_listview_ingredients_info" />
+        </receiver>
+
+        <!-- 2. The service that will send our collection data to our widget. It needs the
+                permission android.permission.BIND_REMOTEVIEWS -->
+        <service
+            android:name=".widgetlistview.ListWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>
