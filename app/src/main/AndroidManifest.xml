@@ -24,7 +24,7 @@
 
         <!-- TextView Widget -->
 
-        <receiver android:name=".widget.WidgetProvider">
+        <receiver android:name=".widgets.widgettextview.TextWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -34,9 +34,9 @@
                 android:resource="@xml/widget_ingredients_info" />
         </receiver>
 
-        <service android:name=".widget.WidgetService" />
+        <service android:name=".widgets.widgettextview.WidgetService" />
 
-        <activity android:name=".widget.WidgetConfigActivity">
+        <activity android:name=".widgets.widgettextview.TextWidgetConfigActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -48,7 +48,7 @@
         <!-- 1. The broadcast receiver that refers to our widget. This needs the
                 intent-filter android.appwidget.action.APPWIDGET_UPDATE and the
                 meta-data for our XML widget configuration -->
-        <receiver android:name=".widgetlistview.ListWidgetProvider">
+        <receiver android:name=".widgets.widgetlistview.ListWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -61,7 +61,7 @@
         <!-- 2. The service that will send our collection data to our widget. It needs the
                 permission android.permission.BIND_REMOTEVIEWS -->
         <service
-            android:name=".widgetlistview.ListWidgetService"
+            android:name=".widgets.widgetlistview.ListWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 

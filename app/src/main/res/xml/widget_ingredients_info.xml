@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:configure="com.udacity.bakingapp.widget.WidgetConfigActivity"
+    android:configure="com.udacity.bakingapp.widgets.widgettextview.TextWidgetConfigActivity"
     android:initialKeyguardLayout="@layout/widget_ingredients"
     android:initialLayout="@layout/widget_ingredients"
     android:minHeight="80dp"

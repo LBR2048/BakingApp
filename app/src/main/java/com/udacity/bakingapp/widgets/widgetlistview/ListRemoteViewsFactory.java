@@ -1,11 +1,9 @@
-package com.udacity.bakingapp.widgetlistview;
+package com.udacity.bakingapp.widgets.widgetlistview;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-import android.widget.Toast;
 
 import com.udacity.bakingapp.repository.RecipesRepositoryImpl;
 

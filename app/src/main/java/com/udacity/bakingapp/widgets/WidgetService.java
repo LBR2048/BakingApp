@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.widget;
+package com.udacity.bakingapp.widgets;
 
 import android.app.IntentService;
 import android.appwidget.AppWidgetManager;
@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.repository.RecipesRepository;
 import com.udacity.bakingapp.repository.RecipesRepositoryImpl;
+import com.udacity.bakingapp.widgets.widgetlistview.ListWidgetProvider;
+import com.udacity.bakingapp.widgets.widgettextview.TextWidgetProvider;
 
 /**
  * Created by leonardo.ardjomand on 02/01/2018.
@@ -74,7 +76,7 @@ public class WidgetService extends IntentService {
         final Context context = this;
         final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         final int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
-                new ComponentName(this, WidgetProvider.class));
+                new ComponentName(this, TextWidgetProvider.class));
 
         for (int appWidgetId : appWidgetIds) {
             int recipeId = PreferenceManager.getDefaultSharedPreferences(context).getInt(
@@ -93,7 +95,8 @@ public class WidgetService extends IntentService {
             @Override
             public void onRecipeLoaded(Recipe recipe) {
                 Log.d("Widget", "Recipe loaded: id " + recipeId);
-                WidgetProvider.updateAppWidget(context, appWidgetManager, widgetId, recipe);
+                TextWidgetProvider.updateAppWidget(context, appWidgetManager, widgetId, recipe);
+//                ListWidgetProvider.updateAppWidget(context, appWidgetManager, widgetId, recipe);
             }
 
             @Override

@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.widget;
+package com.udacity.bakingapp.widgets.widgettextview;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
@@ -10,8 +10,9 @@ import android.widget.Toast;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.recipes.SinglePaneActivity;
+import com.udacity.bakingapp.widgets.WidgetService;
 
-public class WidgetConfigActivity extends SinglePaneActivity {
+public class TextWidgetConfigActivity extends SinglePaneActivity {
 
     private int mAppWidgetId;
 

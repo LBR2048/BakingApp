@@ -1,9 +1,9 @@
-package com.udacity.bakingapp.widgetlistview;
+package com.udacity.bakingapp.widgets.widgetlistview;
 
 import android.content.Intent;
 import android.widget.RemoteViewsService;
 
-import com.udacity.bakingapp.widgetlistview.ListRemoteViewsFactory;
+import com.udacity.bakingapp.widgets.widgetlistview.ListRemoteViewsFactory;
 
 /**
  * Created by unity on 09/01/18.
