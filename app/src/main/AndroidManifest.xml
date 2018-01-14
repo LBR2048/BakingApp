@@ -34,7 +34,7 @@
                 android:resource="@xml/widget_ingredients_info" />
         </receiver>
 
-        <service android:name=".widgets.widgettextview.WidgetService" />
+        <service android:name=".widgets.WidgetService" />
 
         <activity android:name=".widgets.widgettextview.TextWidgetConfigActivity">
             <intent-filter>
