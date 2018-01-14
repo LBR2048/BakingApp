@@ -1,10 +1,12 @@
 package com.udacity.bakingapp.widgets.widgetlistview;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.udacity.bakingapp.model.Ingredient;
+import com.udacity.bakingapp.model.Recipe;
+import com.udacity.bakingapp.repository.RecipesRepository;
 import com.udacity.bakingapp.repository.RecipesRepositoryImpl;
 
 import java.util.ArrayList;
@@ -16,26 +18,25 @@ import java.util.List;
 
 public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
+    private int mRecipeId;
     private Context mContext;
-    private Cursor mCursor;
     private RecipesRepositoryImpl mRecipesRepository;
 
-    List<String> mCollection = new ArrayList<>();
+    private List<Ingredient> mIngredients = new ArrayList<>();
 
-
-    public ListRemoteViewsFactory(Context context) {
-        this.mContext = context;
+    public ListRemoteViewsFactory(Context context, int recipeId) {
+        mContext = context;
+        mRecipeId = recipeId;
     }
 
     @Override
     public void onCreate() {
         mRecipesRepository = new RecipesRepositoryImpl();
-        initData();
     }
 
     @Override
     public void onDataSetChanged() {
-        initData();
+        loadData();
     }
 
     @Override
@@ -45,14 +46,14 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
 
     @Override
     public int getCount() {
-        return mCollection.size();
+        return mIngredients.size();
     }
 
     @Override
     public RemoteViews getViewAt(int i) {
         RemoteViews view = new RemoteViews(mContext.getPackageName(),
                 android.R.layout.simple_list_item_1);
-        view.setTextViewText(android.R.id.text1, mCollection.get(i));
+        view.setTextViewText(android.R.id.text1, mIngredients.get(i).getIngredient());
         return view;
     }
 
@@ -76,11 +77,18 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
         return true;
     }
 
-    private void initData() {
-        mCollection.clear();
-        for (int i = 1; i <= 10; i++) {
-            mCollection.add("Ingredient " + i);
-        }
+    private void loadData() {
+        mRecipesRepository.loadRecipe(new RecipesRepository.LoadRecipeCallback() {
+            @Override
+            public void onRecipeLoaded(Recipe recipe) {
+                mIngredients = recipe.getIngredients();
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+
+            }
+        }, mRecipeId);
     }
 
 }

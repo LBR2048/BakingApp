@@ -93,7 +93,7 @@ public class ListWidgetDataService extends IntentService {
             @Override
             public void onRecipeLoaded(Recipe recipe) {
                 Log.d("Widget", "Recipe loaded: id " + recipeId);
-                ListWidgetProvider.updateAppWidget(context, appWidgetManager, widgetId);
+                ListWidgetProvider.updateAppWidget(context, appWidgetManager, widgetId, recipe);
             }
 
             @Override

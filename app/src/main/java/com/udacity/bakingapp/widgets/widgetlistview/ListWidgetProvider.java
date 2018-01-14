@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.udacity.bakingapp.R;
+import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.recipes.SinglePaneActivity;
 
 /**
@@ -16,13 +17,14 @@ import com.udacity.bakingapp.recipes.SinglePaneActivity;
 public class ListWidgetProvider extends AppWidgetProvider {
 
     public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                       int appWidgetId) {
+                                       int appWidgetId, Recipe recipe) {
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ingredients_listview);
 
         // Set the ListWidgetService intent to act as the adapter for the ListView
         Intent listWidgetIntent = new Intent(context, ListWidgetService.class);
+        listWidgetIntent.putExtra(ListWidgetService.EXTRA_RECIPE_ID, recipe.getId());
         views.setRemoteAdapter(R.id.appwidget_ingredients_listview, listWidgetIntent);
 
         // Create an intent to launch SinglePaneActivity when clicked
@@ -33,8 +35,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.appwidget, pendingIntent);
 
         // Show recipe title on the widget
-//        views.setTextViewText(R.id.appwidget_recipe_name, recipe.getName());
-        views.setTextViewText(R.id.appwidget_recipe_name, "Nutella Pie");
+        views.setTextViewText(R.id.appwidget_recipe_name, recipe.getName());
 
         // Show ingredients on the widget
 //        String ingredientsString = Utils.formatIngredientsString(recipe.getIngredients());
@@ -46,11 +47,8 @@ public class ListWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // There may be multiple widgets active, so update all of them
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
-        }
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
+        // Update the widget through an IntentService
+        ListWidgetDataService.startActionUpdateAllWidgets(context);
     }
 
     @Override
