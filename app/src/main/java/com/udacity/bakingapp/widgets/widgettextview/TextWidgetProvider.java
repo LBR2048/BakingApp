@@ -11,7 +11,6 @@ import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.Utils;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.recipes.SinglePaneActivity;
-import com.udacity.bakingapp.widgets.WidgetService;
 
 /**
  * Implementation of App Widget functionality.
@@ -45,7 +44,7 @@ public class TextWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // Update the widget through an IntentService
-        WidgetService.startActionUpdateAllWidgets(context);
+        TextWidgetDataService.startActionUpdateAllWidgets(context);
     }
 
     @Override

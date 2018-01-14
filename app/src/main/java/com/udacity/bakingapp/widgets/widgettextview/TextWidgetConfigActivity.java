@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.recipes.SinglePaneActivity;
-import com.udacity.bakingapp.widgets.WidgetService;
 
 public class TextWidgetConfigActivity extends SinglePaneActivity {
 
@@ -26,7 +25,7 @@ public class TextWidgetConfigActivity extends SinglePaneActivity {
                 .apply();
 
         // Perform your App Widget configuration.
-        WidgetService.startActionUpdateWidget(this, mAppWidgetId, recipe.getId());
+        TextWidgetDataService.startActionUpdateWidget(this, mAppWidgetId, recipe.getId());
 
         // When the configuration is complete,
         // get an instance of the AppWidgetManager by calling getInstance(Context):

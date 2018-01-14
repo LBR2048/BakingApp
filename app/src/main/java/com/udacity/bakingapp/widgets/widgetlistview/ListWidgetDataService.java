@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.widgets;
+package com.udacity.bakingapp.widgets.widgetlistview;
 
 import android.app.IntentService;
 import android.appwidget.AppWidgetManager;
@@ -13,24 +13,22 @@ import android.widget.Toast;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.repository.RecipesRepository;
 import com.udacity.bakingapp.repository.RecipesRepositoryImpl;
-import com.udacity.bakingapp.widgets.widgetlistview.ListWidgetProvider;
-import com.udacity.bakingapp.widgets.widgettextview.TextWidgetProvider;
 
 /**
  * Created by leonardo.ardjomand on 02/01/2018.
  */
 
-public class WidgetService extends IntentService {
+public class ListWidgetDataService extends IntentService {
 
-    private static final String ACTION_UPDATE_ALL_WIDGETS = "com.udacity.bakingapp.action.update_widgets";
-    private static final String ACTION_UPDATE_WIDGET = "com.udacity.bakingapp.action.update_single_widget";
+    private static final String ACTION_UPDATE_ALL_WIDGETS = "com.udacity.bakingapp.action.update_listwidgets";
+    private static final String ACTION_UPDATE_WIDGET = "com.udacity.bakingapp.action.update_single_listwidget";
 
     private static final String EXTRA_RECIPE_ID = "recipeId";
 
     private RecipesRepositoryImpl mRecipesRepository;
 
-    public WidgetService() {
-        super("Baking Service");
+    public ListWidgetDataService() {
+        super("List Widget Service");
     }
 
     @Override
@@ -40,13 +38,13 @@ public class WidgetService extends IntentService {
     }
 
     public static void startActionUpdateAllWidgets(Context context) {
-        Intent intent = new Intent(context, WidgetService.class);
+        Intent intent = new Intent(context, ListWidgetDataService.class);
         intent.setAction(ACTION_UPDATE_ALL_WIDGETS);
         context.startService(intent);
     }
 
     public static void startActionUpdateWidget(Context context, int widgetId, int recipeId) {
-        Intent intent = new Intent(context, WidgetService.class);
+        Intent intent = new Intent(context, ListWidgetDataService.class);
         intent.setAction(ACTION_UPDATE_WIDGET);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         intent.putExtra(EXTRA_RECIPE_ID, recipeId);
@@ -76,7 +74,7 @@ public class WidgetService extends IntentService {
         final Context context = this;
         final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         final int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
-                new ComponentName(this, TextWidgetProvider.class));
+                new ComponentName(this, ListWidgetProvider.class));
 
         for (int appWidgetId : appWidgetIds) {
             int recipeId = PreferenceManager.getDefaultSharedPreferences(context).getInt(
@@ -95,8 +93,7 @@ public class WidgetService extends IntentService {
             @Override
             public void onRecipeLoaded(Recipe recipe) {
                 Log.d("Widget", "Recipe loaded: id " + recipeId);
-                TextWidgetProvider.updateAppWidget(context, appWidgetManager, widgetId, recipe);
-//                ListWidgetProvider.updateAppWidget(context, appWidgetManager, widgetId, recipe);
+                ListWidgetProvider.updateAppWidget(context, appWidgetManager, widgetId);
             }
 
             @Override

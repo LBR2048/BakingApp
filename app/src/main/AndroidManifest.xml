@@ -34,7 +34,7 @@
                 android:resource="@xml/widget_ingredients_info" />
         </receiver>
 
-        <service android:name=".widgets.WidgetService" />
+        <service android:name=".widgets.widgettextview.TextWidgetDataService" />
 
         <activity android:name=".widgets.widgettextview.TextWidgetConfigActivity">
             <intent-filter>
@@ -63,6 +63,9 @@
         <service
             android:name=".widgets.widgetlistview.ListWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <service android:name=".widgets.widgetlistview.ListWidgetDataService" />
+
     </application>
 
 </manifest>

@@ -7,9 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.udacity.bakingapp.model.Recipe;
-import com.udacity.bakingapp.widgets.WidgetService;
-
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.recipes.SinglePaneActivity;
 
