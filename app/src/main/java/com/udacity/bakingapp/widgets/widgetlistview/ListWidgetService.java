@@ -10,8 +10,6 @@ import android.widget.RemoteViewsService;
 
 public class ListWidgetService extends RemoteViewsService {
 
-    public static String EXTRA_RECIPE_ID = "extra-recipe-id";
-
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         if (intent.getData() != null) {
