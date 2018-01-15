@@ -1,6 +1,7 @@
 package com.udacity.bakingapp.widgets.widgetlistview;
 
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViewsService;
 
 /**
@@ -13,7 +14,12 @@ public class ListWidgetService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        int recipeId = intent.getIntExtra(EXTRA_RECIPE_ID, -1);
-        return new ListRemoteViewsFactory(this.getApplicationContext(), recipeId);
+        if (intent.getData() != null) {
+            Integer recipeId = Integer.valueOf(intent.getData().getSchemeSpecificPart());
+            Log.d("Factory", "onGetViewFactory");
+            return new ListRemoteViewsFactory(this.getApplicationContext(), recipeId);
+        } else {
+            return null;
+        }
     }
 }

@@ -5,6 +5,8 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.udacity.bakingapp.R;
@@ -24,7 +26,8 @@ public class ListWidgetProvider extends AppWidgetProvider {
 
         // Set the ListWidgetService intent to act as the adapter for the ListView
         Intent listWidgetIntent = new Intent(context, ListWidgetService.class);
-        listWidgetIntent.putExtra(ListWidgetService.EXTRA_RECIPE_ID, recipe.getId());
+        listWidgetIntent.setData(Uri.fromParts("content", String.valueOf(recipe.getId()), null));
+        Log.d("Factory", "Putting extra into intent");
         views.setRemoteAdapter(R.id.appwidget_ingredients_listview, listWidgetIntent);
 
         // Create an intent to launch SinglePaneActivity when clicked
