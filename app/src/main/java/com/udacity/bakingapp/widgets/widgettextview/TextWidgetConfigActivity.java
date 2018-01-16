@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.widget;
+package com.udacity.bakingapp.widgets.widgettextview;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
@@ -9,9 +9,9 @@ import android.widget.Toast;
 
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Recipe;
-import com.udacity.bakingapp.recipes.MainActivity;
+import com.udacity.bakingapp.recipes.SinglePaneActivity;
 
-public class WidgetConfigActivity extends MainActivity {
+public class TextWidgetConfigActivity extends SinglePaneActivity {
 
     private int mAppWidgetId;
 
@@ -25,14 +25,14 @@ public class WidgetConfigActivity extends MainActivity {
                 .apply();
 
         // Perform your App Widget configuration.
-        BakingService.startActionUpdateWidget(this, mAppWidgetId, recipe.getId());
+        TextWidgetDataService.startActionUpdateWidget(this, mAppWidgetId, recipe.getId());
 
         // When the configuration is complete,
         // get an instance of the AppWidgetManager by calling getInstance(Context):
 //        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 
         // Update the App Widget with a RemoteViews layout
-//        RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.baking_app_widget);
+//        RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.widget_ingredients);
 //        appWidgetManager.updateAppWidget(mAppWidgetId, views);
 
         // Finally, create the return Intent, set it with the Activity result, and finish the Activity:

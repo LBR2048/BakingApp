@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="com.udacity.bakingapp.widgets.widgettextview.TextWidgetConfigActivity"
+    android:initialKeyguardLayout="@layout/widget_ingredients"
+    android:initialLayout="@layout/widget_ingredients"
+    android:minHeight="80dp"
+    android:minWidth="80dp"
+    android:minResizeHeight="40dp"
+    android:minResizeWidth="40dp"
+    android:previewImage="@drawable/widget_text"
+    android:resizeMode="horizontal|vertical"
+    android:updatePeriodMillis="86400000"
+    android:widgetCategory="home_screen" />
