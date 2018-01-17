@@ -89,17 +89,11 @@ public class ListWidgetDataService extends IntentService {
         final Context context = this;
         final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 
-        mRecipesRepository.loadRecipe(new RecipesRepository.LoadRecipeCallback() {
-            @Override
-            public void onRecipeLoaded(Recipe recipe) {
-                Log.d("Widget", "Recipe loaded: id " + recipeId);
-                ListWidgetProvider.updateAppWidget(context, appWidgetManager, widgetId, recipe);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                Toast.makeText(getApplication(), "Ingredients not available", Toast.LENGTH_SHORT).show();
-            }
-        }, recipeId);
+        Recipe recipe = mRecipesRepository.loadRecipe(recipeId);
+        if (recipe != null) {
+            ListWidgetProvider.updateAppWidget(context, appWidgetManager, widgetId, recipe);
+        } else {
+            Toast.makeText(getApplication(), "Ingredients not available", Toast.LENGTH_SHORT).show();
+        }
     }
 }

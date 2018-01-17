@@ -92,6 +92,13 @@ public class RecipesRemoteRepository implements RecipesRepository {
         });
     }
 
+    @Override
+    public Recipe loadRecipe(int recipeId) {
+        String recipesPath = "baking.json";
+        List<Recipe> recipes = getRecipesEndpointInterface().getRecipesSync(recipesPath);
+        return findRecipeById(recipeId, recipes);
+    }
+
     private RecipesEndpointInterface getRecipesEndpointInterface() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -107,11 +114,6 @@ public class RecipesRemoteRepository implements RecipesRepository {
                 return recipe;
             }
         }
-        return null;
-    }
-
-    @Override
-    public Recipe loadRecipe(int recipeId) {
         return null;
     }
 }

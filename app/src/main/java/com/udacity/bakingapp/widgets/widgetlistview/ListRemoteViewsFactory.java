@@ -78,17 +78,7 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
     }
 
     private void loadData() {
-        mRecipesRepository.loadRecipe(new RecipesRepository.LoadRecipeCallback() {
-            @Override
-            public void onRecipeLoaded(Recipe recipe) {
-                mIngredients = recipe.getIngredients();
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-
-            }
-        }, mRecipeId);
+        mIngredients = mRecipesRepository.loadRecipe(mRecipeId).getIngredients();
     }
 
 }
