@@ -1,5 +1,6 @@
 package com.udacity.bakingapp.repository.local;
 
+import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.repository.RecipesRepository;
 
 /**
@@ -21,5 +22,10 @@ public class RecipesLocalRepository implements RecipesRepository {
     @Override
     public void loadSteps(LoadStepsCallback loadStepsCallback, int recipeId) {
 
+    }
+
+    @Override
+    public Recipe loadRecipe(int recipeId) {
+        return null;
     }
 }

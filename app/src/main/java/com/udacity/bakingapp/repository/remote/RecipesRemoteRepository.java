@@ -109,4 +109,9 @@ public class RecipesRemoteRepository implements RecipesRepository {
         }
         return null;
     }
+
+    @Override
+    public Recipe loadRecipe(int recipeId) {
+        return null;
+    }
 }

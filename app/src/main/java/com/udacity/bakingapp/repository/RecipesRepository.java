@@ -35,4 +35,6 @@ public interface RecipesRepository {
     void loadRecipe(LoadRecipeCallback loadRecipeCallback, int recipeId);
 
     void loadSteps(LoadStepsCallback loadStepsCallback, int recipeId);
+
+    Recipe loadRecipe(int recipeId);
 }

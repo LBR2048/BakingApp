@@ -55,4 +55,9 @@ public class RecipesRepositoryImpl implements RecipesRepository {
             }
         }, recipeId);
     }
+
+    @Override
+    public Recipe loadRecipe(int recipeId) {
+        return null;
+    }
 }
