@@ -19,4 +19,7 @@ public interface RecipesEndpointInterface {
 
     @GET("{recipes}")
     Call<List<Recipe>> getRecipes(@Path("recipes") String recipes);
+
+    @GET("{recipes}")
+    List<Recipe> getRecipesSync(@Path("recipes") String recipes);
 }
