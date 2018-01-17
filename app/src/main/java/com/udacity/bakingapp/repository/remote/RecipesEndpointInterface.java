@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.repository;
+package com.udacity.bakingapp.repository.remote;
 
 import com.udacity.bakingapp.model.Recipe;
 

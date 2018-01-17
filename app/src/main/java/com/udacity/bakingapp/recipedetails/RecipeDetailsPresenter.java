@@ -2,7 +2,7 @@ package com.udacity.bakingapp.recipedetails;
 
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.repository.RecipesRepository;
-import com.udacity.bakingapp.repository.RecipesRepositoryImpl;
+import com.udacity.bakingapp.repository.remote.RecipesRemoteRepository;
 
 /**
  * Created by leonardo.ardjomand on 28/12/2017.
@@ -15,7 +15,7 @@ public class RecipeDetailsPresenter implements RecipeDetailsContract.Presenter {
 
     public RecipeDetailsPresenter(RecipeDetailsContract.View view) {
         mView = view;
-        mRepository = new RecipesRepositoryImpl();
+        mRepository = new RecipesRemoteRepository();
     }
 
     @Override

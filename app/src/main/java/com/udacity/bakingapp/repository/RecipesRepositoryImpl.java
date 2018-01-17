@@ -1,115 +1,58 @@
 package com.udacity.bakingapp.repository;
 
-import android.util.Log;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.udacity.bakingapp.model.Recipe;
+import com.udacity.bakingapp.model.Step;
+import com.udacity.bakingapp.repository.local.RecipesLocalRepository;
+import com.udacity.bakingapp.repository.remote.RecipesRemoteRepository;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 /**
- * Created by leonardo.ardjomand on 09/06/2017.
+ * Created by leonardo.ardjomand on 16/01/2018.
  */
 
 public class RecipesRepositoryImpl implements RecipesRepository {
 
-    private static final String BASE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/";
+    private RecipesRepository mRecipesLocalRepository = new RecipesLocalRepository();
+    private RecipesRepository mRecipesRemoteRepository = new RecipesRemoteRepository();
 
     @Override
     public void loadRecipes(final LoadRecipesCallback loadRecipesCallback) {
-        RecipesEndpointInterface apiService = getRecipesEndpointInterface();
-
-        String recipes = "baking.json";
-        Call<List<Recipe>> call = apiService.getRecipes(recipes);
-        call.enqueue(new Callback<List<Recipe>>() {
+        mRecipesRemoteRepository.loadRecipes(new LoadRecipesCallback() {
             @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                Log.i("Retrofit", "Download all recipes from server");
-                List<Recipe> recipes = response.body();
+            public void onRecipesLoaded(List<Recipe> recipes) {
                 loadRecipesCallback.onRecipesLoaded(recipes);
             }
 
             @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                // Log error here since request failed
+            public void onDataNotAvailable() {
+                loadRecipesCallback.onDataNotAvailable();
             }
         });
     }
 
     @Override
-    public void loadRecipe(final LoadRecipeCallback loadRecipeCallback, final int recipeId) {
-        RecipesEndpointInterface apiService = getRecipesEndpointInterface();
-
-        String recipes = "baking.json";
-        Call<List<Recipe>> call = apiService.getRecipes(recipes);
-        call.enqueue(new Callback<List<Recipe>>() {
+    public void loadRecipe(final LoadRecipeCallback loadRecipeCallback, int recipeId) {
+        mRecipesRemoteRepository.loadRecipe(new LoadRecipeCallback() {
             @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                Log.i("Retrofit loadRecipe", "Download recipe from server");
-                List<Recipe> recipes = response.body();
-                Recipe recipe = findRecipeById(recipeId, recipes);
-
-                if (recipe != null) {
-                    loadRecipeCallback.onRecipeLoaded(recipe);
-                }
+            public void onRecipeLoaded(Recipe recipe) {
+                loadRecipeCallback.onRecipeLoaded(recipe);
             }
 
             @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                // Log error here since request failed
+            public void onDataNotAvailable() {
+                loadRecipeCallback.onDataNotAvailable();
             }
-        });
+        }, recipeId);
     }
 
     @Override
-    public void loadSteps(final LoadStepsCallback loadStepsCallback, final int recipeId) {
-        RecipesEndpointInterface apiService = getRecipesEndpointInterface();
-
-        String recipes = "baking.json";
-        Call<List<Recipe>> call = apiService.getRecipes(recipes);
-        call.enqueue(new Callback<List<Recipe>>() {
+    public void loadSteps(final LoadStepsCallback loadStepsCallback, int recipeId) {
+        mRecipesRemoteRepository.loadSteps(new LoadStepsCallback() {
             @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                Log.i("Retrofit loadSteps", "Download steps from server");
-                List<Recipe> recipes = response.body();
-                Recipe recipe = findRecipeById(recipeId, recipes);
-
-                if (recipe != null) {
-                    loadStepsCallback.onStepsLoaded(recipe.getSteps());
-                }
+            public void onStepsLoaded(List<Step> steps) {
+                loadStepsCallback.onStepsLoaded(steps);
             }
-
-            @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                // Log error here since request failed
-            }
-        });
-    }
-
-    private RecipesEndpointInterface getRecipesEndpointInterface() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        return retrofit.create(RecipesEndpointInterface.class);
-    }
-
-    private Recipe findRecipeById(int recipeId, List<Recipe> recipes) {
-        for (Recipe recipe : recipes) {
-            if (recipe.getId() == recipeId) {
-                return recipe;
-            }
-        }
-        return null;
+        }, recipeId);
     }
 }
