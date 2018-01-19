@@ -6,7 +6,9 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Ingredient implements Parcelable {
+import co.uk.rushorm.core.RushObject;
+
+public class Ingredient extends RushObject implements Parcelable {
 
     @SerializedName("quantity")
     public Double quantity;

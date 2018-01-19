@@ -6,7 +6,9 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Step implements Parcelable {
+import co.uk.rushorm.core.RushObject;
+
+public class Step extends RushObject implements Parcelable {
 
     @SerializedName("id")
     public Integer identity;

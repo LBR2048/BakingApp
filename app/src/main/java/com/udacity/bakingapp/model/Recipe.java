@@ -9,7 +9,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Recipe implements Parcelable {
+import co.uk.rushorm.core.RushObject;
+
+public class Recipe extends RushObject implements Parcelable {
 
     @SerializedName("id")
     public Integer identity;
