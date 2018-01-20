@@ -75,6 +75,30 @@
             </intent-filter>
         </activity>
 
+
+        <!-- RushOrm -->
+
+        <!-- Updating this will cause a database upgrade -->
+        <meta-data
+            android:name="Rush_db_version"
+            android:value="4" />
+
+        <!-- Database name -->
+        <meta-data
+            android:name="Rush_db_name"
+            android:value="rush.db" />
+
+        <!-- Setting this to true will cause a migration to happen every launch,
+        this is very handy during development although could cause data loss -->
+        <meta-data
+            android:name="Rush_debug"
+            android:value="true" />
+
+        <!-- Turning on logging can be done by settings this value to true -->
+        <meta-data
+            android:name="Rush_log"
+            android:value="false" />
+
     </application>
 
 </manifest>
