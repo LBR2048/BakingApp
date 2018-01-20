@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.uk.rushorm.core.RushObject;
+import co.uk.rushorm.core.annotations.RushList;
 
 public class Recipe extends RushObject implements Parcelable {
 
@@ -20,9 +21,11 @@ public class Recipe extends RushObject implements Parcelable {
     public String name;
 
     @SerializedName("ingredients")
+    @RushList(classType = Ingredient.class)
     public List<Ingredient> ingredients = null;
 
     @SerializedName("steps")
+    @RushList(classType = Step.class)
     public List<Step> steps = null;
 
     @SerializedName("servings")
