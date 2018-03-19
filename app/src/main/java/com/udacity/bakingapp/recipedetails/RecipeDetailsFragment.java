@@ -16,12 +16,10 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.exoplayer2.util.Util;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.Utils;
 import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Step;
-import com.udacity.bakingapp.recipes.RecipesPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +45,6 @@ public class RecipeDetailsFragment extends Fragment
     private RecyclerView mIngredientList;
     private TextView mIngredientText;
     private List<Step> mSteps;
-    private List<Ingredient> mIngredients;
     private RecipeDetailsPresenter mRecipeDetailsPresenter;
     private int mRecipeId;
 
@@ -146,15 +143,17 @@ public class RecipeDetailsFragment extends Fragment
 
     @Override
     public void showRecipeName(String title) {
-        ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.setTitle(title);
+        if (getActivity() != null) {
+            ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (supportActionBar != null) {
+                supportActionBar.setTitle(title);
+            }
         }
     }
 
     @Override
     public void showIngredients(List<Ingredient> ingredients) {
-        mIngredients = ingredients;
+        List<Ingredient> ingredients1 = ingredients;
 //        mIngredientsAdapter.replaceData(ingredients);
         mIngredientText.setText(Utils.formatIngredientsString(ingredients));
     }
