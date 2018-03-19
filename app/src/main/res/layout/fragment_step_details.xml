@@ -9,28 +9,32 @@
     <FrameLayout
         android:id="@+id/videoContainerLayout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/step_description"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_height="200dp" />
 
     <TextView
         android:id="@+id/step_description"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/colorPrimary"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toTopOf="@+id/previous_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/videoContainerLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/videoContainerLayout"
+        tools:text="Recipe description recipe description recipe description recipe description recipe description "/>
 
     <Button
         android:id="@+id/previous_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:text="@string/previous_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/next_button"
