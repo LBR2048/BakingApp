@@ -15,10 +15,10 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
     private List<Step> mSteps;
     private int mCurrentStepId;
 
-    private StepDetailsContract.View mView;
-    private RecipesRepository mRepository;
+    private final StepDetailsContract.View mView;
+    private final RecipesRepository mRepository;
 
-    public StepDetailsPresenter(StepDetailsContract.View view) {
+    StepDetailsPresenter(StepDetailsContract.View view) {
         mView = view;
         mRepository = new RecipesRepositoryImpl();
     }
