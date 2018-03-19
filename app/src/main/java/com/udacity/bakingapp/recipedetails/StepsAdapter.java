@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.udacity.bakingapp.R;
-import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment.OnDetailsFragmentInteraction;
@@ -24,7 +23,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     private List<Step> mValues;
     private final OnStepsAdapterInteraction mListener;
 
-    public StepsAdapter(List<Step> items, OnStepsAdapterInteraction listener) {
+    StepsAdapter(List<Step> items, OnStepsAdapterInteraction listener) {
         mValues = items;
         mListener = listener;
     }
@@ -60,16 +59,16 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mShortDescription;
-        public final TextView mContentView;
-        public Step mStep;
+        final View mView;
+        final TextView mShortDescription;
+        final TextView mContentView;
+        Step mStep;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             mView = view;
-            mShortDescription = (TextView) view.findViewById(R.id.short_description);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mShortDescription = view.findViewById(R.id.short_description);
+            mContentView = view.findViewById(R.id.content);
         }
 
         @Override
@@ -78,7 +77,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         }
     }
 
-    public void replaceData(List<Step> steps) {
+    void replaceData(List<Step> steps) {
         mValues = steps;
         notifyDataSetChanged();
     }
