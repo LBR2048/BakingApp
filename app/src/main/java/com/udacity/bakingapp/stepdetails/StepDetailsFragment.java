@@ -1,6 +1,5 @@
 package com.udacity.bakingapp.stepdetails;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -16,8 +15,6 @@ import com.udacity.bakingapp.R;
 /**
  * A fragment representing a list of Items.
  * <p />
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
  */
 public class StepDetailsFragment extends Fragment implements StepDetailsContract.View {
 
@@ -27,7 +24,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     private static final String VIDEO_FRAGMENT_TAG = "video-fragment-tag";
 
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
     private TextView mDescriptionView;
     private Button mPreviousButton;
     private Button mNextButton;
@@ -35,10 +31,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     private int mRecipeId;
     private int mStepId;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public StepDetailsFragment() {
     }
 
@@ -85,17 +77,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
 
         return view;
     }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnIngredientsFragmentInteractionListener");
-        }
-    }
     //endregion
 
     public void showStep(int recipeId, int stepId) {
@@ -112,9 +93,11 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
 
     @Override
     public void showStepTitle(String stepName) {
-        ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.setTitle(stepName);
+        if (getActivity() != null) {
+            ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (supportActionBar != null) {
+                supportActionBar.setTitle(stepName);
+            }
         }
     }
 
@@ -173,10 +156,5 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
                 mStepDetailsPresenter.getNextStep();
             }
         });
-    }
-
-    public interface OnListFragmentInteractionListener {
-        void previousStep();
-        void nextStep();
     }
 }
