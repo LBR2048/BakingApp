@@ -27,12 +27,12 @@ public class RecipesPresenter implements RecipesContract.Presenter {
     public void loadRecipes() {
         mRecipesRepository.loadRecipes(new RecipesRepository.LoadRecipesCallback() {
             @Override
-            public void onRecipesLoaded(List<Recipe> recipes) {
+            public void onSuccess(List<Recipe> recipes) {
                 mView.showRecipes(recipes);
             }
 
             @Override
-            public void onDataNotAvailable() {
+            public void onFailure() {
 
             }
         });

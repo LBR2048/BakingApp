@@ -22,14 +22,14 @@ public class RecipeDetailsPresenter implements RecipeDetailsContract.Presenter {
     public void getRecipeDetails(int recipeId) {
         mRepository.loadRecipe(new RecipesRepository.LoadRecipeCallback() {
             @Override
-            public void onRecipeLoaded(Recipe recipe) {
+            public void onSuccess(Recipe recipe) {
                 mView.showRecipeName(recipe.getName());
                 mView.showIngredients(recipe.getIngredients());
                 mView.showSteps(recipe.getSteps());
             }
 
             @Override
-            public void onDataNotAvailable() {
+            public void onFailure() {
 
             }
         }, recipeId);

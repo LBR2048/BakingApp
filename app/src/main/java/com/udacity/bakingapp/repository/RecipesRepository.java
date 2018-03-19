@@ -11,30 +11,30 @@ import java.util.List;
 
 public interface RecipesRepository {
 
+    void loadRecipes(LoadRecipesCallback loadRecipesCallback);
+
     interface LoadRecipesCallback {
 
-        void onRecipesLoaded(List<Recipe> recipes);
+        void onSuccess(List<Recipe> recipes);
 
-        void onDataNotAvailable();
+        void onFailure();
     }
-
-    interface LoadRecipeCallback {
-
-        void onRecipeLoaded(Recipe recipe);
-
-        void onDataNotAvailable();
-    }
-
-    interface LoadStepsCallback {
-
-        void onStepsLoaded(List<Step> steps);
-    }
-
-    void loadRecipes(LoadRecipesCallback loadRecipesCallback);
 
     void loadRecipe(LoadRecipeCallback loadRecipeCallback, int recipeId);
 
+    interface LoadRecipeCallback {
+
+        void onSuccess(Recipe recipe);
+
+        void onFailure();
+    }
+
     void loadSteps(LoadStepsCallback loadStepsCallback, int recipeId);
+
+    interface LoadStepsCallback {
+
+        void onSuccess(List<Step> steps);
+    }
 
     Recipe loadRecipe(int recipeId);
 }

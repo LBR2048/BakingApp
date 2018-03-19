@@ -27,7 +27,7 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
     public void getStep(int recipeId, final int stepId) {
         mRepository.loadSteps(new RecipesRepository.LoadStepsCallback() {
             @Override
-            public void onStepsLoaded(List<Step> steps) {
+            public void onSuccess(List<Step> steps) {
                 mSteps = steps;
 
                 Step step = findStepById(stepId, steps);

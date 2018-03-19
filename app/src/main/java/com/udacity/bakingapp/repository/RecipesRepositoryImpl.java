@@ -20,13 +20,13 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     public void loadRecipes(final LoadRecipesCallback loadRecipesCallback) {
         mRecipesRemoteRepository.loadRecipes(new LoadRecipesCallback() {
             @Override
-            public void onRecipesLoaded(List<Recipe> recipes) {
-                loadRecipesCallback.onRecipesLoaded(recipes);
+            public void onSuccess(List<Recipe> recipes) {
+                loadRecipesCallback.onSuccess(recipes);
             }
 
             @Override
-            public void onDataNotAvailable() {
-                loadRecipesCallback.onDataNotAvailable();
+            public void onFailure() {
+                loadRecipesCallback.onFailure();
             }
         });
     }
@@ -35,13 +35,13 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     public void loadRecipe(final LoadRecipeCallback loadRecipeCallback, int recipeId) {
         mRecipesRemoteRepository.loadRecipe(new LoadRecipeCallback() {
             @Override
-            public void onRecipeLoaded(Recipe recipe) {
-                loadRecipeCallback.onRecipeLoaded(recipe);
+            public void onSuccess(Recipe recipe) {
+                loadRecipeCallback.onSuccess(recipe);
             }
 
             @Override
-            public void onDataNotAvailable() {
-                loadRecipeCallback.onDataNotAvailable();
+            public void onFailure() {
+                loadRecipeCallback.onFailure();
             }
         }, recipeId);
     }
@@ -50,8 +50,8 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     public void loadSteps(final LoadStepsCallback loadStepsCallback, int recipeId) {
         mRecipesRemoteRepository.loadSteps(new LoadStepsCallback() {
             @Override
-            public void onStepsLoaded(List<Step> steps) {
-                loadStepsCallback.onStepsLoaded(steps);
+            public void onSuccess(List<Step> steps) {
+                loadStepsCallback.onSuccess(steps);
             }
         }, recipeId);
     }

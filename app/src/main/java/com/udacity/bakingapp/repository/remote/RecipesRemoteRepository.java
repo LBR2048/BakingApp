@@ -32,7 +32,7 @@ public class RecipesRemoteRepository implements RecipesRepository {
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 Log.i("Retrofit", "Download all recipes from server");
                 List<Recipe> recipes = response.body();
-                loadRecipesCallback.onRecipesLoaded(recipes);
+                loadRecipesCallback.onSuccess(recipes);
             }
 
             @Override
@@ -56,7 +56,7 @@ public class RecipesRemoteRepository implements RecipesRepository {
                 Recipe recipe = findRecipeById(recipeId, recipes);
 
                 if (recipe != null) {
-                    loadRecipeCallback.onRecipeLoaded(recipe);
+                    loadRecipeCallback.onSuccess(recipe);
                 }
             }
 
@@ -81,7 +81,7 @@ public class RecipesRemoteRepository implements RecipesRepository {
                 Recipe recipe = findRecipeById(recipeId, recipes);
 
                 if (recipe != null) {
-                    loadStepsCallback.onStepsLoaded(recipe.getSteps());
+                    loadStepsCallback.onSuccess(recipe.getSteps());
                 }
             }
 
