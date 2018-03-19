@@ -12,13 +12,11 @@ import java.util.List;
 
 public class RecipesPresenter implements RecipesContract.Presenter {
 
-    private RecipesContract.View mView;
+    private final RecipesContract.View mView;
 
-    private RecipesRepository mRecipesRepository;
+    private final RecipesRepository mRecipesRepository;
 
-    private String urlString = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
-
-    public RecipesPresenter(RecipesContract.View view) {
+    RecipesPresenter(RecipesContract.View view) {
         mView = view;
         mRecipesRepository = new RecipesRepositoryImpl();
     }
@@ -33,7 +31,7 @@ public class RecipesPresenter implements RecipesContract.Presenter {
 
             @Override
             public void onFailure() {
-
+                // TODO show toast
             }
         });
     }
