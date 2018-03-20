@@ -1,6 +1,8 @@
 package com.udacity.bakingapp.stepdetails;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.udacity.bakingapp.R;
@@ -30,6 +33,8 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     private StepDetailsPresenter mStepDetailsPresenter;
     private int mRecipeId;
     private int mStepId;
+    private boolean mLandscapeMode;
+    private FrameLayout mVideoContainer;
 
     public StepDetailsFragment() {
     }
@@ -63,15 +68,29 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     }
 
     @Override
-    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        android.view.View view = inflater.inflate(R.layout.fragment_step_details, container, false);
+        View view;
 
-        mDescriptionView = view.findViewById(R.id.step_description);
-        mPreviousButton = view.findViewById(R.id.previous_button);
-        mNextButton = view.findViewById(R.id.next_button);
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mLandscapeMode = true;
+            view = inflater.inflate(R.layout.fragment_step_details_landscape, container, false);
 
-        setupNavigationButtons();
+            hideSystemUI();
+
+        } else {
+            mLandscapeMode = false;
+            view = inflater.inflate(R.layout.fragment_step_details, container, false);
+
+            mDescriptionView = view.findViewById(R.id.step_description);
+            mPreviousButton = view.findViewById(R.id.previous_button);
+            mNextButton = view.findViewById(R.id.next_button);
+
+            setupNavigationButtons();
+        }
+
+        mVideoContainer = view.findViewById(R.id.videoContainerLayout);
 
         mStepDetailsPresenter.getStep(mRecipeId, mStepId);
 
@@ -103,11 +122,15 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
 
     @Override
     public void showDescription(String description) {
-        mDescriptionView.setText(description);
+        if (!mLandscapeMode) {
+            mDescriptionView.setText(description);
+        }
     }
 
     @Override
     public void showVideo(String videoUrl) {
+        mVideoContainer.setVisibility(View.VISIBLE);
+
         if (getChildFragmentManager().findFragmentByTag(VIDEO_FRAGMENT_TAG) == null) {
             VideoFragment videoFragment = VideoFragment.newInstance(videoUrl);
             getChildFragmentManager()
@@ -123,6 +146,8 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
 
     @Override
     public void hideVideo() {
+        mVideoContainer.setVisibility(View.GONE);
+
         Fragment videoFragment = getChildFragmentManager().findFragmentByTag(VIDEO_FRAGMENT_TAG);
         if (videoFragment != null) {
             getChildFragmentManager()
@@ -134,12 +159,16 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
 
     @Override
     public void setPreviousButtonVisibility(boolean visibility) {
-        mPreviousButton.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
+        if (!mLandscapeMode) {
+            mPreviousButton.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 
     @Override
     public void setNextButtonVisibility(boolean visibility) {
-        mNextButton.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
+        if (!mLandscapeMode) {
+            mNextButton.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 
     private void setupNavigationButtons() {
@@ -157,4 +186,18 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
             }
         });
     }
+
+    private void hideSystemUI() {
+        // Set the IMMERSIVE flag.
+        // Set the content to appear under the system bars so that the content
+        // doesn't resize when the system bars hide and show.
+        getActivity().getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
+    }
+
 }
