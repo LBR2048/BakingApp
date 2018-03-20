@@ -24,7 +24,7 @@
 
         <!-- TextView Widget -->
 
-        <receiver android:name=".widgets.widgettextview.TextWidgetProvider">
+        <receiver android:name=".widgets.textwidget.TextWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -34,9 +34,9 @@
                 android:resource="@xml/widget_ingredients_info" />
         </receiver>
 
-        <service android:name=".widgets.widgettextview.TextWidgetDataService" />
+        <service android:name=".widgets.textwidget.TextWidgetDataService" />
 
-        <activity android:name=".widgets.widgettextview.TextWidgetConfigActivity">
+        <activity android:name=".widgets.textwidget.TextWidgetConfigActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -48,7 +48,7 @@
         <!-- 1. The broadcast receiver that refers to our widget. This needs the
                 intent-filter android.appwidget.action.APPWIDGET_UPDATE and the
                 meta-data for our XML widget configuration -->
-        <receiver android:name=".widgets.widgetlistview.ListWidgetProvider">
+        <receiver android:name=".widgets.listwidget.ListWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -61,12 +61,12 @@
         <!-- 2. The service that will send our collection data to our widget. It needs the
                 permission android.permission.BIND_REMOTEVIEWS -->
         <service
-            android:name=".widgets.widgetlistview.ListWidgetService"
+            android:name=".widgets.listwidget.ListWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <service android:name=".widgets.widgetlistview.ListWidgetDataService" />
+        <service android:name=".widgets.listwidget.ListWidgetDataService" />
 
-        <activity android:name=".widgets.widgetlistview.ListWidgetConfigActivity">
+        <activity android:name=".widgets.listwidget.ListWidgetConfigActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

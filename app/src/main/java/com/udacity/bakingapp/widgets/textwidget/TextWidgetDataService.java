@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.widgets.widgettextview;
+package com.udacity.bakingapp.widgets.textwidget;
 
 import android.app.IntentService;
 import android.appwidget.AppWidgetManager;

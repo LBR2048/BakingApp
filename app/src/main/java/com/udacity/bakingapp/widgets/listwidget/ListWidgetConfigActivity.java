@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.widgets.widgetlistview;
+package com.udacity.bakingapp.widgets.listwidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
