@@ -25,7 +25,7 @@ public class ListWidgetDataService extends IntentService {
 
     private static final String EXTRA_RECIPE_ID = "recipeId";
 
-    private RecipesRepositoryImpl mRecipesRepository;
+    private RecipesRepository mRecipesRepository;
 
     public ListWidgetDataService() {
         super("List Widget Service");
