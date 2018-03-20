@@ -58,6 +58,6 @@ public class RecipesRepositoryImpl implements RecipesRepository {
 
     @Override
     public Recipe loadRecipe(int recipeId) {
-        return null;
+        return mRecipesRemoteRepository.loadRecipe(recipeId);
     }
 }

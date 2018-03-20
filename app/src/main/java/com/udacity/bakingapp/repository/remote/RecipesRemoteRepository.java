@@ -5,6 +5,7 @@ import android.util.Log;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.repository.RecipesRepository;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -94,9 +95,17 @@ public class RecipesRemoteRepository implements RecipesRepository {
 
     @Override
     public Recipe loadRecipe(int recipeId) {
-        String recipesPath = "baking.json";
-        List<Recipe> recipes = getRecipesEndpointInterface().getRecipesSync(recipesPath);
-        return findRecipeById(recipeId, recipes);
+        RecipesEndpointInterface apiService = getRecipesEndpointInterface();
+
+        String recipePath = "baking.json";
+        Call<List<Recipe>> call = apiService.getRecipes(recipePath);
+        try {
+            List<Recipe> recipes = call.execute().body();
+            return findRecipeById(recipeId, recipes);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private RecipesEndpointInterface getRecipesEndpointInterface() {

@@ -93,6 +93,7 @@ public class ListWidgetDataService extends IntentService {
         if (recipe != null) {
             ListWidgetProvider.updateAppWidget(context, appWidgetManager, widgetId, recipe);
         } else {
+            // TODO fix toast not showing
             Toast.makeText(getApplication(), "Ingredients not available", Toast.LENGTH_SHORT).show();
         }
     }
