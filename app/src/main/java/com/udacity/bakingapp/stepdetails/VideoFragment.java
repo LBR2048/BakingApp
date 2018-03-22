@@ -46,10 +46,6 @@ public class VideoFragment extends Fragment implements Player.EventListener {
     private long mPlaybackPosition;
     private String mVideoUrl;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public VideoFragment() {
     }
 
@@ -92,11 +88,9 @@ public class VideoFragment extends Fragment implements Player.EventListener {
     @Override
     public void onResume() {
         super.onResume();
-//        hideSystemUi();
         if ((Util.SDK_INT <= 23 || mPlayer == null)) {
             initializePlayer();
         }
-        mPlayer.seekTo(mCurrentWindow, mPlaybackPosition);
     }
 
     @Override
@@ -123,6 +117,7 @@ public class VideoFragment extends Fragment implements Player.EventListener {
 
         mPlayerView.setPlayer(mPlayer);
 
+        mPlayer.seekTo(mCurrentWindow, mPlaybackPosition);
         mPlayer.setPlayWhenReady(mPlayWhenReady);
 
         Uri uri = Uri.parse(mVideoUrl);
