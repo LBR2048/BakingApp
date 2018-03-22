@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.udacity.bakingapp.GuiUtils;
 import com.udacity.bakingapp.R;
 
 /**
@@ -77,7 +78,7 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
             mLandscapeMode = true;
             view = inflater.inflate(R.layout.fragment_step_details_landscape, container, false);
 
-            hideSystemUI();
+            GuiUtils.hideSystemUI(getActivity());
 
         } else {
             mLandscapeMode = false;
@@ -185,19 +186,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
                 mStepDetailsPresenter.getNextStep();
             }
         });
-    }
-
-    private void hideSystemUI() {
-        // Set the IMMERSIVE flag.
-        // Set the content to appear under the system bars so that the content
-        // doesn't resize when the system bars hide and show.
-        getActivity().getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
 
 }
