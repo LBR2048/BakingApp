@@ -1,8 +1,8 @@
 package com.udacity.bakingapp.stepdetails;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +34,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     private StepDetailsPresenter mStepDetailsPresenter;
     private int mRecipeId;
     private int mStepId;
-    private boolean mLandscapeMode;
     private FrameLayout mVideoContainer;
 
     public StepDetailsFragment() {
@@ -52,7 +51,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     }
 
     //region Lifecycle
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,32 +69,28 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view;
+        return inflater.inflate(R.layout.fragment_step_details, container, false);
+    }
 
-        int orientation = getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mLandscapeMode = true;
-            view = inflater.inflate(R.layout.fragment_step_details_landscape, container, false);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        // Hide system UI if device is a handset in landscape mode (show fullscreen video)
+        if (GuiUtils.isHandsetLandscape(getActivity())) {
             GuiUtils.hideSystemUI(getActivity());
-
-        } else {
-            mLandscapeMode = false;
-            view = inflater.inflate(R.layout.fragment_step_details, container, false);
-
-            mDescriptionView = view.findViewById(R.id.step_description);
-            mPreviousButton = view.findViewById(R.id.previous_button);
-            mNextButton = view.findViewById(R.id.next_button);
-
-            setupNavigationButtons();
         }
 
         mVideoContainer = view.findViewById(R.id.videoContainerLayout);
+        mDescriptionView = view.findViewById(R.id.step_description);
+        mPreviousButton = view.findViewById(R.id.previous_button);
+        mNextButton = view.findViewById(R.id.next_button);
 
         mStepDetailsPresenter.getStep(mRecipeId, mStepId);
 
-        return view;
+        setupNavigationButtons();
     }
+
     //endregion
 
     public void showStep(int recipeId, int stepId) {
@@ -123,7 +117,7 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
 
     @Override
     public void showDescription(String description) {
-        if (!mLandscapeMode) {
+        if (mDescriptionView != null) {
             mDescriptionView.setText(description);
         }
     }
@@ -160,32 +154,35 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
 
     @Override
     public void setPreviousButtonVisibility(boolean visibility) {
-        if (!mLandscapeMode) {
+        if (mPreviousButton != null) {
             mPreviousButton.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
         }
     }
 
     @Override
     public void setNextButtonVisibility(boolean visibility) {
-        if (!mLandscapeMode) {
+        if (mNextButton != null) {
             mNextButton.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
         }
     }
 
     private void setupNavigationButtons() {
-        mPreviousButton.setOnClickListener(new android.view.View.OnClickListener() {
-            @Override
-            public void onClick(android.view.View v) {
-                mStepDetailsPresenter.getPreviousStep();
-            }
-        });
+        if (mPreviousButton != null) {
+            mPreviousButton.setOnClickListener(new android.view.View.OnClickListener() {
+                @Override
+                public void onClick(android.view.View v) {
+                    mStepDetailsPresenter.getPreviousStep();
+                }
+            });
+        }
 
-        mNextButton.setOnClickListener(new android.view.View.OnClickListener() {
-            @Override
-            public void onClick(android.view.View v) {
-                mStepDetailsPresenter.getNextStep();
-            }
-        });
+        if (mNextButton != null) {
+            mNextButton.setOnClickListener(new android.view.View.OnClickListener() {
+                @Override
+                public void onClick(android.view.View v) {
+                    mStepDetailsPresenter.getNextStep();
+                }
+            });
+        }
     }
-
 }

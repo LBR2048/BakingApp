@@ -2,6 +2,7 @@ package com.udacity.bakingapp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.view.View;
  */
 
 public class GuiUtils {
+
+    private static final int HANDSET_LANDSCAPE_WIDTH_LIMIT = 840;
 
     @SuppressLint("InlinedApi")
     public static void hideSystemUI(FragmentActivity activity) {
@@ -32,5 +35,11 @@ public class GuiUtils {
         // Best solution: http://blog.sqisland.com/2014/12/recyclerview-autofit-grid.html
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return displayMetrics.widthPixels / displayMetrics.density;
+    }
+
+    public static boolean isHandsetLandscape(Context context) {
+        int orientation = context.getResources().getConfiguration().orientation;
+        float widthDp = getWidthDp(context);
+        return orientation == Configuration.ORIENTATION_LANDSCAPE && widthDp <= HANDSET_LANDSCAPE_WIDTH_LIMIT;
     }
 }
