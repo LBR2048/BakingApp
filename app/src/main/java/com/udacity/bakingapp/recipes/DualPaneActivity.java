@@ -56,7 +56,7 @@ public class DualPaneActivity extends AppCompatActivity
                 stepDetailsFragment.showStep(recipeId, step.getId());
             } else {
                 stepDetailsFragment =
-                        StepDetailsFragment.newInstance(1, recipeId, step.getId());
+                        StepDetailsFragment.newInstance(recipeId, step.getId());
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_activity_detail_pane, stepDetailsFragment,
@@ -66,7 +66,7 @@ public class DualPaneActivity extends AppCompatActivity
         } else {
             if (stepDetailsFragment == null) {
                 stepDetailsFragment =
-                        StepDetailsFragment.newInstance(1, recipeId, step.getId());
+                        StepDetailsFragment.newInstance(recipeId, step.getId());
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_activity_master_pane, stepDetailsFragment,

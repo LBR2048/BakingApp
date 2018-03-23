@@ -10,7 +10,7 @@ public interface StepDetailsContract {
 
         void setStepId(int stepId);
 
-        void showStepTitle(String stepName);
+        void showTitle(String stepName);
 
         void showDescription(String description);
 

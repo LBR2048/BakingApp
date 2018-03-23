@@ -22,28 +22,25 @@ import com.udacity.bakingapp.R;
  */
 public class StepDetailsFragment extends Fragment implements StepDetailsContract.View {
 
-    private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String ARG_RECIPE_ID = "recipe-id";
     private static final String ARG_STEP_ID = "step-id";
     private static final String VIDEO_FRAGMENT_TAG = "video-fragment-tag";
 
-    private int mColumnCount = 1;
+    private FrameLayout mVideoContainer;
     private TextView mDescriptionView;
     private Button mPreviousButton;
     private Button mNextButton;
-    private StepDetailsPresenter mStepDetailsPresenter;
     private int mRecipeId;
     private int mStepId;
-    private FrameLayout mVideoContainer;
+    private StepDetailsPresenter mStepDetailsPresenter;
 
     public StepDetailsFragment() {
     }
 
     @SuppressWarnings("unused")
-    public static StepDetailsFragment newInstance(int columnCount, int recipeId, int stepId) {
+    public static StepDetailsFragment newInstance(int recipeId, int stepId) {
         StepDetailsFragment fragment = new StepDetailsFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
         args.putInt(ARG_RECIPE_ID, recipeId);
         args.putInt(ARG_STEP_ID, stepId);
         fragment.setArguments(args);
@@ -57,7 +54,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
         setRetainInstance(true);
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
             mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
             mStepId = getArguments().getInt(ARG_STEP_ID);
         }
@@ -106,7 +102,7 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     }
 
     @Override
-    public void showStepTitle(String stepName) {
+    public void showTitle(String stepName) {
         if (getActivity() != null) {
             ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if (supportActionBar != null) {

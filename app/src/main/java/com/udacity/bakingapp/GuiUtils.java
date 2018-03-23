@@ -40,6 +40,7 @@ public class GuiUtils {
     public static boolean isHandsetLandscape(Context context) {
         int orientation = context.getResources().getConfiguration().orientation;
         float widthDp = getWidthDp(context);
-        return orientation == Configuration.ORIENTATION_LANDSCAPE && widthDp <= HANDSET_LANDSCAPE_WIDTH_LIMIT;
+        return orientation == Configuration.ORIENTATION_LANDSCAPE
+                && widthDp <= HANDSET_LANDSCAPE_WIDTH_LIMIT;
     }
 }
