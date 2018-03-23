@@ -31,8 +31,8 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
     private static final int MIN_WIDTH_THREE_COLUMNS = 800;
 
     private OnRecipesFragmentInteractionListener mListener;
-    private RecipesAdapter mRecipesAdapter;
-    private RecipesPresenter mRecipesPresenter;
+    private RecipesAdapter mAdapter;
+    private RecipesPresenter mPresenter;
     private RecyclerView mRecyclerView;
     private Context mContext;
 
@@ -53,7 +53,7 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
         setRetainInstance(true);
 
         // Instantiate presenter
-        mRecipesPresenter = new RecipesPresenter(this);
+        mPresenter = new RecipesPresenter(this);
     }
 
     @Override
@@ -75,11 +75,11 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
         } else {
             mRecyclerView.setLayoutManager(new GridLayoutManager(context, COLUMN_COUNT_THREE));
         }
-        mRecipesAdapter = new RecipesAdapter(new ArrayList<Recipe>(), mListener);
-        mRecyclerView.setAdapter(mRecipesAdapter);
+        mAdapter = new RecipesAdapter(new ArrayList<Recipe>(), mListener);
+        mRecyclerView.setAdapter(mAdapter);
 
         // Load data
-        mRecipesPresenter.loadRecipes();
+        mPresenter.loadRecipes();
         return view;
     }
 
@@ -121,7 +121,7 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
 
     @Override
     public void showRecipes(List<Recipe> recipes) {
-        mRecipesAdapter.replaceData(recipes);
+        mAdapter.replaceData(recipes);
     }
 
     public interface OnRecipesFragmentInteractionListener {
