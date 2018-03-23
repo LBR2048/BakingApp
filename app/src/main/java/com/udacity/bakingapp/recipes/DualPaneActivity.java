@@ -29,10 +29,17 @@ public class DualPaneActivity extends AppCompatActivity
 
         determineTwoPane();
 
+        // TODO improve names, they are confusing right now
         showRecipeDetailsFragment(recipeId);
 
         if (!mTwoPane) {
+            // TODO remove detail pane if no video selected
             removeDetailPaneFragment();
+
+            // TODO remove master pane if video selected
+
+            // TODO the Activity must know if a video is selected or not
+            // TODO or even the Activity presenter
         }
     }
 
@@ -47,9 +54,11 @@ public class DualPaneActivity extends AppCompatActivity
                 (StepDetailsFragment) getSupportFragmentManager().findFragmentByTag(
                         STEP_DETAILS_FRAGMENT_TAG);
 
+        // TODO use tags instead of IDs to operate on fragments
         Fragment detailPaneFragment = getSupportFragmentManager().findFragmentById(
                 R.id.main_activity_detail_pane);
 
+        // TODO simplify adding fragments
         if (mTwoPane) {
             if (detailPaneFragment != null && detailPaneFragment instanceof StepDetailsFragment) {
                 stepDetailsFragment = (StepDetailsFragment) detailPaneFragment;
