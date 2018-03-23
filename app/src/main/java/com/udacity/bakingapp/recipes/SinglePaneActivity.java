@@ -41,7 +41,7 @@ public class SinglePaneActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (fragmentManager.findFragmentByTag(RECIPES_FRAGMENT_TAG) == null) {
-            RecipesFragment recipesFragment = RecipesFragment.newInstance(1);
+            RecipesFragment recipesFragment = RecipesFragment.newInstance();
             fragmentManager.beginTransaction()
                     .replace(R.id.single_pane_activity, recipesFragment, RECIPES_FRAGMENT_TAG)
                     .commit();

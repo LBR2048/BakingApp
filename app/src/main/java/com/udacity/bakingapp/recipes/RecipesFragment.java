@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -25,23 +26,23 @@ import java.util.List;
  */
 public class RecipesFragment extends android.support.v4.app.Fragment implements RecipesContract.View {
 
-    private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String RECYCLER_VIEW_STATE = "recyclerViewState";
+    private static final int COLUMN_COUNT_THREE = 3;
+    private static final int MIN_WIDTH_THREE_COLUMNS = 800;
 
-    private int mColumnCount = 1;
     private OnRecipesFragmentInteractionListener mListener;
     private RecipesAdapter mRecipesAdapter;
     private RecipesPresenter mRecipesPresenter;
     private RecyclerView mRecyclerView;
+    private Context mContext;
 
     public RecipesFragment() {
     }
 
     @SuppressWarnings("unused")
-    public static RecipesFragment newInstance(int columnCount) {
+    public static RecipesFragment newInstance() {
         RecipesFragment recipesFragment = new RecipesFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
         recipesFragment.setArguments(args);
         return recipesFragment;
     }
@@ -50,10 +51,6 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
 
         // Instantiate presenter
         mRecipesPresenter = new RecipesPresenter(this);
@@ -65,12 +62,18 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
         android.view.View view = inflater.inflate(R.layout.fragment_recipes, container, false);
         mRecyclerView = view.findViewById(R.id.recipe_list);
 
+        // https://stackoverflow.com/questions/6465680/how-to-determine-the-screen-width-in-terms-of-dp-or-dip-at-runtime-in-android
+        // https://stackoverflow.com/questions/29579811/changing-number-of-columns-with-gridlayoutmanager-and-recyclerview
+        // Best solution: http://blog.sqisland.com/2014/12/recyclerview-autofit-grid.html
+        DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
+        float widthDp = displayMetrics.widthPixels / displayMetrics.density;
+
         // Set the adapter
         Context context = view.getContext();
-        if (mColumnCount <= 1) {
+        if (widthDp <= MIN_WIDTH_THREE_COLUMNS) {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         } else {
-            mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+            mRecyclerView.setLayoutManager(new GridLayoutManager(context, COLUMN_COUNT_THREE));
         }
         mRecipesAdapter = new RecipesAdapter(new ArrayList<Recipe>(), mListener);
         mRecyclerView.setAdapter(mRecipesAdapter);
@@ -101,6 +104,7 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mContext = context;
         if (context instanceof OnRecipesFragmentInteractionListener) {
             mListener = (OnRecipesFragmentInteractionListener) context;
         } else {
