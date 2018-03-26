@@ -19,6 +19,7 @@ public class DualPaneActivity extends AppCompatActivity
     private static final String STEP_DETAILS_FRAGMENT_TAG = "step_details_tag";
 
     private boolean mTwoPane;
+    private boolean mIsRecipeSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +30,16 @@ public class DualPaneActivity extends AppCompatActivity
 
         determineTwoPane();
 
-        // TODO improve names, they are confusing right now
-        showRecipeDetailsFragment(recipeId);
+        showRecipeDetails(recipeId, R.id.dual_pane_master);
 
-        if (!mTwoPane) {
-            // TODO remove detail pane if no video selected
+        if (!mTwoPane) {// || mIsRecipeSelected) {
+        // TODO remove detail pane if no video selected
             removeDetailPaneFragment();
 
-            // TODO remove master pane if video selected
+        // TODO remove master pane if video selected
 
-            // TODO the Activity must know if a video is selected or not
-            // TODO or even the Activity presenter
+        // TODO the Activity must know if a video is selected or not
+        // TODO or even the Activity presenter
         }
     }
 
@@ -50,58 +50,63 @@ public class DualPaneActivity extends AppCompatActivity
 
     @Override
     public void onStepClicked(int recipeId, Step step) {
-        StepDetailsFragment stepDetailsFragment =
-                (StepDetailsFragment) getSupportFragmentManager().findFragmentByTag(
-                        STEP_DETAILS_FRAGMENT_TAG);
-
-        // TODO use tags instead of IDs to operate on fragments
-        Fragment detailPaneFragment = getSupportFragmentManager().findFragmentById(
-                R.id.main_activity_detail_pane);
-
-        // TODO simplify adding fragments
         if (mTwoPane) {
-            if (detailPaneFragment != null && detailPaneFragment instanceof StepDetailsFragment) {
-                stepDetailsFragment = (StepDetailsFragment) detailPaneFragment;
-                stepDetailsFragment.showStep(recipeId, step.getId());
-            } else {
-                stepDetailsFragment =
-                        StepDetailsFragment.newInstance(recipeId, step.getId());
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_activity_detail_pane, stepDetailsFragment,
-                                STEP_DETAILS_FRAGMENT_TAG)
-                        .commit();
-            }
+            showStepDetails(recipeId, step.getId(), R.id.dual_pane_detail);
+            // TODO add to backstack
         } else {
-            if (stepDetailsFragment == null) {
-                stepDetailsFragment =
-                        StepDetailsFragment.newInstance(recipeId, step.getId());
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_activity_master_pane, stepDetailsFragment,
-                                STEP_DETAILS_FRAGMENT_TAG)
-                        .addToBackStack(null)
-                        .commit();
-            } else {
-                stepDetailsFragment.showStep(recipeId, step.getId());
-            }
+            showStepDetails(recipeId, step.getId(), R.id.dual_pane_master);
         }
     }
 
     private void determineTwoPane() {
-        mTwoPane = (findViewById(R.id.main_activity_detail_pane) != null);
+        mTwoPane = (findViewById(R.id.dual_pane_detail) != null);
     }
 
-    private void showRecipeDetailsFragment(int mRecipeId) {
-        RecipeDetailsFragment recipeDetailsFragment =
-                (RecipeDetailsFragment) getSupportFragmentManager().findFragmentByTag(
-                        RECIPE_DETAILS_FRAGMENT_TAG);
+    private void showRecipeDetails(int mRecipeId, int containerViewId) {
+        RecipeDetailsFragment recipeDetailsFragment = getRecipeDetailsFragment();
 
         if (recipeDetailsFragment == null) {
             recipeDetailsFragment = RecipeDetailsFragment.newInstance(1, mRecipeId);
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.main_activity_master_pane, recipeDetailsFragment, RECIPE_DETAILS_FRAGMENT_TAG)
+                    .replace(containerViewId, recipeDetailsFragment, RECIPE_DETAILS_FRAGMENT_TAG)
+                    .commit();
+            getSupportFragmentManager().executePendingTransactions();
+        }
+    }
+
+    private void showStepDetails(int recipeId, int stepId, int containerViewId) {
+        StepDetailsFragment stepDetailsFragment = getStepDetailsFragment();
+
+        if (stepDetailsFragment == null) {
+            stepDetailsFragment = StepDetailsFragment.newInstance(recipeId, stepId);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG)
+                    .commit();
+        } else {
+            stepDetailsFragment.showStep(recipeId, stepId);
+        }
+    }
+
+    private void removeStepDetailsFragment() {
+        StepDetailsFragment stepDetailsFragment = getStepDetailsFragment();
+
+        if (stepDetailsFragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(stepDetailsFragment)
+                    .commit();
+        }
+    }
+
+    private void removeRecipeDetailsFragment() {
+        RecipeDetailsFragment recipeDetailsFragment = getRecipeDetailsFragment();
+
+        if (recipeDetailsFragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(recipeDetailsFragment)
                     .commit();
         }
     }
@@ -109,12 +114,21 @@ public class DualPaneActivity extends AppCompatActivity
     private void removeDetailPaneFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        Fragment detailPaneFragment = fragmentManager.findFragmentById(
-                R.id.main_activity_detail_pane);
+        Fragment detailPaneFragment = fragmentManager.findFragmentById(R.id.dual_pane_detail);
 
         if (detailPaneFragment != null) {
             fragmentManager.beginTransaction().remove(detailPaneFragment).commit();
             fragmentManager.executePendingTransactions();
         }
+    }
+
+    private RecipeDetailsFragment getRecipeDetailsFragment() {
+        return (RecipeDetailsFragment) getSupportFragmentManager().findFragmentByTag(
+                RECIPE_DETAILS_FRAGMENT_TAG);
+    }
+
+    private StepDetailsFragment getStepDetailsFragment() {
+        return (StepDetailsFragment) getSupportFragmentManager().findFragmentByTag(
+                STEP_DETAILS_FRAGMENT_TAG);
     }
 }
