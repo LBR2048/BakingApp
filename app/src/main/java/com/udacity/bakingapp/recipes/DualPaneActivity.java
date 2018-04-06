@@ -12,35 +12,65 @@ import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment;
 import com.udacity.bakingapp.stepdetails.StepDetailsFragment;
 
 public class DualPaneActivity extends AppCompatActivity
-        implements RecipeDetailsFragment.OnDetailsFragmentInteraction {
+        implements RecipeDetailsFragment.OnDetailsFragmentInteraction,
+        StepDetailsFragment.OnFragmentInteraction {
 
     public static final String EXTRA_RECIPE_ID = "recipeId";
     private static final String RECIPE_DETAILS_FRAGMENT_TAG = "recipe_details_fragment_tag";
     private static final String STEP_DETAILS_FRAGMENT_TAG = "step_details_tag";
+    private static final String KEY_STEP_SELECTED = "key-step-selected";
+    private static final String KEY_STEP_ID = "key-step-id";
 
     private boolean mTwoPane;
-    private boolean mIsRecipeSelected;
+    private boolean mStepSelected;
+    private int mStepId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dual_pane);
 
+        if (savedInstanceState != null) {
+            mStepSelected = savedInstanceState.getBoolean(KEY_STEP_SELECTED, false);
+            mStepId = savedInstanceState.getInt(KEY_STEP_ID);
+        }
+
         int recipeId = getIntent().getIntExtra(EXTRA_RECIPE_ID, -1);
 
         determineTwoPane();
 
-        showRecipeDetails(recipeId, R.id.dual_pane_master);
-
-        if (!mTwoPane) {// || mIsRecipeSelected) {
-        // TODO remove detail pane if no video selected
-            removeDetailPaneFragment();
-
-        // TODO remove master pane if video selected
+        if (!mTwoPane) {
+            if (!mStepSelected) {
+                // Remove detail pane if no video selected
+                // Fragment must be removed because it is using setSaveInstanceState(true)
+                removeDetailPaneFragment();
+                showRecipeDetails(recipeId, R.id.dual_pane_master);
+            } else {
+                // Remove master pane if video selected
+                // Fragment must be removed because it is using setSaveInstanceState(true)
+                removeDetailPaneFragment();
+                showStepDetails(recipeId, mStepId, R.id.dual_pane_master);
+            }
 
         // TODO the Activity must know if a video is selected or not
         // TODO or even the Activity presenter
+        } else {
+            if (!mStepSelected) {
+                showRecipeDetails(recipeId, R.id.dual_pane_master);
+                removeDetailPaneFragment();
+            } else {
+                showRecipeDetails(recipeId, R.id.dual_pane_master);
+                showStepDetails(recipeId, mStepId, R.id.dual_pane_detail);
+            }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean(KEY_STEP_SELECTED, mStepSelected);
+        outState.putInt(KEY_STEP_ID, mStepId);
     }
 
     @Override
@@ -50,12 +80,19 @@ public class DualPaneActivity extends AppCompatActivity
 
     @Override
     public void onStepClicked(int recipeId, Step step) {
+        mStepSelected = true;
+        mStepId = step.getId();
         if (mTwoPane) {
             showStepDetails(recipeId, step.getId(), R.id.dual_pane_detail);
             // TODO add to backstack
         } else {
             showStepDetails(recipeId, step.getId(), R.id.dual_pane_master);
         }
+    }
+
+    @Override
+    public void onStepSelected(int stepId) {
+        mStepId = stepId;
     }
 
     private void determineTwoPane() {
@@ -84,7 +121,13 @@ public class DualPaneActivity extends AppCompatActivity
                     .beginTransaction()
                     .replace(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG)
                     .commit();
+            getSupportFragmentManager().executePendingTransactions();
         } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG)
+                    .commit();
+            getSupportFragmentManager().executePendingTransactions();
             stepDetailsFragment.showStep(recipeId, stepId);
         }
     }

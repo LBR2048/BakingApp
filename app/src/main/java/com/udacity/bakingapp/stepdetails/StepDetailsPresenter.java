@@ -13,6 +13,7 @@ import java.util.List;
 public class StepDetailsPresenter implements StepDetailsContract.Presenter {
 
     private List<Step> mSteps;
+    // TODO is this the step id or position?
     private int mCurrentStepId;
 
     private final StepDetailsContract.View mView;

@@ -6,14 +6,14 @@
     android:baselineAligned="false">
 
     <FrameLayout
-        android:id="@+id/main_activity_master_pane"
+        android:id="@+id/dual_pane_master"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
         tools:context=".recipes.DualPaneActivity" />
 
     <FrameLayout
-        android:id="@+id/main_activity_detail_pane"
+        android:id="@+id/dual_pane_detail"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
