@@ -24,10 +24,13 @@ import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment;
  */
 public class StepDetailsFragment extends Fragment implements StepDetailsContract.View {
 
+    //region Constants
     private static final String ARG_RECIPE_ID = "recipe-id";
     private static final String ARG_STEP_ID = "step-id";
     private static final String VIDEO_FRAGMENT_TAG = "video-fragment-tag";
+    //endregion
 
+    //region Member Variables
     private FrameLayout mVideoContainer;
     private TextView mDescriptionView;
     private Button mPreviousButton;
@@ -36,7 +39,9 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     private int mStepId;
     private StepDetailsPresenter mStepDetailsPresenter;
     private OnFragmentInteraction mListener;
+    //endregion
 
+    //region Constructors
     public StepDetailsFragment() {
     }
 
@@ -49,6 +54,7 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
         fragment.setArguments(args);
         return fragment;
     }
+    //endregion
 
     //region Lifecycle
     @Override

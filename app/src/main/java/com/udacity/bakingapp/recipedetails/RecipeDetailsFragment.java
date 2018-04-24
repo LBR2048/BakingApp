@@ -33,10 +33,13 @@ import java.util.List;
 public class RecipeDetailsFragment extends Fragment
         implements StepsAdapter.OnStepsAdapterInteraction, RecipeDetailsContract.View {
 
+    //region Constants
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String RECYCLER_VIEW_STATE = "recycler_view_state";
     private static final String ARG_RECIPE_ID = "arg_recipe_id";
+    //endregion
 
+    //region Member Variables
     private int mColumnCount = 1;
     private OnDetailsFragmentInteraction mListener;
     private StepsAdapter mStepsAdapter;
@@ -47,7 +50,9 @@ public class RecipeDetailsFragment extends Fragment
     private List<Step> mSteps;
     private RecipeDetailsPresenter mRecipeDetailsPresenter;
     private int mRecipeId;
+    //endregion
 
+    //region Constructors
     public RecipeDetailsFragment() {
     }
 
@@ -60,7 +65,9 @@ public class RecipeDetailsFragment extends Fragment
         fragment.setArguments(args);
         return fragment;
     }
+    //endregion
 
+    //region Lifecycle
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +147,7 @@ public class RecipeDetailsFragment extends Fragment
         super.onDetach();
         mListener = null;
     }
+    //endregion
 
     @Override
     public void showRecipeName(String title) {

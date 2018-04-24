@@ -26,15 +26,20 @@ import java.util.List;
  */
 public class RecipesFragment extends android.support.v4.app.Fragment implements RecipesContract.View {
 
+    //region Constants
     private static final String RECYCLER_VIEW_STATE = "recyclerViewState";
     private static final int COLUMN_COUNT_THREE = 3;
     private static final int MIN_WIDTH_THREE_COLUMNS = 800;
+    //endregion
 
+    //region Member Variables
     private OnRecipesFragmentInteractionListener mListener;
     private RecipesAdapter mAdapter;
     private RecipesPresenter mPresenter;
     private RecyclerView mRecyclerView;
+    //endregion
 
+    //region Constructors
     public RecipesFragment() {
     }
 
@@ -45,7 +50,9 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
         recipesFragment.setArguments(args);
         return recipesFragment;
     }
+    //endregion
 
+    //region Lifecycle
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +118,7 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
         super.onDetach();
         mListener = null;
     }
+    //endregion
 
     @Override
     public void showRecipes(List<Recipe> recipes) {
