@@ -1,5 +1,6 @@
 package com.udacity.bakingapp.stepdetails;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.udacity.bakingapp.GuiUtils;
 import com.udacity.bakingapp.R;
+import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment;
 
 /**
  * A fragment representing a list of Items.
@@ -33,6 +35,7 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     private int mRecipeId;
     private int mStepId;
     private StepDetailsPresenter mStepDetailsPresenter;
+    private OnFragmentInteraction mListener;
 
     public StepDetailsFragment() {
     }
@@ -87,17 +90,30 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
         setupNavigationButtons();
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteraction) {
+            mListener = (OnFragmentInteraction) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement StepDetailsFragment.OnFragmentInteraction");
+        }
+    }
     //endregion
 
     public void showStep(int recipeId, int stepId) {
         mRecipeId = recipeId;
         mStepId = stepId;
 
+        mListener.onStepSelected(stepId);
         mStepDetailsPresenter.getStep(mRecipeId, mStepId);
     }
 
+    // TODO is this method really needed?
     @Override
     public void setStepId(int stepId) {
+        mListener.onStepSelected(stepId);
         mStepId = stepId;
     }
 
@@ -180,5 +196,9 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
                 }
             });
         }
+    }
+
+    public interface OnFragmentInteraction {
+        void onStepSelected(int stepId);
     }
 }
