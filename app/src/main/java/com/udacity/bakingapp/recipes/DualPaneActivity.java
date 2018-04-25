@@ -106,7 +106,7 @@ public class DualPaneActivity extends AppCompatActivity
     }
 
     private void showSteps(int mRecipeId, int containerViewId) {
-        StepsFragment stepsFragment = getRecipeDetailsFragment();
+        StepsFragment stepsFragment = getStepsFragment();
 
         if (stepsFragment == null) {
             stepsFragment = StepsFragment.newInstance(1, mRecipeId);
@@ -149,7 +149,7 @@ public class DualPaneActivity extends AppCompatActivity
         }
     }
 
-    private StepsFragment getRecipeDetailsFragment() {
+    private StepsFragment getStepsFragment() {
         return (StepsFragment) getSupportFragmentManager().findFragmentByTag(
                 RECIPE_DETAILS_FRAGMENT_TAG);
     }
