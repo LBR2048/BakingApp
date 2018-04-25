@@ -33,7 +33,7 @@ public class SinglePaneActivity extends AppCompatActivity
     private void setTitle() {
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
-            supportActionBar.setTitle("Recipes");
+            supportActionBar.setTitle(R.string.recipes_title);
         }
     }
 
