@@ -110,11 +110,7 @@ public class DualPaneActivity extends AppCompatActivity
 
         if (stepsFragment == null) {
             stepsFragment = StepsFragment.newInstance(1, mRecipeId);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(containerViewId, stepsFragment, STEPS_FRAGMENT_TAG)
-                    .commit();
-            getSupportFragmentManager().executePendingTransactions();
+            replaceFragment(containerViewId, stepsFragment, STEPS_FRAGMENT_TAG);
         }
     }
 
@@ -124,19 +120,19 @@ public class DualPaneActivity extends AppCompatActivity
 
         if (stepDetailsFragment == null) {
             stepDetailsFragment = StepDetailsFragment.newInstance(recipeId, stepId);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG)
-                    .commit();
-            getSupportFragmentManager().executePendingTransactions();
+            replaceFragment(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
         } else {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG)
-                    .commit();
-            getSupportFragmentManager().executePendingTransactions();
+            replaceFragment(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
             stepDetailsFragment.showStep(recipeId, stepId);
         }
+    }
+
+    private void replaceFragment(int containerViewId, Fragment fragment, String fragmentTag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(containerViewId, fragment, fragmentTag)
+                .commit();
+        getSupportFragmentManager().executePendingTransactions();
     }
 
     private void removeDetailPaneFragment() {
