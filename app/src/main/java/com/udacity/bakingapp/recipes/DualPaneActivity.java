@@ -9,6 +9,7 @@ import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.steps.StepsFragment;
 import com.udacity.bakingapp.stepdetails.StepDetailsFragment;
+import com.udacity.bakingapp.utils.GuiUtils;
 
 public class DualPaneActivity extends AppCompatActivity
         implements StepsFragment.OnDetailsFragmentInteraction,
@@ -110,7 +111,7 @@ public class DualPaneActivity extends AppCompatActivity
 
         if (stepsFragment == null) {
             stepsFragment = StepsFragment.newInstance(1, mRecipeId);
-            replaceFragment(containerViewId, stepsFragment, STEPS_FRAGMENT_TAG);
+            GuiUtils.replaceFragment(this, containerViewId, stepsFragment, STEPS_FRAGMENT_TAG);
         }
     }
 
@@ -120,19 +121,11 @@ public class DualPaneActivity extends AppCompatActivity
 
         if (stepDetailsFragment == null) {
             stepDetailsFragment = StepDetailsFragment.newInstance(recipeId, stepId);
-            replaceFragment(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
+            GuiUtils.replaceFragment(this, containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
         } else {
-            replaceFragment(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
+            GuiUtils.replaceFragment(this, containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
             stepDetailsFragment.showStep(recipeId, stepId);
         }
-    }
-
-    private void replaceFragment(int containerViewId, Fragment fragment, String fragmentTag) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(containerViewId, fragment, fragmentTag)
-                .commit();
-        getSupportFragmentManager().executePendingTransactions();
     }
 
     private void removeDetailPaneFragment() {

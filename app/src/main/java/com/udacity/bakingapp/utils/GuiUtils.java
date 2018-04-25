@@ -3,6 +3,7 @@ package com.udacity.bakingapp.utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -42,5 +43,13 @@ public class GuiUtils {
         float widthDp = getWidthDp(context);
         return orientation == Configuration.ORIENTATION_LANDSCAPE
                 && widthDp <= HANDSET_LANDSCAPE_WIDTH_LIMIT;
+    }
+
+    public static void replaceFragment(FragmentActivity fragmentActivity, int containerViewId, Fragment fragment, String fragmentTag) {
+        fragmentActivity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(containerViewId, fragment, fragmentTag)
+                .commit();
+        fragmentActivity.getSupportFragmentManager().executePendingTransactions();
     }
 }
