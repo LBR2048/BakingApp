@@ -11,7 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.udacity.bakingapp.GuiUtils;
+import com.udacity.bakingapp.utils.GuiUtils;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Recipe;
 
