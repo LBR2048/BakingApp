@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.repository;
+package com.udacity.bakingapp.data;
 
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.model.Step;

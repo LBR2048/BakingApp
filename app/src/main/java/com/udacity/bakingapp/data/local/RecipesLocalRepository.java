@@ -1,7 +1,7 @@
-package com.udacity.bakingapp.repository.local;
+package com.udacity.bakingapp.data.local;
 
 import com.udacity.bakingapp.model.Recipe;
-import com.udacity.bakingapp.repository.RecipesRepository;
+import com.udacity.bakingapp.data.RecipesRepository;
 
 /**
  * Created by leonardo.ardjomand on 16/01/2018.

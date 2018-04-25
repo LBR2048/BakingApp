@@ -1,9 +1,9 @@
-package com.udacity.bakingapp.repository;
+package com.udacity.bakingapp.data;
 
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.model.Step;
-import com.udacity.bakingapp.repository.local.RecipesLocalRepository;
-import com.udacity.bakingapp.repository.remote.RecipesRemoteRepository;
+import com.udacity.bakingapp.data.local.RecipesLocalRepository;
+import com.udacity.bakingapp.data.remote.RecipesRemoteRepository;
 
 import java.util.List;
 

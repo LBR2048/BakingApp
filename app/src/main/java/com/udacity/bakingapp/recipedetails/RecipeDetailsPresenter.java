@@ -1,8 +1,8 @@
 package com.udacity.bakingapp.recipedetails;
 
 import com.udacity.bakingapp.model.Recipe;
-import com.udacity.bakingapp.repository.RecipesRepository;
-import com.udacity.bakingapp.repository.remote.RecipesRemoteRepository;
+import com.udacity.bakingapp.data.RecipesRepository;
+import com.udacity.bakingapp.data.remote.RecipesRemoteRepository;
 
 /**
  * Created by leonardo.ardjomand on 28/12/2017.

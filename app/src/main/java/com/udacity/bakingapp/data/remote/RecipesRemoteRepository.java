@@ -1,9 +1,9 @@
-package com.udacity.bakingapp.repository.remote;
+package com.udacity.bakingapp.data.remote;
 
 import android.util.Log;
 
 import com.udacity.bakingapp.model.Recipe;
-import com.udacity.bakingapp.repository.RecipesRepository;
+import com.udacity.bakingapp.data.RecipesRepository;
 
 import java.io.IOException;
 import java.util.List;

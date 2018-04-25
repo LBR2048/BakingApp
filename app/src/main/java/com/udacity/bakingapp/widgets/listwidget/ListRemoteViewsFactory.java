@@ -5,7 +5,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.udacity.bakingapp.model.Ingredient;
-import com.udacity.bakingapp.repository.RecipesRepositoryImpl;
+import com.udacity.bakingapp.data.RecipesRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.List;

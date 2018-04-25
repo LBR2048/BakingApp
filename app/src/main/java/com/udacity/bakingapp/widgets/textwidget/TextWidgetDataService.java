@@ -11,8 +11,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.udacity.bakingapp.model.Recipe;
-import com.udacity.bakingapp.repository.RecipesRepository;
-import com.udacity.bakingapp.repository.RecipesRepositoryImpl;
+import com.udacity.bakingapp.data.RecipesRepository;
+import com.udacity.bakingapp.data.RecipesRepositoryImpl;
 
 /**
  * Created by leonardo.ardjomand on 02/01/2018.

@@ -1,8 +1,8 @@
 package com.udacity.bakingapp.recipes;
 
 import com.udacity.bakingapp.model.Recipe;
-import com.udacity.bakingapp.repository.RecipesRepository;
-import com.udacity.bakingapp.repository.RecipesRepositoryImpl;
+import com.udacity.bakingapp.data.RecipesRepository;
+import com.udacity.bakingapp.data.RecipesRepositoryImpl;
 
 import java.util.List;
 
