@@ -138,28 +138,6 @@ public class DualPaneActivity extends AppCompatActivity
         }
     }
 
-    private void removeStepDetailsFragment() {
-        StepDetailsFragment stepDetailsFragment = getStepDetailsFragment();
-
-        if (stepDetailsFragment != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .remove(stepDetailsFragment)
-                    .commit();
-        }
-    }
-
-    private void removeRecipeDetailsFragment() {
-        StepsFragment stepsFragment = getRecipeDetailsFragment();
-
-        if (stepsFragment != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .remove(stepsFragment)
-                    .commit();
-        }
-    }
-
     private void removeDetailPaneFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
