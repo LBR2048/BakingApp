@@ -43,9 +43,7 @@ public class RecipeDetailsFragment extends Fragment
     private int mColumnCount = 1;
     private OnDetailsFragmentInteraction mListener;
     private StepsAdapter mStepsAdapter;
-    private IngredientsAdapter mIngredientsAdapter;
     private RecyclerView mStepList;
-    private RecyclerView mIngredientList;
     private TextView mIngredientText;
     private List<Step> mSteps;
     private RecipeDetailsPresenter mRecipeDetailsPresenter;
@@ -161,8 +159,6 @@ public class RecipeDetailsFragment extends Fragment
 
     @Override
     public void showIngredients(List<Ingredient> ingredients) {
-        List<Ingredient> ingredients1 = ingredients;
-//        mIngredientsAdapter.replaceData(ingredients);
         mIngredientText.setText(Utils.formatIngredientsString(ingredients));
     }
 
