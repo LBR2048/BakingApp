@@ -49,7 +49,7 @@ public class DualPaneActivity extends AppCompatActivity
                 // Remove detail pane if no video selected
                 // Fragment must be removed because it is using setSaveInstanceState(true)
                 removeDetailPaneFragment();
-                showRecipeDetails(recipeId, R.id.dual_pane_master);
+                showSteps(recipeId, R.id.dual_pane_master);
             } else {
                 // Remove master pane if video selected
                 // Fragment must be removed because it is using setSaveInstanceState(true)
@@ -61,10 +61,10 @@ public class DualPaneActivity extends AppCompatActivity
         // TODO or even the Activity presenter
         } else {
             if (!mStepSelected) {
-                showRecipeDetails(recipeId, R.id.dual_pane_master);
+                showSteps(recipeId, R.id.dual_pane_master);
                 removeDetailPaneFragment();
             } else {
-                showRecipeDetails(recipeId, R.id.dual_pane_master);
+                showSteps(recipeId, R.id.dual_pane_master);
                 showStepDetails(recipeId, mStepId, R.id.dual_pane_detail);
             }
         }
@@ -105,7 +105,7 @@ public class DualPaneActivity extends AppCompatActivity
         mTwoPane = (findViewById(R.id.dual_pane_detail) != null);
     }
 
-    private void showRecipeDetails(int mRecipeId, int containerViewId) {
+    private void showSteps(int mRecipeId, int containerViewId) {
         StepsFragment stepsFragment = getRecipeDetailsFragment();
 
         if (stepsFragment == null) {
