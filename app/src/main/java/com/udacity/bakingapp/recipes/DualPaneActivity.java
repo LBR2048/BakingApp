@@ -16,8 +16,8 @@ public class DualPaneActivity extends AppCompatActivity
 
     //region Constants
     public static final String EXTRA_RECIPE_ID = "recipeId";
-    private static final String RECIPE_DETAILS_FRAGMENT_TAG = "recipe_details_fragment_tag";
-    private static final String STEP_DETAILS_FRAGMENT_TAG = "step_details_tag";
+    private static final String STEPS_FRAGMENT_TAG = "steps_fragment_tag";
+    private static final String STEP_DETAILS_FRAGMENT_TAG = "step_details_fragment_tag";
     private static final String KEY_STEP_SELECTED = "key-step-selected";
     private static final String KEY_STEP_ID = "key-step-id";
     //endregion
@@ -106,13 +106,13 @@ public class DualPaneActivity extends AppCompatActivity
 
     private void showSteps(int mRecipeId, int containerViewId) {
         StepsFragment stepsFragment = (StepsFragment) getSupportFragmentManager()
-                .findFragmentByTag(RECIPE_DETAILS_FRAGMENT_TAG);
+                .findFragmentByTag(STEPS_FRAGMENT_TAG);
 
         if (stepsFragment == null) {
             stepsFragment = StepsFragment.newInstance(1, mRecipeId);
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(containerViewId, stepsFragment, RECIPE_DETAILS_FRAGMENT_TAG)
+                    .replace(containerViewId, stepsFragment, STEPS_FRAGMENT_TAG)
                     .commit();
             getSupportFragmentManager().executePendingTransactions();
         }
