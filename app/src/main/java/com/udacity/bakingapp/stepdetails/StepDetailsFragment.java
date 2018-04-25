@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.udacity.bakingapp.GuiUtils;
 import com.udacity.bakingapp.R;
-import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment;
 
 /**
  * A fragment representing a list of Items.

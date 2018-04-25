@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.recipedetails;
+package com.udacity.bakingapp.steps;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -30,8 +30,8 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnDetailsFragmentInteraction}
  * interface.
  */
-public class RecipeDetailsFragment extends Fragment
-        implements StepsAdapter.OnStepsAdapterInteraction, RecipeDetailsContract.View {
+public class StepsFragment extends Fragment
+        implements StepsAdapter.OnStepsAdapterInteraction, StepsContract.View {
 
     //region Constants
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -46,17 +46,17 @@ public class RecipeDetailsFragment extends Fragment
     private RecyclerView mStepList;
     private TextView mIngredientText;
     private List<Step> mSteps;
-    private RecipeDetailsPresenter mRecipeDetailsPresenter;
+    private StepsPresenter mStepsPresenter;
     private int mRecipeId;
     //endregion
 
     //region Constructors
-    public RecipeDetailsFragment() {
+    public StepsFragment() {
     }
 
     @SuppressWarnings("unused")
-    public static RecipeDetailsFragment newInstance(int columnCount, int recipeId) {
-        RecipeDetailsFragment fragment = new RecipeDetailsFragment();
+    public static StepsFragment newInstance(int columnCount, int recipeId) {
+        StepsFragment fragment = new StepsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         args.putInt(ARG_RECIPE_ID, recipeId);
@@ -77,7 +77,7 @@ public class RecipeDetailsFragment extends Fragment
         }
 
         // Instantiate presenter
-        mRecipeDetailsPresenter = new RecipeDetailsPresenter(this);
+        mStepsPresenter = new StepsPresenter(this);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class RecipeDetailsFragment extends Fragment
         mStepsAdapter = new StepsAdapter(new ArrayList<Step>(), this);
         mStepList.setAdapter(mStepsAdapter);
 
-        mRecipeDetailsPresenter.getRecipeDetails(mRecipeId);
+        mStepsPresenter.getRecipeDetails(mRecipeId);
 
         ViewCompat.setNestedScrollingEnabled(mStepList, false);
 

@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.recipedetails;
+package com.udacity.bakingapp.steps;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.model.Step;
-import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment.OnDetailsFragmentInteraction;
+import com.udacity.bakingapp.steps.StepsFragment.OnDetailsFragmentInteraction;
 
 import java.util.List;
 

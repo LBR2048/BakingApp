@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.recipedetails;
+package com.udacity.bakingapp.steps;
 
 import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Step;
@@ -9,7 +9,7 @@ import java.util.List;
  * Created by leonardo.ardjomand on 28/12/2017.
  */
 
-public interface RecipeDetailsContract {
+public interface StepsContract {
 
     interface View {
 

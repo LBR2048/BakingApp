@@ -8,11 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Step;
-import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment;
+import com.udacity.bakingapp.steps.StepsFragment;
 import com.udacity.bakingapp.stepdetails.StepDetailsFragment;
 
 public class DualPaneActivity extends AppCompatActivity
-        implements RecipeDetailsFragment.OnDetailsFragmentInteraction,
+        implements StepsFragment.OnDetailsFragmentInteraction,
         StepDetailsFragment.OnFragmentInteraction {
 
     public static final String EXTRA_RECIPE_ID = "recipeId";
@@ -100,13 +100,13 @@ public class DualPaneActivity extends AppCompatActivity
     }
 
     private void showRecipeDetails(int mRecipeId, int containerViewId) {
-        RecipeDetailsFragment recipeDetailsFragment = getRecipeDetailsFragment();
+        StepsFragment stepsFragment = getRecipeDetailsFragment();
 
-        if (recipeDetailsFragment == null) {
-            recipeDetailsFragment = RecipeDetailsFragment.newInstance(1, mRecipeId);
+        if (stepsFragment == null) {
+            stepsFragment = StepsFragment.newInstance(1, mRecipeId);
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(containerViewId, recipeDetailsFragment, RECIPE_DETAILS_FRAGMENT_TAG)
+                    .replace(containerViewId, stepsFragment, RECIPE_DETAILS_FRAGMENT_TAG)
                     .commit();
             getSupportFragmentManager().executePendingTransactions();
         }
@@ -144,12 +144,12 @@ public class DualPaneActivity extends AppCompatActivity
     }
 
     private void removeRecipeDetailsFragment() {
-        RecipeDetailsFragment recipeDetailsFragment = getRecipeDetailsFragment();
+        StepsFragment stepsFragment = getRecipeDetailsFragment();
 
-        if (recipeDetailsFragment != null) {
+        if (stepsFragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .remove(recipeDetailsFragment)
+                    .remove(stepsFragment)
                     .commit();
         }
     }
@@ -165,8 +165,8 @@ public class DualPaneActivity extends AppCompatActivity
         }
     }
 
-    private RecipeDetailsFragment getRecipeDetailsFragment() {
-        return (RecipeDetailsFragment) getSupportFragmentManager().findFragmentByTag(
+    private StepsFragment getRecipeDetailsFragment() {
+        return (StepsFragment) getSupportFragmentManager().findFragmentByTag(
                 RECIPE_DETAILS_FRAGMENT_TAG);
     }
 

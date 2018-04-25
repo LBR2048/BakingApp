@@ -1,4 +1,4 @@
-package com.udacity.bakingapp.recipedetails;
+package com.udacity.bakingapp.steps;
 
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.data.RecipesRepository;
@@ -8,12 +8,12 @@ import com.udacity.bakingapp.data.remote.RecipesRemoteRepository;
  * Created by leonardo.ardjomand on 28/12/2017.
  */
 
-public class RecipeDetailsPresenter implements RecipeDetailsContract.Presenter {
+public class StepsPresenter implements StepsContract.Presenter {
 
-    private final RecipeDetailsContract.View mView;
+    private final StepsContract.View mView;
     private final RecipesRepository mRepository;
 
-    public RecipeDetailsPresenter(RecipeDetailsContract.View view) {
+    public StepsPresenter(StepsContract.View view) {
         mView = view;
         mRepository = new RecipesRemoteRepository();
     }
