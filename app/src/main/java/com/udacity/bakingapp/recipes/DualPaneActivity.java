@@ -2,7 +2,6 @@ package com.udacity.bakingapp.recipes;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.udacity.bakingapp.R;
@@ -106,7 +105,8 @@ public class DualPaneActivity extends AppCompatActivity
     }
 
     private void showSteps(int mRecipeId, int containerViewId) {
-        StepsFragment stepsFragment = getStepsFragment();
+        StepsFragment stepsFragment = (StepsFragment) getSupportFragmentManager()
+                .findFragmentByTag(RECIPE_DETAILS_FRAGMENT_TAG);
 
         if (stepsFragment == null) {
             stepsFragment = StepsFragment.newInstance(1, mRecipeId);
@@ -119,7 +119,8 @@ public class DualPaneActivity extends AppCompatActivity
     }
 
     private void showStepDetails(int recipeId, int stepId, int containerViewId) {
-        StepDetailsFragment stepDetailsFragment = getStepDetailsFragment();
+        StepDetailsFragment stepDetailsFragment = (StepDetailsFragment) getSupportFragmentManager()
+                .findFragmentByTag(STEP_DETAILS_FRAGMENT_TAG);
 
         if (stepDetailsFragment == null) {
             stepDetailsFragment = StepDetailsFragment.newInstance(recipeId, stepId);
@@ -139,23 +140,12 @@ public class DualPaneActivity extends AppCompatActivity
     }
 
     private void removeDetailPaneFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        Fragment detailPaneFragment = fragmentManager.findFragmentById(R.id.dual_pane_detail);
+        Fragment detailPaneFragment = getSupportFragmentManager().findFragmentById(R.id.dual_pane_detail);
 
         if (detailPaneFragment != null) {
-            fragmentManager.beginTransaction().remove(detailPaneFragment).commit();
-            fragmentManager.executePendingTransactions();
+            getSupportFragmentManager().beginTransaction().remove(detailPaneFragment).commit();
+            getSupportFragmentManager().executePendingTransactions();
         }
     }
 
-    private StepsFragment getStepsFragment() {
-        return (StepsFragment) getSupportFragmentManager().findFragmentByTag(
-                RECIPE_DETAILS_FRAGMENT_TAG);
-    }
-
-    private StepDetailsFragment getStepDetailsFragment() {
-        return (StepDetailsFragment) getSupportFragmentManager().findFragmentByTag(
-                STEP_DETAILS_FRAGMENT_TAG);
-    }
 }
