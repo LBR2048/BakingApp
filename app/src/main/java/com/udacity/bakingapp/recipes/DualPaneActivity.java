@@ -15,16 +15,21 @@ public class DualPaneActivity extends AppCompatActivity
         implements StepsFragment.OnDetailsFragmentInteraction,
         StepDetailsFragment.OnFragmentInteraction {
 
+    //region Constants
     public static final String EXTRA_RECIPE_ID = "recipeId";
     private static final String RECIPE_DETAILS_FRAGMENT_TAG = "recipe_details_fragment_tag";
     private static final String STEP_DETAILS_FRAGMENT_TAG = "step_details_tag";
     private static final String KEY_STEP_SELECTED = "key-step-selected";
     private static final String KEY_STEP_ID = "key-step-id";
+    //endregion
 
+    //region Member Variables
     private boolean mTwoPane;
     private boolean mStepSelected;
     private int mStepId;
+    //endregion
 
+    //region Lifecycle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +77,7 @@ public class DualPaneActivity extends AppCompatActivity
         outState.putBoolean(KEY_STEP_SELECTED, mStepSelected);
         outState.putInt(KEY_STEP_ID, mStepId);
     }
+    //endregion
 
     @Override
     public void onIngredientClicked(Ingredient ingredient) {
