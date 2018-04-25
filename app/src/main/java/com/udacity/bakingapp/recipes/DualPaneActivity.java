@@ -45,21 +45,19 @@ public class DualPaneActivity extends AppCompatActivity
         determineTwoPane();
 
         if (!mTwoPane) {
+            // Single pane
+
+            // Detail pane fragment must be removed because it is using setSaveInstanceState(true)
+            removeDetailPaneFragment();
+
             if (!mStepSelected) {
-                // Remove detail pane if no video selected
-                // Fragment must be removed because it is using setSaveInstanceState(true)
-                removeDetailPaneFragment();
                 showSteps(recipeId, R.id.dual_pane_master);
             } else {
-                // Remove master pane if video selected
-                // Fragment must be removed because it is using setSaveInstanceState(true)
-                removeDetailPaneFragment();
                 showStepDetails(recipeId, mStepId, R.id.dual_pane_master);
             }
 
-        // TODO the Activity must know if a video is selected or not
-        // TODO or even the Activity presenter
         } else {
+            // Two pane
             if (!mStepSelected) {
                 showSteps(recipeId, R.id.dual_pane_master);
                 removeDetailPaneFragment();
