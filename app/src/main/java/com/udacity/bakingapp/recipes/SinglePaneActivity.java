@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Recipe;
+import com.udacity.bakingapp.utils.GuiUtils;
 
 public class SinglePaneActivity extends AppCompatActivity
         implements RecipesFragment.OnRecipesFragmentInteractionListener {
@@ -38,13 +39,9 @@ public class SinglePaneActivity extends AppCompatActivity
     }
 
     private void showRecipesFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        if (fragmentManager.findFragmentByTag(RECIPES_FRAGMENT_TAG) == null) {
+        if (getSupportFragmentManager().findFragmentByTag(RECIPES_FRAGMENT_TAG) == null) {
             RecipesFragment recipesFragment = RecipesFragment.newInstance();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.single_pane_activity, recipesFragment, RECIPES_FRAGMENT_TAG)
-                    .commit();
+            GuiUtils.replaceFragment(this, R.id.single_pane_activity, recipesFragment, RECIPES_FRAGMENT_TAG);
         }
     }
 }
