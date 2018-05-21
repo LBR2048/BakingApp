@@ -116,19 +116,31 @@ public class DualPaneActivity extends AppCompatActivity
 
         if (stepDetailsFragment == null) {
             stepDetailsFragment = StepDetailsFragment.newInstance(recipeId, stepId);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG)
-                    .commit();
-            getSupportFragmentManager().executePendingTransactions();
+            if (mTwoPane) {
+                replaceFragment(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
+            } else {
+                replaceFragmentWithBackStack(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
+            }
         } else {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG)
-                    .commit();
-            getSupportFragmentManager().executePendingTransactions();
             stepDetailsFragment.showStep(recipeId, stepId);
         }
+    }
+
+    private void replaceFragment(int containerViewId, StepDetailsFragment stepDetailsFragment, String tag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(containerViewId, stepDetailsFragment, tag)
+                .commit();
+        getSupportFragmentManager().executePendingTransactions();
+    }
+
+    private void replaceFragmentWithBackStack(int containerViewId, StepDetailsFragment stepDetailsFragment, String tag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(containerViewId, stepDetailsFragment, tag)
+                .addToBackStack(null)
+                .commit();
+        getSupportFragmentManager().executePendingTransactions();
     }
 
     private void removeStepDetailsFragment() {
