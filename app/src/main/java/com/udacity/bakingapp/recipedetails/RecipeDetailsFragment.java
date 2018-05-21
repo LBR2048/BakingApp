@@ -17,9 +17,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.udacity.bakingapp.R;
-import com.udacity.bakingapp.Utils;
 import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Step;
+import com.udacity.bakingapp.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

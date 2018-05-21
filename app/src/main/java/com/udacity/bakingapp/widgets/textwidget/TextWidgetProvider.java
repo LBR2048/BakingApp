@@ -9,8 +9,8 @@ import android.widget.RemoteViews;
 
 import com.udacity.bakingapp.MainActivity;
 import com.udacity.bakingapp.R;
-import com.udacity.bakingapp.Utils;
 import com.udacity.bakingapp.model.Recipe;
+import com.udacity.bakingapp.utils.Utils;
 
 /**
  * Implementation of App Widget functionality.

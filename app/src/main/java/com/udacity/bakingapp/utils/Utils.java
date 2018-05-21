@@ -1,4 +1,4 @@
-package com.udacity.bakingapp;
+package com.udacity.bakingapp.utils;
 
 import android.support.annotation.NonNull;
 
