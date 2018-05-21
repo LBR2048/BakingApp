@@ -1,15 +1,15 @@
-package com.udacity.bakingapp.recipes;
+package com.udacity.bakingapp;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
-import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Recipe;
+import com.udacity.bakingapp.recipes.RecipesFragment;
 
-public class SinglePaneActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
         implements RecipesFragment.OnRecipesFragmentInteractionListener {
 
     private static final String RECIPES_FRAGMENT_TAG = "recipes_fragment_tag";

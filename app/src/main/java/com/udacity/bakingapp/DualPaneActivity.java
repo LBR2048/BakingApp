@@ -1,11 +1,10 @@
-package com.udacity.bakingapp.recipes;
+package com.udacity.bakingapp;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.recipedetails.RecipeDetailsFragment;

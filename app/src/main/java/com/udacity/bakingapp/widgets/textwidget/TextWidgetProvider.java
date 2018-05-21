@@ -7,10 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import com.udacity.bakingapp.MainActivity;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.Utils;
 import com.udacity.bakingapp.model.Recipe;
-import com.udacity.bakingapp.recipes.SinglePaneActivity;
 
 /**
  * Implementation of App Widget functionality.
@@ -23,8 +23,8 @@ public class TextWidgetProvider extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ingredients);
 
-        // Create an intent to launch SinglePaneActivity when clicked
-        Intent intent = new Intent(context, SinglePaneActivity.class);
+        // Create an intent to launch MainActivity when clicked
+        Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         // Widget allow click handlers to only launch pending intents
