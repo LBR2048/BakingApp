@@ -119,31 +119,15 @@ public class DualPaneActivity extends AppCompatActivity
         if (stepDetailsFragment == null) {
             stepDetailsFragment = StepDetailsFragment.newInstance(recipeId, stepId);
             if (mTwoPane) {
-                replaceFragment(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
+                GuiUtils.replaceFragment(this, containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
             } else {
-                replaceFragmentWithBackStack(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
+                GuiUtils.replaceFragmentWithBackStack(this, containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
             }
         } else {
             stepDetailsFragment.showStep(recipeId, stepId);
         }
     }
 
-    private void replaceFragment(int containerViewId, StepDetailsFragment stepDetailsFragment, String tag) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(containerViewId, stepDetailsFragment, tag)
-                .commit();
-        getSupportFragmentManager().executePendingTransactions();
-    }
-
-    private void replaceFragmentWithBackStack(int containerViewId, StepDetailsFragment stepDetailsFragment, String tag) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(containerViewId, stepDetailsFragment, tag)
-                .addToBackStack(null)
-                .commit();
-        getSupportFragmentManager().executePendingTransactions();
-    }
 
     private void removeDetailPaneFragment() {
         Fragment detailPaneFragment = getSupportFragmentManager().findFragmentById(R.id.dual_pane_detail);

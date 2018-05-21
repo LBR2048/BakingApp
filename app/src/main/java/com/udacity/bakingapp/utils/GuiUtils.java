@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 
+import com.udacity.bakingapp.stepdetails.StepDetailsFragment;
+
 /**
  * Created by leonardo.ardjomand on 22/03/2018.
  */
@@ -49,6 +51,15 @@ public class GuiUtils {
         fragmentActivity.getSupportFragmentManager()
                 .beginTransaction()
                 .replace(containerViewId, fragment, fragmentTag)
+                .commit();
+        fragmentActivity.getSupportFragmentManager().executePendingTransactions();
+    }
+
+    public static void replaceFragmentWithBackStack(FragmentActivity fragmentActivity, int containerViewId, StepDetailsFragment stepDetailsFragment, String tag) {
+        fragmentActivity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(containerViewId, stepDetailsFragment, tag)
+                .addToBackStack(null)
                 .commit();
         fragmentActivity.getSupportFragmentManager().executePendingTransactions();
     }
