@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.udacity.bakingapp.utils.GuiUtils;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Recipe;
+import com.udacity.bakingapp.utils.GuiUtils;
 
 import java.util.ArrayList;
 import java.util.List;

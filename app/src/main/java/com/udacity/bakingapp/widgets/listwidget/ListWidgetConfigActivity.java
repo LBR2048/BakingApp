@@ -7,11 +7,11 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.widget.Toast;
 
+import com.udacity.bakingapp.MainActivity;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Recipe;
-import com.udacity.bakingapp.recipes.SinglePaneActivity;
 
-public class ListWidgetConfigActivity extends SinglePaneActivity {
+public class ListWidgetConfigActivity extends MainActivity {
 
     private int mAppWidgetId;
 

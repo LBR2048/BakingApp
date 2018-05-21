@@ -1,10 +1,9 @@
-package com.udacity.bakingapp.recipes;
+package com.udacity.bakingapp;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
-import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.steps.StepsFragment;
@@ -119,11 +118,31 @@ public class DualPaneActivity extends AppCompatActivity
 
         if (stepDetailsFragment == null) {
             stepDetailsFragment = StepDetailsFragment.newInstance(recipeId, stepId);
-            GuiUtils.replaceFragment(this, containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
+            if (mTwoPane) {
+                replaceFragment(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
+            } else {
+                replaceFragmentWithBackStack(containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
+            }
         } else {
-            GuiUtils.replaceFragment(this, containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
             stepDetailsFragment.showStep(recipeId, stepId);
         }
+    }
+
+    private void replaceFragment(int containerViewId, StepDetailsFragment stepDetailsFragment, String tag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(containerViewId, stepDetailsFragment, tag)
+                .commit();
+        getSupportFragmentManager().executePendingTransactions();
+    }
+
+    private void replaceFragmentWithBackStack(int containerViewId, StepDetailsFragment stepDetailsFragment, String tag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(containerViewId, stepDetailsFragment, tag)
+                .addToBackStack(null)
+                .commit();
+        getSupportFragmentManager().executePendingTransactions();
     }
 
     private void removeDetailPaneFragment() {
