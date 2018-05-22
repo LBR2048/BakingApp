@@ -57,7 +57,6 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
 
         // Instantiate presenter
         mPresenter = new RecipesPresenter(this);
