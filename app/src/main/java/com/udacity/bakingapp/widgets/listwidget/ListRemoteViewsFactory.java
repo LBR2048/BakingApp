@@ -4,8 +4,8 @@ import android.content.Context;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.data.RecipesRepositoryImpl;
+import com.udacity.bakingapp.model.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +16,8 @@ import java.util.List;
 
 public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
-    private int mRecipeId;
-    private Context mContext;
+    private final int mRecipeId;
+    private final Context mContext;
     private RecipesRepositoryImpl mRecipesRepository;
 
     private List<Ingredient> mIngredients = new ArrayList<>();

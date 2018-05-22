@@ -27,8 +27,8 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     private static final String ARG_RECIPE_ID = "recipe-id";
     private static final String ARG_STEP_ID = "step-id";
     private static final String VIDEO_FRAGMENT_TAG = "video-fragment-tag";
-    public static final String STATE_RECIPE_ID = "state-recipe-id";
-    public static final String STATE_STEP_ID = "state-step-id";
+    private static final String STATE_RECIPE_ID = "state-recipe-id";
+    private static final String STATE_STEP_ID = "state-step-id";
     //endregion
 
     //region Member Variables
@@ -87,8 +87,10 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
         super.onViewCreated(view, savedInstanceState);
 
         // Hide system UI if device is a handset in landscape mode (show fullscreen video)
-        if (GuiUtils.isHandsetLandscape(getActivity())) {
-            GuiUtils.hideSystemUI(getActivity());
+        if (getActivity() != null) {
+            if (GuiUtils.isHandsetLandscape(getActivity())) {
+                GuiUtils.hideSystemUI(getActivity());
+            }
         }
 
         mVideoContainer = view.findViewById(R.id.videoContainerLayout);

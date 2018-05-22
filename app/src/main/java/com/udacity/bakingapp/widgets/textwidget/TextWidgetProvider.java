@@ -9,7 +9,6 @@ import android.widget.RemoteViews;
 
 import com.udacity.bakingapp.MainActivity;
 import com.udacity.bakingapp.R;
-import com.udacity.bakingapp.utils.Utils;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.utils.Utils;
 
