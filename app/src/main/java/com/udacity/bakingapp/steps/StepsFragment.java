@@ -178,7 +178,6 @@ public class StepsFragment extends Fragment
     }
 
     public interface OnDetailsFragmentInteraction {
-        void onIngredientClicked(Ingredient ingredient);
         void onStepClicked(int recipeId, Step step);
     }
 }
