@@ -14,8 +14,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.udacity.bakingapp.utils.GuiUtils;
 import com.udacity.bakingapp.R;
+import com.udacity.bakingapp.utils.GuiUtils;
 
 /**
  * A fragment representing a list of Items.
@@ -59,7 +59,6 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
 
         if (getArguments() != null) {
             mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
