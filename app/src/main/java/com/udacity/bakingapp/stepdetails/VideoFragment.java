@@ -1,13 +1,12 @@
 package com.udacity.bakingapp.stepdetails;
 
-import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -25,31 +24,34 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.udacity.bakingapp.R;
 
-/**
- * A fragment representing a list of Items.
- */
 public class VideoFragment extends Fragment implements Player.EventListener {
 
-    private static final String ARG_VIDEO_URL = "video-url";
-    private static final String LOG_TAG = "Log Tag";
+    //region Constants
+    private static final String LOG_TAG = VideoFragment.class.getSimpleName();
+    private static final String ARG_VIDEO_URL = "arg-video-url";
+    private static final String STATE_PLAYBACK_POSITION = "state-playback-position";
+    private static final String STATE_CURRENT_WINDOW = "state-current-window";
+    private static final String STATE_PLAY_WHEN_READY = "state-play-whe-ready";
+    //endregion
 
+    //region Member variables
     private SimpleExoPlayer mPlayer;
     private SimpleExoPlayerView mPlayerView;
     private boolean mPlayWhenReady = true;
     private int mCurrentWindow;
     private long mPlaybackPosition;
     private String mVideoUrl;
+    //endregion
 
+    //region Constructors
     public VideoFragment() {
     }
 
-    @SuppressWarnings("unused")
     public static VideoFragment newInstance(String videoUrl) {
         VideoFragment fragment = new VideoFragment();
         Bundle args = new Bundle();
@@ -57,12 +59,12 @@ public class VideoFragment extends Fragment implements Player.EventListener {
         fragment.setArguments(args);
         return fragment;
     }
+    //endregion
 
     //region Lifecycle
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
 
         if (getArguments() != null) {
             mVideoUrl = getArguments().getString(ARG_VIDEO_URL);
@@ -71,7 +73,7 @@ public class VideoFragment extends Fragment implements Player.EventListener {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_video, container, false);
         mPlayerView = view.findViewById(R.id.step_video_player);
         return view;
@@ -108,7 +110,40 @@ public class VideoFragment extends Fragment implements Player.EventListener {
             releasePlayer();
         }
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save playback position
+        if (mPlayer != null) {
+            mPlaybackPosition = mPlayer.getCurrentPosition();
+            mCurrentWindow = mPlayer.getCurrentWindowIndex();
+            mPlayWhenReady = mPlayer.getPlayWhenReady();
+            outState.putLong(STATE_PLAYBACK_POSITION, mPlaybackPosition);
+            outState.putInt(STATE_CURRENT_WINDOW, mCurrentWindow);
+            outState.putBoolean(STATE_PLAY_WHEN_READY, mPlayWhenReady);
+        }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // Restore playback position
+        if (savedInstanceState != null) {
+            mPlaybackPosition = savedInstanceState.getLong(STATE_PLAYBACK_POSITION);
+            mCurrentWindow = savedInstanceState.getInt(STATE_CURRENT_WINDOW);
+            mPlayWhenReady = savedInstanceState.getBoolean(STATE_PLAY_WHEN_READY);
+        }
+    }
     //endregion
+
+    public void playVideo(String videoUrl) {
+        mVideoUrl = videoUrl;
+
+        initializePlayer();
+    }
 
     private void initializePlayer() {
         mPlayer = ExoPlayerFactory.newSimpleInstance(
@@ -125,17 +160,8 @@ public class VideoFragment extends Fragment implements Player.EventListener {
         mPlayer.prepare(mediaSource);
     }
 
-    public void playVideo(String videoUrl) {
-        mVideoUrl = videoUrl;
-
-        initializePlayer();
-    }
-
     private void releasePlayer() {
         if (mPlayer != null) {
-            mPlaybackPosition = mPlayer.getCurrentPosition();
-            mCurrentWindow = mPlayer.getCurrentWindowIndex();
-            mPlayWhenReady = mPlayer.getPlayWhenReady();
             mPlayer.release();
             mPlayer = null;
         }
