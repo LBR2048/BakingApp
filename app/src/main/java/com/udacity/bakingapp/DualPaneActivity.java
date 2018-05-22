@@ -2,7 +2,6 @@ package com.udacity.bakingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.udacity.bakingapp.model.Step;
@@ -52,18 +51,9 @@ public class DualPaneActivity extends AppCompatActivity implements
                 showStepDetails(mRecipeId, mStepId, R.id.dual_pane_detail);
             } else {
                 showSteps(mRecipeId, R.id.dual_pane_master);
-//                removeDetailPaneFragment();
             }
         } else {
-            // Detail pane fragment must be removed because it is using setSaveInstanceState(true)
-            removeDetailPaneFragment();
-
-            if (mStepSelected) {
-                showStepDetails(mRecipeId, mStepId, R.id.dual_pane_master);
-            } else {
-                showSteps(mRecipeId, R.id.dual_pane_master);
-            }
-
+            showSteps(mRecipeId, R.id.dual_pane_master);
         }
     }
 
@@ -126,15 +116,4 @@ public class DualPaneActivity extends AppCompatActivity implements
             stepDetailsFragment.showStep(recipeId, stepId);
         }
     }
-
-    private void removeDetailPaneFragment() {
-        getSupportFragmentManager().executePendingTransactions();
-        Fragment detailPaneFragment = getSupportFragmentManager().findFragmentById(R.id.dual_pane_detail);
-
-        if (detailPaneFragment != null) {
-            getSupportFragmentManager().beginTransaction().remove(detailPaneFragment).commit();
-            getSupportFragmentManager().executePendingTransactions();
-        }
-    }
-
 }
