@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:paddingEnd="32dp"
             android:paddingStart="32dp"
+            android:freezesText="true"
             tools:text="Ingredient 1,\nIngredient 2,\nIngredient 3" />
 
         <TextView

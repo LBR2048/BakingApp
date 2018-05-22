@@ -85,8 +85,11 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        // Save RecyclerView state
         Parcelable recyclerViewState = mRecyclerView.getLayoutManager().onSaveInstanceState();
         outState.putParcelable(RECYCLER_VIEW_STATE, recyclerViewState);
+
+        // Save RecyclerView data
         outState.putParcelableArrayList(RECYCLER_VIEW_DATA, (ArrayList) recipes);
     }
 

@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.udacity.bakingapp.R;
-import com.udacity.bakingapp.utils.Utils;
 import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.utils.Utils;
@@ -37,6 +36,7 @@ public class StepsFragment extends Fragment
     //region Constants
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String RECYCLER_VIEW_STATE = "recycler_view_state";
+    private static final String RECYCLER_VIEW_DATA = "recycler_view_data";
     private static final String ARG_RECIPE_ID = "arg_recipe_id";
     //endregion
 
@@ -70,7 +70,6 @@ public class StepsFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -85,6 +84,10 @@ public class StepsFragment extends Fragment
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        // Save RecyclerView data
+        outState.putParcelableArrayList(RECYCLER_VIEW_DATA, (ArrayList) mSteps);
+
+        // Save RecyclerView state
         Parcelable recyclerViewState = mStepList.getLayoutManager().onSaveInstanceState();
         outState.putParcelable(RECYCLER_VIEW_STATE, recyclerViewState);
     }
@@ -94,8 +97,11 @@ public class StepsFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
 
         if (savedInstanceState != null) {
+            // Restore RecyclerView data
+            mSteps = savedInstanceState.getParcelableArrayList(RECYCLER_VIEW_DATA);
             mStepsAdapter.replaceData(mSteps);
 
+            // Restore RecyclerView state
             Parcelable recyclerViewState = savedInstanceState.getParcelable(RECYCLER_VIEW_STATE);
             mStepList.getLayoutManager().onRestoreInstanceState(recyclerViewState);
         }
@@ -105,7 +111,6 @@ public class StepsFragment extends Fragment
     public android.view.View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         android.view.View view = inflater.inflate(R.layout.fragment_details, container, false);
         mStepList = view.findViewById(R.id.step_list);
-//        mIngredientList = (RecyclerView) view.findViewById(R.id.ingredient_list);
         mIngredientText = view.findViewById(R.id.ingredient_text);
 
         // Set the adapter
@@ -119,14 +124,12 @@ public class StepsFragment extends Fragment
         mStepsAdapter = new StepsAdapter(new ArrayList<Step>(), this);
         mStepList.setAdapter(mStepsAdapter);
 
-        mStepsPresenter.getRecipeDetails(mRecipeId);
+        if (savedInstanceState == null) {
+            mStepsPresenter.getRecipeDetails(mRecipeId);
+        }
 
         ViewCompat.setNestedScrollingEnabled(mStepList, false);
 
-//        mIngredientsAdapter = new IngredientsAdapter(new ArrayList<Ingredient>(), mListener);
-//        mIngredientList.setAdapter(mIngredientsAdapter);
-        // Load data
-//        mRecipesPresenter.loadRecipes();
         return view;
     }
 
