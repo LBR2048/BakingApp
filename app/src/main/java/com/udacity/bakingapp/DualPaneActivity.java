@@ -47,13 +47,13 @@ public class DualPaneActivity extends AppCompatActivity implements
 
         if (mTwoPane) {
             if (mStepSelected) {
-                showSteps(mRecipeId, R.id.dual_pane_master);
-                showStepDetails(mRecipeId, mStepId, R.id.dual_pane_detail);
+                showStepsFragment(mRecipeId);
+                showStepDetailsFragment(mRecipeId, mStepId);
             } else {
-                showSteps(mRecipeId, R.id.dual_pane_master);
+                showStepsFragment(mRecipeId);
             }
         } else {
-            showSteps(mRecipeId, R.id.dual_pane_master);
+            showStepsFragment(mRecipeId);
         }
     }
 
@@ -72,13 +72,9 @@ public class DualPaneActivity extends AppCompatActivity implements
         mStepId = step.getId();
 
         if (mTwoPane) {
-            showStepDetails(recipeId, step.getId(), R.id.dual_pane_detail);
+            showStepDetailsFragment(recipeId, step.getId());
         } else {
-            // Open step details in SinglePaneActivity
-            Intent intent = new Intent(this, SinglePaneActivity.class);
-            intent.putExtra(EXTRA_RECIPE_ID, mRecipeId);
-            intent.putExtra(EXTRA_STEP_ID, mStepId);
-            startActivity(intent);
+            showStepDetailsInSinglePaneActivity();
         }
     }
 
@@ -91,29 +87,39 @@ public class DualPaneActivity extends AppCompatActivity implements
         mTwoPane = (findViewById(R.id.dual_pane_detail) != null);
     }
 
-    private void showSteps(int mRecipeId, int containerViewId) {
+    private void showStepsFragment(int mRecipeId) {
         StepsFragment stepsFragment = (StepsFragment) getSupportFragmentManager()
                 .findFragmentByTag(STEPS_FRAGMENT_TAG);
 
         if (stepsFragment == null) {
             stepsFragment = StepsFragment.newInstance(1, mRecipeId);
-            GuiUtils.replaceFragment(this, containerViewId, stepsFragment, STEPS_FRAGMENT_TAG);
+            GuiUtils.replaceFragment(this, R.id.dual_pane_master, stepsFragment, STEPS_FRAGMENT_TAG);
         }
     }
 
-    private void showStepDetails(int recipeId, int stepId, int containerViewId) {
+    private void showStepDetailsFragment(int recipeId, int stepId) {
         StepDetailsFragment stepDetailsFragment = (StepDetailsFragment) getSupportFragmentManager()
                 .findFragmentByTag(STEP_DETAILS_FRAGMENT_TAG);
 
         if (stepDetailsFragment == null) {
             stepDetailsFragment = StepDetailsFragment.newInstance(recipeId, stepId);
             if (mTwoPane) {
-                GuiUtils.replaceFragment(this, containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
+                GuiUtils.replaceFragment(this, R.id.dual_pane_detail,
+                        stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
             } else {
-                GuiUtils.replaceFragmentWithBackStack(this, containerViewId, stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
+                GuiUtils.replaceFragmentWithBackStack(this, R.id.dual_pane_detail,
+                        stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
             }
         } else {
             stepDetailsFragment.showStep(recipeId, stepId);
         }
+    }
+
+    private void showStepDetailsInSinglePaneActivity() {
+        // Open step details in SinglePaneActivity
+        Intent intent = new Intent(this, SinglePaneActivity.class);
+        intent.putExtra(EXTRA_RECIPE_ID, mRecipeId);
+        intent.putExtra(EXTRA_STEP_ID, mStepId);
+        startActivity(intent);
     }
 }
