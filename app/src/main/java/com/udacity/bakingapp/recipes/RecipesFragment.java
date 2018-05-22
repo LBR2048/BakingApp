@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.udacity.bakingapp.utils.GuiUtils;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.utils.GuiUtils;
@@ -19,16 +18,11 @@ import com.udacity.bakingapp.utils.GuiUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p />
- * Activities containing this fragment MUST implement the {@link OnRecipesFragmentInteractionListener}
- * interface.
- */
 public class RecipesFragment extends android.support.v4.app.Fragment implements RecipesContract.View {
 
     //region Constants
     private static final String RECYCLER_VIEW_STATE = "recyclerViewState";
+    private static final String RECYCLER_VIEW_DATA = "recyclerViewData";
     private static final int COLUMN_COUNT_THREE = 3;
     private static final int MIN_WIDTH_THREE_COLUMNS = 800;
     //endregion
@@ -38,6 +32,7 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
     private RecipesAdapter mAdapter;
     private RecipesPresenter mPresenter;
     private RecyclerView mRecyclerView;
+    private List<Recipe> recipes;
     //endregion
 
     //region Constructors
@@ -64,7 +59,7 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
 
     @Override
     public android.view.View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                                          Bundle savedInstanceState) {
         android.view.View view = inflater.inflate(R.layout.fragment_recipes, container, false);
         mRecyclerView = view.findViewById(R.id.recipe_list);
 
@@ -80,7 +75,9 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
         mRecyclerView.setAdapter(mAdapter);
 
         // Load data
-        mPresenter.loadRecipes();
+        if (savedInstanceState == null) {
+            mPresenter.loadRecipes();
+        }
         return view;
     }
 
@@ -90,6 +87,7 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
 
         Parcelable recyclerViewState = mRecyclerView.getLayoutManager().onSaveInstanceState();
         outState.putParcelable(RECYCLER_VIEW_STATE, recyclerViewState);
+        outState.putParcelableArrayList(RECYCLER_VIEW_DATA, (ArrayList) recipes);
     }
 
     @Override
@@ -97,6 +95,11 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
         super.onActivityCreated(savedInstanceState);
 
         if (savedInstanceState != null) {
+            // Restore RecyclerView data
+            recipes = savedInstanceState.getParcelableArrayList(RECYCLER_VIEW_DATA);
+            mAdapter.replaceData(recipes);
+
+            // Restore RecyclerView state
             Parcelable recyclerViewState = savedInstanceState.getParcelable(RECYCLER_VIEW_STATE);
             mRecyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
         }
@@ -122,6 +125,7 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
 
     @Override
     public void showRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
         mAdapter.replaceData(recipes);
     }
 
