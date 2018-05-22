@@ -9,6 +9,8 @@ import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.recipes.RecipesFragment;
 import com.udacity.bakingapp.utils.GuiUtils;
 
+import static com.udacity.bakingapp.SinglePaneActivity.EXTRA_RECIPE_ID;
+
 public class MainActivity extends AppCompatActivity
         implements RecipesFragment.OnRecipesFragmentInteractionListener {
 
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onRecipeClicked(Recipe recipe) {
         Intent intent = new Intent(this, DualPaneActivity.class);
-        intent.putExtra(DualPaneActivity.EXTRA_RECIPE_ID, recipe.getId());
+        intent.putExtra(EXTRA_RECIPE_ID, recipe.getId());
         startActivity(intent);
     }
 

@@ -1,5 +1,6 @@
 package com.udacity.bakingapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +10,14 @@ import com.udacity.bakingapp.stepdetails.StepDetailsFragment;
 import com.udacity.bakingapp.steps.StepsFragment;
 import com.udacity.bakingapp.utils.GuiUtils;
 
+import static com.udacity.bakingapp.SinglePaneActivity.EXTRA_RECIPE_ID;
+import static com.udacity.bakingapp.SinglePaneActivity.EXTRA_STEP_ID;
+
 public class DualPaneActivity extends AppCompatActivity implements
         StepsFragment.OnDetailsFragmentInteraction,
         StepDetailsFragment.OnFragmentInteraction {
 
     //region Constants
-    public static final String EXTRA_RECIPE_ID = "recipeId";
     private static final String STEPS_FRAGMENT_TAG = "steps_fragment_tag";
     private static final String STEP_DETAILS_FRAGMENT_TAG = "step_details_fragment_tag";
     private static final String STATE_IS_STEP_SELECTED = "state-is-key-step-selected";
@@ -25,6 +28,7 @@ public class DualPaneActivity extends AppCompatActivity implements
     private boolean mTwoPane;
     private boolean mStepSelected;
     private int mStepId;
+    private int mRecipeId;
     //endregion
 
     //region Lifecycle
@@ -38,16 +42,16 @@ public class DualPaneActivity extends AppCompatActivity implements
             mStepId = savedInstanceState.getInt(STATE_STEP_ID);
         }
 
-        int recipeId = getIntent().getIntExtra(EXTRA_RECIPE_ID, -1);
+        mRecipeId = getIntent().getIntExtra(EXTRA_RECIPE_ID, -1);
 
         determineTwoPane();
 
         if (mTwoPane) {
             if (mStepSelected) {
-                showSteps(recipeId, R.id.dual_pane_master);
-                showStepDetails(recipeId, mStepId, R.id.dual_pane_detail);
+                showSteps(mRecipeId, R.id.dual_pane_master);
+                showStepDetails(mRecipeId, mStepId, R.id.dual_pane_detail);
             } else {
-                showSteps(recipeId, R.id.dual_pane_master);
+                showSteps(mRecipeId, R.id.dual_pane_master);
 //                removeDetailPaneFragment();
             }
         } else {
@@ -55,9 +59,9 @@ public class DualPaneActivity extends AppCompatActivity implements
             removeDetailPaneFragment();
 
             if (mStepSelected) {
-                showStepDetails(recipeId, mStepId, R.id.dual_pane_master);
+                showStepDetails(mRecipeId, mStepId, R.id.dual_pane_master);
             } else {
-                showSteps(recipeId, R.id.dual_pane_master);
+                showSteps(mRecipeId, R.id.dual_pane_master);
             }
 
         }
@@ -76,10 +80,15 @@ public class DualPaneActivity extends AppCompatActivity implements
     public void onStepClicked(int recipeId, Step step) {
         mStepSelected = true;
         mStepId = step.getId();
+
         if (mTwoPane) {
             showStepDetails(recipeId, step.getId(), R.id.dual_pane_detail);
         } else {
-            showStepDetails(recipeId, step.getId(), R.id.dual_pane_master);
+            // Open step details in SinglePaneActivity
+            Intent intent = new Intent(this, SinglePaneActivity.class);
+            intent.putExtra(EXTRA_RECIPE_ID, mRecipeId);
+            intent.putExtra(EXTRA_STEP_ID, mStepId);
+            startActivity(intent);
         }
     }
 

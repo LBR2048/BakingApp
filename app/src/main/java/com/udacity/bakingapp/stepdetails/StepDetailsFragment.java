@@ -27,6 +27,8 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     private static final String ARG_RECIPE_ID = "recipe-id";
     private static final String ARG_STEP_ID = "step-id";
     private static final String VIDEO_FRAGMENT_TAG = "video-fragment-tag";
+    public static final String STATE_RECIPE_ID = "state-recipe-id";
+    public static final String STATE_STEP_ID = "state-step-id";
     //endregion
 
     //region Member Variables
@@ -60,9 +62,14 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
-            mStepId = getArguments().getInt(ARG_STEP_ID);
+        if (savedInstanceState == null) {
+            if (getArguments() != null) {
+                mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
+                mStepId = getArguments().getInt(ARG_STEP_ID);
+            }
+        } else {
+            mRecipeId = savedInstanceState.getInt(STATE_RECIPE_ID);
+            mStepId = savedInstanceState.getInt(STATE_STEP_ID);
         }
 
         // Instantiate presenter
@@ -92,6 +99,14 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
         mStepDetailsPresenter.getStep(mRecipeId, mStepId);
 
         setupNavigationButtons();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt(STATE_RECIPE_ID, mRecipeId);
+        outState.putInt(STATE_STEP_ID, mStepId);
     }
 
     @Override
