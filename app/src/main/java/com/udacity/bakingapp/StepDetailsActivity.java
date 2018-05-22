@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.udacity.bakingapp.stepdetails.StepDetailsFragment;
 import com.udacity.bakingapp.utils.GuiUtils;
 
-public class SinglePaneActivity extends AppCompatActivity
+public class StepDetailsActivity extends AppCompatActivity
         implements StepDetailsFragment.OnFragmentInteraction {
 
     public static final String EXTRA_RECIPE_ID = "extra-recipe-id";

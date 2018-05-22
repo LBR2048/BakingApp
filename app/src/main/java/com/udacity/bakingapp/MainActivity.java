@@ -9,7 +9,7 @@ import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.recipes.RecipesFragment;
 import com.udacity.bakingapp.utils.GuiUtils;
 
-import static com.udacity.bakingapp.SinglePaneActivity.EXTRA_RECIPE_ID;
+import static com.udacity.bakingapp.StepDetailsActivity.EXTRA_RECIPE_ID;
 
 public class MainActivity extends AppCompatActivity
         implements RecipesFragment.OnRecipesFragmentInteractionListener {

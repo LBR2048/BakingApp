@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SinglePaneActivity" />
+        <activity android:name=".StepDetailsActivity" />
 
         <activity android:name=".DualPaneActivity" />
 

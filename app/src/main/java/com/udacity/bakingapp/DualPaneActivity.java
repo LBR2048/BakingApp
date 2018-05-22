@@ -9,8 +9,8 @@ import com.udacity.bakingapp.stepdetails.StepDetailsFragment;
 import com.udacity.bakingapp.steps.StepsFragment;
 import com.udacity.bakingapp.utils.GuiUtils;
 
-import static com.udacity.bakingapp.SinglePaneActivity.EXTRA_RECIPE_ID;
-import static com.udacity.bakingapp.SinglePaneActivity.EXTRA_STEP_ID;
+import static com.udacity.bakingapp.StepDetailsActivity.EXTRA_RECIPE_ID;
+import static com.udacity.bakingapp.StepDetailsActivity.EXTRA_STEP_ID;
 
 public class DualPaneActivity extends AppCompatActivity implements
         StepsFragment.OnDetailsFragmentInteraction,
@@ -74,7 +74,7 @@ public class DualPaneActivity extends AppCompatActivity implements
         if (mTwoPane) {
             showStepDetailsFragment(recipeId, step.getId());
         } else {
-            showStepDetailsInSinglePaneActivity();
+            showStepDetailsActivity();
         }
     }
 
@@ -111,9 +111,8 @@ public class DualPaneActivity extends AppCompatActivity implements
         }
     }
 
-    private void showStepDetailsInSinglePaneActivity() {
-        // Open step details in SinglePaneActivity
-        Intent intent = new Intent(this, SinglePaneActivity.class);
+    private void showStepDetailsActivity() {
+        Intent intent = new Intent(this, StepDetailsActivity.class);
         intent.putExtra(EXTRA_RECIPE_ID, mRecipeId);
         intent.putExtra(EXTRA_STEP_ID, mStepId);
         startActivity(intent);
