@@ -20,7 +20,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_single_pane);
 
         setTitle();
-        showRecipesFragment();
+
+        if(savedInstanceState == null) {
+            showRecipesFragment();
+        }
     }
 
     @Override
@@ -38,9 +41,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showRecipesFragment() {
-        if (getSupportFragmentManager().findFragmentByTag(RECIPES_FRAGMENT_TAG) == null) {
-            RecipesFragment recipesFragment = RecipesFragment.newInstance();
-            GuiUtils.replaceFragment(this, R.id.single_pane_activity, recipesFragment, RECIPES_FRAGMENT_TAG);
-        }
+        RecipesFragment recipesFragment = RecipesFragment.newInstance();
+        GuiUtils.replaceFragment(this, R.id.single_pane_activity, recipesFragment,
+                RECIPES_FRAGMENT_TAG);
     }
 }
