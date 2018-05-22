@@ -93,7 +93,8 @@ public class DualPaneActivity extends AppCompatActivity implements
 
         if (stepsFragment == null) {
             stepsFragment = StepsFragment.newInstance(1, mRecipeId);
-            GuiUtils.replaceFragment(this, R.id.dual_pane_master, stepsFragment, STEPS_FRAGMENT_TAG);
+            GuiUtils.replaceFragment(this, R.id.dual_pane_master,
+                    stepsFragment, STEPS_FRAGMENT_TAG);
         }
     }
 
@@ -103,13 +104,8 @@ public class DualPaneActivity extends AppCompatActivity implements
 
         if (stepDetailsFragment == null) {
             stepDetailsFragment = StepDetailsFragment.newInstance(recipeId, stepId);
-            if (mTwoPane) {
-                GuiUtils.replaceFragment(this, R.id.dual_pane_detail,
-                        stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
-            } else {
-                GuiUtils.replaceFragmentWithBackStack(this, R.id.dual_pane_detail,
-                        stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
-            }
+            GuiUtils.replaceFragment(this, R.id.dual_pane_detail,
+                    stepDetailsFragment, STEP_DETAILS_FRAGMENT_TAG);
         } else {
             stepDetailsFragment.showStep(recipeId, stepId);
         }
