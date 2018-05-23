@@ -16,5 +16,7 @@ public interface RecipesContract {
 
     interface Presenter {
         void loadRecipes();
+
+        void refreshRecipes();
     }
 }

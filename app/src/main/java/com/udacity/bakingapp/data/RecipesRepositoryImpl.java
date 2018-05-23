@@ -13,17 +13,17 @@ import java.util.List;
  * Created by leonardo.ardjomand on 16/01/2018.
  */
 
-public class RecipesRepositoryImpl implements RecipesRepository {
+public class RecipesRepositoryImpl implements RecipesRepository, RefreshRecipesRepository {
 
     public static final String TAG = RecipesRepositoryImpl.class.getSimpleName();
 
     private RecipesLocalRepository mLocalRepository = new RecipesLocalRepository();
-    private RecipesRepository mRemoteRepository = new RecipesRemoteRepository();
+    private RecipesRemoteRepository mRemoteRepository = new RecipesRemoteRepository();
 
     @Override
-    public void loadRecipes(final LoadRecipesCallback loadRecipesCallback) {
+    public void loadRecipes(final RecipesRepository.LoadRecipesCallback loadRecipesCallback) {
         Log.d(TAG, "Loading recipes from local storage");
-        mLocalRepository.loadRecipes(new LoadRecipesCallback() {
+        mLocalRepository.loadRecipes(new RecipesRepository.LoadRecipesCallback() {
             @Override
             public void onSuccess(List<Recipe> recipes) {
                 Log.d(TAG, "Recipes successfully loaded from local storage");
@@ -34,7 +34,7 @@ public class RecipesRepositoryImpl implements RecipesRepository {
             public void onFailure() {
                 Log.d(TAG, "Could not load recipes from local storage");
                 Log.d(TAG, "Loading recipes from remote source");
-                mRemoteRepository.loadRecipes(new LoadRecipesCallback() {
+                mRemoteRepository.loadRecipes(new RecipesRepository.LoadRecipesCallback() {
                     @Override
                     public void onSuccess(List<Recipe> recipes) {
                         Log.d(TAG, "Recipes successfully loaded from remote source");
@@ -105,5 +105,11 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     @Override
     public Recipe loadRecipe(int recipeId) {
         return mRemoteRepository.loadRecipe(recipeId);
+    }
+
+
+    @Override
+    public void refreshRecipes(RefreshRecipesCallback refreshRecipesCallback) {
+        mRemoteRepository.refreshRecipes(refreshRecipesCallback);
     }
 }

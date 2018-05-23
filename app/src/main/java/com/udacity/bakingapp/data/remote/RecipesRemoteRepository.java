@@ -3,6 +3,7 @@ package com.udacity.bakingapp.data.remote;
 import android.util.Log;
 
 import com.udacity.bakingapp.data.RecipesRepository;
+import com.udacity.bakingapp.data.RefreshRecipesRepository;
 import com.udacity.bakingapp.model.Recipe;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by leonardo.ardjomand on 09/06/2017.
  */
 
-public class RecipesRemoteRepository implements RecipesRepository {
+public class RecipesRemoteRepository implements RecipesRepository, RefreshRecipesRepository {
 
     private static final String BASE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/";
 
@@ -126,5 +127,29 @@ public class RecipesRemoteRepository implements RecipesRepository {
             }
         }
         return null;
+    }
+
+
+    @Override
+    public void refreshRecipes(final RefreshRecipesCallback refreshRecipesCallback) {
+        Log.d("Race", "RecipesRemoteRepository loadRecipes");
+        RecipesEndpointInterface apiService = getRecipesEndpointInterface();
+
+        String recipes = "baking.json";
+        Call<List<Recipe>> call = apiService.getRecipes(recipes);
+        call.enqueue(new Callback<List<Recipe>>() {
+            @Override
+            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                Log.d("Race", "RecipesRemoteRepository loadRecipes_onResponse");
+                List<Recipe> recipes = response.body();
+                refreshRecipesCallback.onSuccess(recipes);
+            }
+
+            @Override
+            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                Log.d("Race", "RecipesRemoteRepository loadRecipes_onResponse");
+                // Log error here since request failed
+            }
+        });
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,7 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
     private RecipesPresenter mPresenter;
     private RecyclerView mRecyclerView;
     private List<Recipe> recipes;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     //endregion
 
     //region Constructors
@@ -62,6 +64,7 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
                                           Bundle savedInstanceState) {
         android.view.View view = inflater.inflate(R.layout.fragment_recipes, container, false);
         mRecyclerView = view.findViewById(R.id.recipe_list);
+        mSwipeRefreshLayout = view.findViewById(R.id.recipe_swipe_refresh_layout);
 
         // Set the adapter
         Context context = view.getContext();
@@ -78,6 +81,14 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
         if (savedInstanceState == null) {
             mPresenter.loadRecipes();
         }
+
+        // Refresh data from remote source
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.refreshRecipes();
+            }
+        });
         return view;
     }
 
@@ -129,6 +140,7 @@ public class RecipesFragment extends android.support.v4.app.Fragment implements 
     @Override
     public void showRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
+        mSwipeRefreshLayout.setRefreshing(false);
         mAdapter.replaceData(recipes);
     }
 
