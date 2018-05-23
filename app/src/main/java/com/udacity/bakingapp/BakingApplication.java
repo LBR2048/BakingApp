@@ -2,6 +2,7 @@ package com.udacity.bakingapp;
 
 import android.app.Application;
 
+import com.facebook.stetho.Stetho;
 import com.udacity.bakingapp.model.Ingredient;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.model.Step;
@@ -36,5 +37,7 @@ public class BakingApplication extends Application {
         AndroidInitializeConfig config
                 = new AndroidInitializeConfig(getApplicationContext(), classes);
         RushCore.initialize(config);
+
+        Stetho.initializeWithDefaults(this);
     }
 }
