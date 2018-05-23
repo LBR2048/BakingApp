@@ -28,7 +28,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
         // Pass recipeId to RemoteViewsService using Intent's data
         // https://stackoverflow.com/questions/11350287/ongetviewfactory-only-called-once-for-multiple-widgets
         Intent listWidgetIntent = new Intent(context, ListWidgetService.class);
-        listWidgetIntent.setData(Uri.fromParts("content", String.valueOf(recipe.getId()), null));
+        listWidgetIntent.setData(Uri.fromParts("content", String.valueOf(recipe.getIdentity()), null));
         Log.d("Factory", "Putting extra into intent");
         views.setRemoteAdapter(R.id.appwidget_ingredients_listview, listWidgetIntent);
 

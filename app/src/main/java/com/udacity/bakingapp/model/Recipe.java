@@ -12,7 +12,7 @@ import java.util.List;
 public class Recipe implements Parcelable {
 
     @SerializedName("id")
-    public Integer id;
+    public Integer identity;
 
     @SerializedName("name")
     public String name;
@@ -47,7 +47,7 @@ public class Recipe implements Parcelable {
      */
     public Recipe(Integer id, String name, List<Ingredient> ingredients, List<Step> steps, Integer servings, String image) {
         super();
-        this.id = id;
+        this.identity = id;
         this.name = name;
         this.ingredients = ingredients;
         this.steps = steps;
@@ -55,12 +55,19 @@ public class Recipe implements Parcelable {
         this.image = image;
     }
 
-    public Integer getId() {
-        return id;
+    protected Recipe(Parcel in) {
+        this.identity = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.name = in.readString();
+        this.ingredients = new ArrayList<Ingredient>();
+        in.readList(this.ingredients, Ingredient.class.getClassLoader());
+        this.steps = new ArrayList<Step>();
+        in.readList(this.steps, Step.class.getClassLoader());
+        this.servings = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.image = in.readString();
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getIdentity() {
+        return identity;
     }
 
     public String getName() {
@@ -113,25 +120,18 @@ public class Recipe implements Parcelable {
         return 0;
     }
 
+    public void setIdentity(Integer identity) {
+        this.identity = identity;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this.id);
+        dest.writeValue(this.identity);
         dest.writeString(this.name);
         dest.writeList(this.ingredients);
         dest.writeList(this.steps);
         dest.writeValue(this.servings);
         dest.writeString(this.image);
-    }
-
-    protected Recipe(Parcel in) {
-        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.name = in.readString();
-        this.ingredients = new ArrayList<Ingredient>();
-        in.readList(this.ingredients, Ingredient.class.getClassLoader());
-        this.steps = new ArrayList<Step>();
-        in.readList(this.steps, Step.class.getClassLoader());
-        this.servings = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.image = in.readString();
     }
 
     public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {

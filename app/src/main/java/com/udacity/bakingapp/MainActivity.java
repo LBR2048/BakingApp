@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onRecipeClicked(Recipe recipe) {
         Intent intent = new Intent(this, DualPaneActivity.class);
-        intent.putExtra(EXTRA_RECIPE_ID, recipe.getId());
+        intent.putExtra(EXTRA_RECIPE_ID, recipe.getIdentity());
         startActivity(intent);
     }
 

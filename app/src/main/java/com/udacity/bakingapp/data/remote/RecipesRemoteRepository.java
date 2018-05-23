@@ -2,8 +2,8 @@ package com.udacity.bakingapp.data.remote;
 
 import android.util.Log;
 
-import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.data.RecipesRepository;
+import com.udacity.bakingapp.model.Recipe;
 
 import java.io.IOException;
 import java.util.List;
@@ -119,7 +119,7 @@ public class RecipesRemoteRepository implements RecipesRepository {
 
     private Recipe findRecipeById(int recipeId, List<Recipe> recipes) {
         for (Recipe recipe : recipes) {
-            if (recipe.getId() == recipeId) {
+            if (recipe.getIdentity() == recipeId) {
                 return recipe;
             }
         }

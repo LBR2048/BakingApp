@@ -17,15 +17,15 @@ public class ListWidgetConfigActivity extends MainActivity {
 
     @Override
     public void onRecipeClicked(Recipe recipe) {
-        Toast.makeText(this, "Recipe clicked: " + recipe.getId().toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Recipe clicked: " + recipe.getIdentity().toString(), Toast.LENGTH_SHORT).show();
 
         PreferenceManager.getDefaultSharedPreferences(this)
                 .edit()
-                .putInt(String.valueOf(mAppWidgetId), recipe.getId())
+                .putInt(String.valueOf(mAppWidgetId), recipe.getIdentity())
                 .apply();
 
         // Perform your App Widget configuration.
-        ListWidgetDataService.startActionUpdateWidget(this, mAppWidgetId, recipe.getId());
+        ListWidgetDataService.startActionUpdateWidget(this, mAppWidgetId, recipe.getIdentity());
 
         // When the configuration is complete,
         // get an instance of the AppWidgetManager by calling getInstance(Context):
