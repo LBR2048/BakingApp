@@ -1,8 +1,8 @@
 package com.udacity.bakingapp.steps;
 
-import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.data.RecipesRepository;
-import com.udacity.bakingapp.data.remote.RecipesRemoteRepository;
+import com.udacity.bakingapp.data.RecipesRepositoryImpl;
+import com.udacity.bakingapp.model.Recipe;
 
 /**
  * Created by leonardo.ardjomand on 28/12/2017.
@@ -15,7 +15,7 @@ public class StepsPresenter implements StepsContract.Presenter {
 
     public StepsPresenter(StepsContract.View view) {
         mView = view;
-        mRepository = new RecipesRemoteRepository();
+        mRepository = new RecipesRepositoryImpl();
     }
 
     @Override

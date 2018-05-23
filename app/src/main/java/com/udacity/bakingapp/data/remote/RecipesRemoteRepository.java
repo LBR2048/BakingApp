@@ -24,6 +24,7 @@ public class RecipesRemoteRepository implements RecipesRepository {
 
     @Override
     public void loadRecipes(final LoadRecipesCallback loadRecipesCallback) {
+        Log.d("Race", "RecipesRemoteRepository loadRecipes");
         RecipesEndpointInterface apiService = getRecipesEndpointInterface();
 
         String recipes = "baking.json";
@@ -31,13 +32,14 @@ public class RecipesRemoteRepository implements RecipesRepository {
         call.enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                Log.i("Retrofit", "Download all recipes from server");
+                Log.d("Race", "RecipesRemoteRepository loadRecipes_onResponse");
                 List<Recipe> recipes = response.body();
                 loadRecipesCallback.onSuccess(recipes);
             }
 
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                Log.d("Race", "RecipesRemoteRepository loadRecipes_onResponse");
                 // Log error here since request failed
             }
         });

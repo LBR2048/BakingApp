@@ -34,6 +34,8 @@ public interface RecipesRepository {
     interface LoadStepsCallback {
 
         void onSuccess(List<Step> steps);
+
+        void onFailure();
     }
 
     Recipe loadRecipe(int recipeId);

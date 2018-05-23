@@ -43,6 +43,11 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
                     setNavigationButtonsVisibility();
                 }
             }
+
+            @Override
+            public void onDataNotAvailable() {
+
+            }
         }, recipeId);
     }
 

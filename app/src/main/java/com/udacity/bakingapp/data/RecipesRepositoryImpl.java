@@ -1,9 +1,13 @@
 package com.udacity.bakingapp.data;
 
+import android.util.Log;
+
+import com.udacity.bakingapp.data.local.RecipesLocalRepository;
+import com.udacity.bakingapp.data.local.RecipesSaveRepository;
+import com.udacity.bakingapp.data.local.RecipesSaveRepositoryImpl;
+import com.udacity.bakingapp.data.remote.RecipesRemoteRepository;
 import com.udacity.bakingapp.model.Recipe;
 import com.udacity.bakingapp.model.Step;
-import com.udacity.bakingapp.data.local.RecipesLocalRepository;
-import com.udacity.bakingapp.data.remote.RecipesRemoteRepository;
 
 import java.util.List;
 
@@ -13,27 +17,44 @@ import java.util.List;
 
 public class RecipesRepositoryImpl implements RecipesRepository {
 
-    private RecipesRepository mRecipesLocalRepository = new RecipesLocalRepository();
+    private RecipesRepository mRecipesLocalLoadRepository = new RecipesLocalRepository();
+    private RecipesSaveRepository mRecipesLocalSaveRepository = new RecipesSaveRepositoryImpl();
     private RecipesRepository mRecipesRemoteRepository = new RecipesRemoteRepository();
 
     @Override
     public void loadRecipes(final LoadRecipesCallback loadRecipesCallback) {
-        mRecipesRemoteRepository.loadRecipes(new LoadRecipesCallback() {
+        Log.d("Race", "RecipesRepositoryImpl loadRecipes");
+        mRecipesLocalLoadRepository.loadRecipes(new LoadRecipesCallback() {
             @Override
             public void onSuccess(List<Recipe> recipes) {
+                Log.d("Race", "RecipesRepositoryImpl loadRecipes_onRecipesLoaded");
                 loadRecipesCallback.onSuccess(recipes);
             }
 
             @Override
             public void onFailure() {
-                loadRecipesCallback.onFailure();
+                Log.d("Race", "RecipesRepositoryImpl loadRecipes_onDataNotAvailable");
+                mRecipesRemoteRepository.loadRecipes(new LoadRecipesCallback() {
+                    @Override
+                    public void onSuccess(List<Recipe> recipes) {
+                        Log.d("Race", "RecipesRepositoryImpl loadRecipes_onRecipesLoaded");
+                        loadRecipesCallback.onSuccess(recipes);
+                        mRecipesLocalSaveRepository.saveRecipes(recipes);
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        Log.d("Race", "RecipesRepositoryImpl loadRecipes_onDataNotAvailable");
+                        loadRecipesCallback.onFailure();
+                    }
+                });
             }
         });
     }
 
     @Override
-    public void loadRecipe(final LoadRecipeCallback loadRecipeCallback, int recipeId) {
-        mRecipesRemoteRepository.loadRecipe(new LoadRecipeCallback() {
+    public void loadRecipe(final LoadRecipeCallback loadRecipeCallback, final int recipeId) {
+        mRecipesLocalLoadRepository.loadRecipe(new LoadRecipeCallback() {
             @Override
             public void onSuccess(Recipe recipe) {
                 loadRecipeCallback.onSuccess(recipe);
@@ -41,17 +62,42 @@ public class RecipesRepositoryImpl implements RecipesRepository {
 
             @Override
             public void onFailure() {
-                loadRecipeCallback.onFailure();
+                mRecipesRemoteRepository.loadRecipe(new LoadRecipeCallback() {
+                    @Override
+                    public void onSuccess(Recipe recipe) {
+                        loadRecipeCallback.onSuccess(recipe);
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        loadRecipeCallback.onFailure();
+                    }
+                }, recipeId);
             }
         }, recipeId);
     }
 
     @Override
-    public void loadSteps(final LoadStepsCallback loadStepsCallback, int recipeId) {
-        mRecipesRemoteRepository.loadSteps(new LoadStepsCallback() {
+    public void loadSteps(final LoadStepsCallback loadStepsCallback, final int recipeId) {
+        mRecipesLocalLoadRepository.loadSteps(new LoadStepsCallback() {
             @Override
             public void onSuccess(List<Step> steps) {
                 loadStepsCallback.onSuccess(steps);
+            }
+
+            @Override
+            public void onFailure() {
+                mRecipesRemoteRepository.loadSteps(new LoadStepsCallback() {
+                    @Override
+                    public void onSuccess(List<Step> steps) {
+                        loadStepsCallback.onSuccess(steps);
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        loadStepsCallback.onFailure();
+                    }
+                }, recipeId);
             }
         }, recipeId);
     }
