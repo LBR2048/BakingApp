@@ -1,7 +1,6 @@
 package com.udacity.bakingapp.data.local;
 
 import com.udacity.bakingapp.model.Recipe;
-import com.udacity.bakingapp.model.Step;
 
 import java.util.List;
 
@@ -10,25 +9,6 @@ import java.util.List;
  */
 
 public interface RecipesSaveRepository {
-
-    interface LoadRecipesCallback {
-
-        void onRecipesSaved(List<Recipe> recipes);
-
-        void onDataNotAvailable();
-    }
-
-    interface LoadRecipeCallback {
-
-        void onRecipeSaved(Recipe recipe);
-
-        void onDataNotAvailable();
-    }
-
-    interface LoadStepsCallback {
-
-        void onStepsSaved(List<Step> steps);
-    }
 
     void saveRecipes(List<Recipe> recipes);
 }
