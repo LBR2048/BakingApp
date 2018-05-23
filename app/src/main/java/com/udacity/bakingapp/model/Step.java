@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class Step implements Parcelable {
 
     @SerializedName("id")
-    public Integer id;
+    public Integer identity;
 
     @SerializedName("shortDescription")
     public String shortDescription;
@@ -30,12 +30,28 @@ public class Step implements Parcelable {
     public Step() {
     }
 
-    public Integer getId() {
-        return id;
+    /**
+     * @param id
+     * @param shortDescription
+     * @param description
+     * @param videoURL
+     * @param thumbnailURL
+     */
+    public Step(Integer id, String shortDescription, String description, String videoURL, String thumbnailURL) {
+        super();
+        this.identity = id;
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.videoURL = videoURL;
+        this.thumbnailURL = thumbnailURL;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    protected Step(Parcel in) {
+        this.identity = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.shortDescription = in.readString();
+        this.description = in.readString();
+        this.videoURL = in.readString();
+        this.thumbnailURL = in.readString();
     }
 
     public String getShortDescription() {
@@ -70,21 +86,8 @@ public class Step implements Parcelable {
         this.thumbnailURL = thumbnailURL;
     }
 
-    /**
-     * 
-     * @param id
-     * @param shortDescription
-     * @param description
-     * @param videoURL
-     * @param thumbnailURL
-     */
-    public Step(Integer id, String shortDescription, String description, String videoURL, String thumbnailURL) {
-        super();
-        this.id = id;
-        this.shortDescription = shortDescription;
-        this.description = description;
-        this.videoURL = videoURL;
-        this.thumbnailURL = thumbnailURL;
+    public Integer getIdentity() {
+        return identity;
     }
 
     public static final Creator<Step> CREATOR = new Creator<Step>() {
@@ -99,12 +102,8 @@ public class Step implements Parcelable {
         }
     };
 
-    protected Step(Parcel in) {
-        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.shortDescription = in.readString();
-        this.description = in.readString();
-        this.videoURL = in.readString();
-        this.thumbnailURL = in.readString();
+    public void setIdentity(Integer identity) {
+        this.identity = identity;
     }
 
     @Override
@@ -114,7 +113,7 @@ public class Step implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this.id);
+        dest.writeValue(this.identity);
         dest.writeString(this.shortDescription);
         dest.writeString(this.description);
         dest.writeString(this.videoURL);

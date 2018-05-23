@@ -1,8 +1,8 @@
 package com.udacity.bakingapp.stepdetails;
 
-import com.udacity.bakingapp.model.Step;
 import com.udacity.bakingapp.data.RecipesRepository;
 import com.udacity.bakingapp.data.RecipesRepositoryImpl;
+import com.udacity.bakingapp.model.Step;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
     @Override
     public void getPreviousStep() {
         Step step = mSteps.get(--mCurrentStepId);
-        mView.setStepId(step.getId());
+        mView.setStepId(step.getIdentity());
         mView.showTitle(step.getShortDescription());
         mView.showDescription(step.getDescription());
         showOrHideVideo(step.getVideoURL());
@@ -59,7 +59,7 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
     @Override
     public void getNextStep() {
         Step step = mSteps.get(++mCurrentStepId);
-        mView.setStepId(step.getId());
+        mView.setStepId(step.getIdentity());
         mView.showTitle(step.getShortDescription());
         mView.showDescription(step.getDescription());
         showOrHideVideo(step.getVideoURL());
@@ -89,7 +89,7 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
 
     private Step findStepById(int stepId, List<Step> steps) {
         for (Step step : steps) {
-            if (step.getId() == stepId) {
+            if (step.getIdentity() == stepId) {
                 return step;
             }
         }
@@ -98,7 +98,7 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
 
     private int findStepPositionById(int stepId, List<Step> steps) {
         for (int i = 0; i < steps.size(); i++) {
-            if (steps.get(i).getId() == stepId) {
+            if (steps.get(i).getIdentity() == stepId) {
                 return i;
             }
         }

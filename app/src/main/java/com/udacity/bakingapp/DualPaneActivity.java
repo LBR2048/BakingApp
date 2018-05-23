@@ -69,10 +69,10 @@ public class DualPaneActivity extends AppCompatActivity implements
     @Override
     public void onStepClicked(int recipeId, Step step) {
         mStepSelected = true;
-        mStepId = step.getId();
+        mStepId = step.getIdentity();
 
         if (mTwoPane) {
-            showStepDetailsFragment(recipeId, step.getId());
+            showStepDetailsFragment(recipeId, step.getIdentity());
         } else {
             showStepDetailsActivity();
         }
