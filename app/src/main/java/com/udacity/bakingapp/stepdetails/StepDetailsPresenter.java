@@ -45,7 +45,7 @@ public class StepDetailsPresenter implements StepDetailsContract.Presenter {
             }
 
             @Override
-            public void onDataNotAvailable() {
+            public void onFailure() {
 
             }
         }, recipeId);

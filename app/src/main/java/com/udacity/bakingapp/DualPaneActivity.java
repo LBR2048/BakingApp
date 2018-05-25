@@ -2,6 +2,8 @@ package com.udacity.bakingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.udacity.bakingapp.model.Step;
@@ -45,15 +47,10 @@ public class DualPaneActivity extends AppCompatActivity implements
 
         determineTwoPane();
 
-        if (mTwoPane) {
-            if (mStepSelected) {
-                showStepsFragment(mRecipeId);
-                showStepDetailsFragment(mRecipeId, mStepId);
-            } else {
-                showStepsFragment(mRecipeId);
-            }
-        } else {
-            showStepsFragment(mRecipeId);
+        showStepsFragment(mRecipeId);
+
+        if (!mTwoPane) {
+            removeDetailPaneFragment();
         }
     }
 
@@ -116,5 +113,17 @@ public class DualPaneActivity extends AppCompatActivity implements
         intent.putExtra(EXTRA_RECIPE_ID, mRecipeId);
         intent.putExtra(EXTRA_STEP_ID, mStepId);
         startActivity(intent);
+    }
+
+    private void removeDetailPaneFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        Fragment detailPaneFragment = fragmentManager.findFragmentById(
+                R.id.dual_pane_detail);
+
+        if (detailPaneFragment != null) {
+            fragmentManager.beginTransaction().remove(detailPaneFragment).commit();
+            fragmentManager.executePendingTransactions();
+        }
     }
 }

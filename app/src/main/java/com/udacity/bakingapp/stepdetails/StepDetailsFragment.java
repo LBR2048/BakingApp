@@ -98,7 +98,9 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
         mPreviousButton = view.findViewById(R.id.previous_button);
         mNextButton = view.findViewById(R.id.next_button);
 
-        mStepDetailsPresenter.getStep(mRecipeId, mStepId);
+        if (savedInstanceState == null) {
+            mStepDetailsPresenter.getStep(mRecipeId, mStepId);
+        }
 
         setupNavigationButtons();
     }
