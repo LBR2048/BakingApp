@@ -31,10 +31,14 @@ public class RecipesLocalRepository implements RecipesRepository, RecipesSaveRep
     @Override
     public void loadRecipe(RecipesRepository.LoadRecipeCallback loadRecipeCallback, int recipeId) {
         List<Recipe> recipes = new RushSearch().whereEqual("identity", String.valueOf(recipeId)).find(Recipe.class);
-        Recipe recipe = recipes.get(0);
-        //TODO improve this logic. How to check if the data is outdated?
-        if (recipe != null) {
-            loadRecipeCallback.onSuccess(recipe);
+        if (!recipes.isEmpty()) {
+            Recipe recipe = recipes.get(0);
+            //TODO improve this logic. How to check if the data is outdated?
+            if (recipe != null) {
+                loadRecipeCallback.onSuccess(recipe);
+            } else {
+                loadRecipeCallback.onFailure();
+            }
         } else {
             loadRecipeCallback.onFailure();
         }
@@ -59,10 +63,12 @@ public class RecipesLocalRepository implements RecipesRepository, RecipesSaveRep
     @Override
     public Recipe loadRecipe(int recipeId) {
         List<Recipe> recipes = new RushSearch().whereEqual("identity", String.valueOf(recipeId)).find(Recipe.class);
-        Recipe recipe = recipes.get(0);
-        //TODO improve this logic. How to check if the data is outdated?
-        if (recipe != null) {
-            return recipe;
+        if (!recipes.isEmpty()) {
+            Recipe recipe = recipes.get(0);
+            //TODO improve this logic. How to check if the data is outdated?
+            if (recipe != null) {
+                return recipe;
+            }
         }
         return null;
     }
