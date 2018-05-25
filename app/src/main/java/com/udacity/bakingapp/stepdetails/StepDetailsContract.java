@@ -16,7 +16,7 @@ public interface StepDetailsContract {
 
         void showVideo(String videoUrl);
 
-        void hideVideo();
+        void showImage(String imageUrl);
 
         void setPreviousButtonVisibility(boolean visibility);
 

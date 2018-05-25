@@ -12,8 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.udacity.bakingapp.R;
 import com.udacity.bakingapp.utils.GuiUtils;
 
@@ -29,6 +31,7 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     private static final String VIDEO_FRAGMENT_TAG = "video-fragment-tag";
     private static final String STATE_RECIPE_ID = "state-recipe-id";
     private static final String STATE_STEP_ID = "state-step-id";
+    public static final String IMAGE_VIEW_TAG = "image-view-tag";
     //endregion
 
     //region Member Variables
@@ -78,7 +81,7 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_step_details, container, false);
     }
 
@@ -159,8 +162,13 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
 
     @Override
     public void showVideo(String videoUrl) {
-        mVideoContainer.setVisibility(View.VISIBLE);
+        // Hide image
+        ImageView imageView = mVideoContainer.findViewWithTag(IMAGE_VIEW_TAG);
+        if (imageView != null) {
+            mVideoContainer.removeView(imageView);
+        }
 
+        // Show video
         if (getChildFragmentManager().findFragmentByTag(VIDEO_FRAGMENT_TAG) == null) {
             VideoFragment videoFragment = VideoFragment.newInstance(videoUrl);
             getChildFragmentManager()
@@ -175,15 +183,28 @@ public class StepDetailsFragment extends Fragment implements StepDetailsContract
     }
 
     @Override
-    public void hideVideo() {
-        mVideoContainer.setVisibility(View.GONE);
-
+    public void showImage(String imageUrl) {
+        // Hide video
         Fragment videoFragment = getChildFragmentManager().findFragmentByTag(VIDEO_FRAGMENT_TAG);
         if (videoFragment != null) {
             getChildFragmentManager()
                     .beginTransaction()
                     .remove(videoFragment)
                     .commit();
+        }
+
+        // Show image
+        ImageView imageView = mVideoContainer.findViewWithTag(IMAGE_VIEW_TAG);
+        if (imageView == null) {
+            imageView = new ImageView(getContext());
+            imageView.setTag(IMAGE_VIEW_TAG);
+            mVideoContainer.addView(imageView);
+        }
+
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            Picasso.get().load(imageUrl).error(R.mipmap.ic_launcher).into(imageView);
+        } else {
+            imageView.setImageResource(R.mipmap.ic_launcher);
         }
     }
 
